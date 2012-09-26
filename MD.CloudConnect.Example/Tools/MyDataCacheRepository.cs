@@ -7,7 +7,7 @@ namespace MD.CloudConnect.Example.Tools
 {
     public class MyDataCacheRepository : MD.CloudConnect.IDataCache
     {
-         protected static readonly MyDataCacheRepository _instance = new MyDataCacheRepository();
+        protected static readonly MyDataCacheRepository _instance = new MyDataCacheRepository();
         public static MyDataCacheRepository Instance
         {
             get
@@ -26,6 +26,7 @@ namespace MD.CloudConnect.Example.Tools
 
         public DateTime getHistoryFor(string asset, ITracking data)
         {
+            
             return DateTime.MinValue;
         }
     }
