@@ -11,16 +11,16 @@ Installation
 
 #### Manualy
 	
-	Reference in your project Dlls : 
-		* MD.CloudConnect
-		* Newtonsoft.Json (dependencie)
+Reference in your project Dlls : 
+* MD.CloudConnect
+* Newtonsoft.Json (dependencie)
 
 Notification Usage
 -----
 
-On your website create HttpHandler.ashx to receive http notification. Send the Json message to the function 'Notification Decode' and make loop on MDData response to retrieve information that you need.
+On your website create HttpHandler.ashx to receive http notification. Send the Json message to the function 'Notification Decode' and make a loop on MDData response to retrieve information that you need.
 
-	List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
+	List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(jsonData);
 	foreach (MD.CloudConnect.MDData mdData in decodedData)
     {
         if (mdData.Meta.Event == "track")
@@ -47,7 +47,7 @@ In the global.asax , Application_Start() :
     private void InitializeCloudConnect()
     {
         //List the field that you want in the notification result
-        string[] fieldsThatIWould = new string[]
+        string[] fieldsThatINeed = new string[]
         {
             MD.CloudConnect.FieldDefinition.GPRMC_VALID.Key,
             MD.CloudConnect.FieldDefinition.GPS_SPEED.Key,
@@ -60,7 +60,7 @@ In the global.asax , Application_Start() :
         };
 
         //initialize field and object (IDataCache)
-        MD.CloudConnect.Notification.Instance.Initialize(fieldsThatIWould, MD.CloudConnect.Example.Tools.MyDataCacheRepository.Instance, true);
+        MD.CloudConnect.Notification.Instance.Initialize(fieldsThatINeed, MD.CloudConnect.Example.Tools.MyDataCacheRepository.Instance, true);
     }
 
 An example of object that you could  implement for IDataCache interface :
@@ -106,7 +106,7 @@ An example of object that you could  implement for IDataCache interface :
         }
     }
 
-The library does not manage directly persistance data, so it's for we need "GetHisoryFor" where you give us last information that you store in your database.
+The library does not manage persistance data, so it's for that we need "GetHistoryFor" where you give us last information that you stored in your database.
 The function "GetHistoryFor" will be call only one time per Device (Asset) after start website when the library
 will received a new data for an asset not present in Data cache of the library.
 
@@ -123,7 +123,7 @@ Here are some ways *you* can contribute:
 * by writing specifications
 * by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
 * by refactoring code
-* by closing [issues](http://github.com/mobile-devices/cloud_connect_dotnet_client/issues)
+* by closing [issues](http://github.com/mobile-devices/cloudconnect_dotnet_client/issues)
 * by reviewing patches
 
 All contributors will be added to the [HISTORY](https://github.com/mobile-devices/cloud_connect_dotnet_client/blob/master/HISTORY.md)
@@ -131,21 +131,9 @@ file and will receive the respect and gratitude of the community.
 
 Submitting an Issue
 -------------------
-We use the [GitHub issue tracker](http://github.com/mobile-devices/cloud_connect_dotnet_client/issues) to track bugs and
+We use the [GitHub issue tracker](http://github.com/mobile-devices/cloudconnect_dotnet_client/issues) to track bugs and
 features. Before submitting a bug report or feature request, check to make sure it hasn't already
 been submitted. You can indicate support for an existing issuse by voting it up. When submitting a
 bug report, please include a [Gist](http://gist.github.com/) that includes a stack trace and any
-details that may be necessary to reproduce the bug, including your gem version, Ruby version, and
+details that may be necessary to reproduce the bug, including your .net Version and
 operating system. Ideally, a bug report should include a pull request with failing specs.
-
-Submitting a Pull Request
--------------------------
-1. Fork the project.
-2. Create a topic branch.
-3. Implement your feature or bug fix.
-4. Add documentation for your feature or bug fix.
-5. Run <tt>bundle exec rake doc:yard</tt>. If your changes are not 100% documented, go back to step 4.
-6. Add specs for your feature or bug fix.
-7. Run <tt>bundle exec rake spec</tt>. If your changes are not 100% covered, go back to step 6.
-8. Commit and push your changes.
-9. Submit a pull request. Please do not include changes to the gemspec, version, or history file. (If you want to create your own version for some reason, please do so in a separate commit.)
