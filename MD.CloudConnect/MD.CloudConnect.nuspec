@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MD.CloudConnect</id>
+    <version>0.0.1</version>
+    <title>Driver Cloud Connect</title>
+    <authors>Mobile Devices</authors>
+    <owners>Mobile Devices</owners>
+    <projectUrl>http://www.mobile-devices.com</projectUrl>
+    <iconUrl>http://www.mobile-devices.com/wp-content/themes/lifestyle/images/mobile-devices-logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Driver to user Notification on the Cloud Connect of Mobile Devices</description>
+    <releaseNotes>Initiate package</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>Mdi CloudConnect Mobile-devices</tags>
+  </metadata>
+</package>
