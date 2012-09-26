@@ -19,7 +19,7 @@ Notification Usage
 -----
 
 On your website create HttpHandler.ashx to receive http notification. Send the Json message to the function 'Notification Decode' and make a loop on MDData response to retrieve information that you need.
-
+```csharp
 	List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(jsonData);
 	foreach (MD.CloudConnect.MDData mdData in decodedData)
     {
@@ -30,7 +30,7 @@ On your website create HttpHandler.ashx to receive http notification. Send the J
             /** Use tracking.Longitude , tracking.Speed to read data **/
         }
     }
-
+```
 
 ## Case where the library manage data cache (Beta)
 
@@ -38,7 +38,7 @@ The Cloud Connect notification will send to you only field updated. You must kee
 You only need to initialize the library with "Field" that you need and on object which is implemented the interface MD.CloudConnect.IDataCache.
 
 In the global.asax , Application_Start() :
-
+```csharp
 	protected void Application_Start()
     {
         InitializeCloudConnect();
@@ -62,9 +62,10 @@ In the global.asax , Application_Start() :
         //initialize field and object (IDataCache)
         MD.CloudConnect.Notification.Instance.Initialize(fieldsThatINeed, MD.CloudConnect.Example.Tools.MyDataCacheRepository.Instance, true);
     }
-
+```
 An example of object that you could  implement for IDataCache interface :
 
+```csharp
 	public class MyDataCacheRepository : MD.CloudConnect.IDataCache
     {
     	/* Singleton */
@@ -105,6 +106,7 @@ An example of object that you could  implement for IDataCache interface :
 				return DateTime.MinValue;
         }
     }
+```    
 
 The library does not manage persistance data, so it's for that we need "GetHistoryFor" where you give us last information that you stored in your database.
 The function "GetHistoryFor" will be call only one time per Device (Asset) after start website when the library
