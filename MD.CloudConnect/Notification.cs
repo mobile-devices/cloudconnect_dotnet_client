@@ -38,7 +38,7 @@ namespace MD.CloudConnect
             if (fieldsName != null && fieldsName.Length > 0)
             {
                 _fieldsUse = fieldsName;
-                dataCache = _dataCache;
+                _dataCache = dataCache;
             }
             _autoFilter = autoFilter;
         }
