@@ -46,6 +46,8 @@ namespace MD.CloudConnect
         public List<MDData> Decode(string jsonData)
         {
             List<MDData> datas = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
+            datas = datas.OrderBy(x => x.Payload.Recorded_at).ToList();
+
             if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
             {
                 Payload history = null;
@@ -58,13 +60,18 @@ namespace MD.CloudConnect
                         if (!_fieldsCache.ContainsKey(track.Asset))
                         {
                             history = GeneratePayload(track.Asset, _fieldsUse);
-                            history.Received_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
+                            history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
 
                             _fieldsCache.Add(track.Asset, history);
                         }
+                        else
+                            history = _fieldsCache[track.Asset];
 
                         if (track.Recorded_at.Ticks > history.Recorded_at.Ticks)
+                        {
                             FillTrackingDataUserChoice(track, history);
+                            history.Recorded_at = track.Recorded_at;
+                        }
                         else if (_autoFilter)
                         {
                             data.Payload.shouldBeIgnore = true;
@@ -75,10 +82,45 @@ namespace MD.CloudConnect
             return datas.Where(x => !x.Payload.shouldBeIgnore).ToList();
         }
 
+        public List<Payload> DecodeTracking(string jsonData)
+        {
+            List<Payload> datas = JsonConvert.DeserializeObject<List<Payload>>(jsonData);
+            datas = datas.OrderBy(x => x.Recorded_at).ToList();
+
+            if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
+            {
+                Payload history = null;
+
+                foreach (MD.CloudConnect.Payload data in datas)
+                {
+                    ITracking track = data as ITracking;
+                    if (!_fieldsCache.ContainsKey(track.Asset))
+                    {
+                        history = GeneratePayload(track.Asset, _fieldsUse);
+                        history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
+
+                        _fieldsCache.Add(track.Asset, history);
+                    }
+                    else
+                        history = _fieldsCache[track.Asset];
+
+                    if (track.Recorded_at.Ticks > history.Recorded_at.Ticks)
+                    {
+                        FillTrackingDataUserChoice(track, history);
+                        history.Recorded_at = track.Recorded_at;
+                    }
+                    else if (_autoFilter)
+                    {
+                        data.shouldBeIgnore = true;
+                    }
+
+                }
+            }
+            return datas.Where(x => !x.shouldBeIgnore).ToList();
+        }
+
         private void FillTrackingDataUserChoice(ITracking data, Payload history)
         {
-
-
             foreach (string field in _fieldsUse)
             {
                 if (data.ContainsField(field))
@@ -109,6 +151,7 @@ namespace MD.CloudConnect
             Payload result = new Payload();
 
             result.Asset = asset;
+            result.fields = new Dictionary<string, Field>();
             foreach (string field in fields)
             {
                 result.fields.Add(field, new Field());

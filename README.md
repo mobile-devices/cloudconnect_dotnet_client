@@ -28,6 +28,15 @@ On your website create HttpHandler.ashx to receive http notification. Send the J
             ITracking tacking = mdData.Tracking;
 
             /** Use tracking.Longitude , tracking.Speed to read data **/
+            // mylongitude = tracking.Longitude;
+
+            /** In case where you manage by yoursefl the data cache, you must
+            ** check if field exist before access
+             **/
+
+             if(tracking.ContainsField(MD.CloudConnect.FieldDefinition.DIO_IGNITION.Key))   
+                myIgnition = tracking.Ignition;
+
         }
     }
 ```

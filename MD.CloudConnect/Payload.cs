@@ -60,7 +60,7 @@ namespace MD.CloudConnect
             set
             {
                 if (fields.ContainsKey(FieldDefinition.GPRMC_VALID.Key))
-                    fields[FieldDefinition.GPRMC_VALID.Key].SetValueAsString(true ? "A" : "V");
+                    fields[FieldDefinition.GPRMC_VALID.Key].SetValueAsString(value ? "A" : "V");
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPRMC_VALID));
             }
         }
