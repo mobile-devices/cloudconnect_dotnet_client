@@ -9,16 +9,16 @@ Installation
     
     Install-Package MD.CloudConnect
 
-#### Manualy
+#### Manually
 	
-Reference in your project Dlls : 
+Dlls Reference that you need in your project (you can download it from library directory on github) : 
 * MD.CloudConnect
 * Newtonsoft.Json (dependencie)
 
-Notification Usage
+Basic Notification Usage
 -----
 
-On your website create HttpHandler.ashx to receive http notification. Send the Json message to the function 'Notification Decode' and make a loop on MDData response to retrieve information that you need.
+On your website create an HttpHandler.ashx to receive http notification.Read the body message, and send the Json message to the function 'Notification Decode'. Make a loop on MDData response to retrieve information that you need.
 ```csharp
 	List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(jsonData);
 	foreach (MD.CloudConnect.MDData mdData in decodedData)
@@ -28,23 +28,24 @@ On your website create HttpHandler.ashx to receive http notification. Send the J
             ITracking tacking = mdData.Tracking;
 
             /** Use tracking.Longitude , tracking.Speed to read data **/
-            // mylongitude = tracking.Longitude;
+            mylongitude = tracking.Longitude;
+            ...
 
-            /** In case where you manage by yoursefl the data cache, you must
-            ** check if field exist before access
-             **/
+            /** In case where you manage by yourself the data cache, you must
+            ** check if field exist in MDData before to access it
+            **/
 
              if(tracking.ContainsField(MD.CloudConnect.FieldDefinition.DIO_IGNITION.Key))   
                 myIgnition = tracking.Ignition;
-
+            ...
         }
     }
 ```
 
-## Case where the library manage data cache (Beta)
+## Case where the library manage data cache for you (Beta feature)
 
-The Cloud Connect notification will send to you only field updated. You must keep in memory the previous state of each fields that you use. In this case, the Cloud Connect library can manage for you a part of this data cache.
-You only need to initialize the library with "Field" that you need and on object which is implemented the interface MD.CloudConnect.IDataCache.
+The Cloud Connect notification will only send to you the updated fields. You must keep in memory the previous state of each fields that you use. In this case, the Cloud Connect library can manage for you a part of this data cache.
+You only need to initialize the library with "Field" that you need and a special object which is implemented the interface MD.CloudConnect.IDataCache.
 
 In the global.asax , Application_Start() :
 ```csharp
@@ -120,6 +121,33 @@ An example of object that you could  implement for IDataCache interface :
 The library does not manage persistance data, so it's for that we need "GetHistoryFor" where you give us last information that you stored in your database.
 The function "GetHistoryFor" will be call only one time per Device (Asset) after start website when the library
 will received a new data for an asset not present in Data cache of the library.
+
+List of fields manage by the library
+------------
+This first of the library does not implement all fields. here the list of field that we manage for you :
+* GPRMC_VALID
+* GPS_SPEED
+* GPS_DIR
+* DIO_IGNITION
+* ODO_FULL
+* DIO_ALARM
+* DRIVER_ID
+* DIO_IN_TOR
+
+In the case where you need a field which is not present you can use special function to decode directly your field : 
+```csharp
+    
+    // ID is an optional parameter
+    public static FieldDetail MY_FIELD = new FieldDetail() { Key = "MY_FIELD", Id = 212 };
+    
+    ITracking tacking = mdData.Tracking;
+
+    if(tracking.ContainsField(MY_FIELD.Key))
+        mypersonalData = tracking.GetFieldAsInt(MY_FIELD.Key);
+    // you have also a function for string and boolean
+    // GetFieldAsString
+    // GetFieldAsBool
+``` 
 
 Contributing
 ------------
