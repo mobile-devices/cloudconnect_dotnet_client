@@ -11,14 +11,14 @@ Installation
 
 #### Manually
 	
-Dlls Reference that you need in your project (you can download it from library directory on github) : 
+Dlls required for your project (available from library directory on github) : 
 * MD.CloudConnect
 * Newtonsoft.Json (dependencie)
 
 Basic Notification Usage
 -----
 
-On your website create an HttpHandler.ashx to receive http notification.Read the body message, and send the Json message to the function 'Notification Decode'. Make a loop on MDData response to retrieve information that you need.
+On your server create an HttpHandler.ashx to receive http notification coming from CloudConnect. Read the body message, and send the Json message to the function 'Notification Decode'. Make a loop on MDData response to retrieve information that you need.
 ```csharp
 	List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(jsonData);
 	foreach (MD.CloudConnect.MDData mdData in decodedData)
@@ -44,8 +44,7 @@ On your website create an HttpHandler.ashx to receive http notification.Read the
 
 ## Case where the library manage data cache for you (Beta feature)
 
-The Cloud Connect notification will only send to you the updated fields. You must keep in memory the previous state of each fields that you use. In this case, the Cloud Connect library can manage for you a part of this data cache.
-You only need to initialize the library with "Field" that you need and a special object which is implemented the interface MD.CloudConnect.IDataCache.
+The Cloud Connect notification system only sends updated fields (if a recorded field is identical to the previous one, it is not resend) thus previous state of each fields must be stored. This library helps you by  managing a part of this data cache. You only need to initialize the library with "Field" that you need and a special object MD.CloudConnect.IDataCache.
 
 In the global.asax , Application_Start() :
 ```csharp
@@ -118,8 +117,8 @@ An example of object that you could  implement for IDataCache interface :
     }
 ```    
 
-The library does not manage persistance data, so it's for that we need "GetHistoryFor" where you give us last information that you stored in your database.
-The function "GetHistoryFor" will be call only one time per Device (Asset) after start website when the library
+As the library does not manage persistance data, you need to fill the "GetHistoryFor" with the last information stored in your database.
+The function "GetHistoryFor" will be call only one time per Device (Asset) upon the start after start server when the library
 will received a new data for an asset not present in Data cache of the library.
 
 List of fields manage by the library
