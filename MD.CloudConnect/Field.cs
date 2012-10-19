@@ -19,12 +19,7 @@ namespace MD.CloudConnect
             if (_type == null)
             {
                 _type = typeof(bool);
-                if (!String.IsNullOrEmpty(b64_value))
-                {
-                    byte[] values = Convert.FromBase64String(b64_value);
-                    _boolValue = BitConverter.ToBoolean(values, 0);
-                }
-                else _boolValue = false;
+                _boolValue = MD.CloudConnect.Tools.Base64Decoder.GetValueAsBool(b64_value);
                 return _boolValue;
             }
             else
@@ -40,22 +35,7 @@ namespace MD.CloudConnect
             if (_type == null)
             {
                 _type = typeof(int);
-                if (!String.IsNullOrEmpty(b64_value))
-                {
-                    byte[] values = Convert.FromBase64String(b64_value);
-
-                    if (values.Length > 0)
-                    {
-                        _intValue = 0;
-                        for (int i = 0; i < values.Length; i++)
-                        {
-                            _intValue = _intValue << 8;
-                            _intValue += values[i];
-                        }
-                    }
-                }
-                else _intValue = 0;
-
+                _intValue = MD.CloudConnect.Tools.Base64Decoder.GetValueAsInt(b64_value);
                 return _intValue;
             }
             else
@@ -71,17 +51,7 @@ namespace MD.CloudConnect
             if (_type == null)
             {
                 _type = typeof(string);
-                if (!String.IsNullOrEmpty(b64_value))
-                {
-                    byte[] values = Convert.FromBase64String(b64_value);
-                    _stringValue = String.Empty;
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        _stringValue += (char)values[i];
-                    }
-                }
-                else _stringValue = String.Empty;
-
+                _stringValue = MD.CloudConnect.Tools.Base64Decoder.GetValueAsString(b64_value);
                 return _stringValue;
             }
             else

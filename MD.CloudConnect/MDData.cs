@@ -21,5 +21,17 @@ namespace MD.CloudConnect
                     return null;
             }
         }
+
+        public IMessage Message
+        {
+            get
+            {
+                if (Meta != null && Meta.Event == "message" && Payload != null)
+                    return (IMessage)Payload;
+                else
+                    return null;
+            }
+
+        }
     }
 }

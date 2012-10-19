@@ -1,5 +1,72 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Demo";
 }
-
-<h2>MD Cloud Connect</h2>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </a><a class="brand" href="#">MD Cloud Connect</a>
+            <form class="navbar-form" action="#">
+            <input type="text" placeholder="account" id="account" value="presalesinte" />
+            <input type="text" placeholder="environment" id="environment" value="integration" />
+            <input type="text" placeholder="token" id="token" value="7b1c5090ea8578b4c8274054d94380dff5c46783" />
+            <button type="button" class="btn" id="btRun">
+                Run</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container" style="padding-top: 45px">
+    <div class="row">
+        <div class="span2">
+            <table class="table table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Imei
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="asset_table">
+                </tbody>
+            </table>
+        </div>
+        <div class="span10">
+            <div class="span10">
+                <div id="map_canvas" style="width: 930px; height: 500px;">
+                </div>
+            </div>
+            <div class="span10">
+                <table class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Recorded_at / Received_at
+                            </th>
+                            <th>
+                                Long / Lat
+                            </th>
+                            <th>
+                                Speed (Km/h)
+                            </th>
+                            <th>
+                                Is Valid
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="track_table">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content("/Scripts/homemap.js")""></script>
+<script type="text/javascript" src="@Url.Content("/Scripts/homeassets.js")""></script>

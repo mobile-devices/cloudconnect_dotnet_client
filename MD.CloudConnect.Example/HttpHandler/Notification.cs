@@ -45,6 +45,8 @@ namespace MD.CloudConnect.Example.HttpHandler
                             if (mdData.Meta.Event == "track")
                             {
                                 ITracking tacking = mdData.Tracking;
+
+                                /* use tracking.Longitude, tracking.Speed ... */
                             }
                         }
                     }

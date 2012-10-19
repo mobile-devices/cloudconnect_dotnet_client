@@ -6,7 +6,7 @@ using System.Text;
 namespace MD.CloudConnect
 {
     [Serializable]
-    public class Payload : ITracking
+    public class Payload : ITracking, IMessage
     {
         /* Common Fields */
         public string Asset { get; set; }
@@ -18,6 +18,11 @@ namespace MD.CloudConnect
         public DateTime Received_at { get; set; }
         public double[] loc { get; set; }
         public Dictionary<string, Field> fields { get; set; }
+
+        /* Message Fields */
+        public string b64_payload { get; set; }
+        private string b64_payload_decoded = null;
+        public string Channel { get; set; }
 
         /* Presence Fields */
         public DateTime time { get; set; }
@@ -226,6 +231,27 @@ namespace MD.CloudConnect
         string[] ITracking.GetFieldsPresent()
         {
             return fields.Keys.ToArray();
+        }
+
+        string IMessage.Message
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(b64_payload_decoded) && !String.IsNullOrEmpty(b64_payload))
+                {
+                    if (!String.IsNullOrEmpty(b64_payload))
+                    {
+                        byte[] values = Convert.FromBase64String(b64_payload);
+                        b64_payload_decoded = String.Empty;
+                        for (int i = 0; i < values.Length; i++)
+                        {
+                            b64_payload_decoded += (char)values[i];
+                        }
+                    }
+                    else b64_payload_decoded = String.Empty;
+                }
+                return b64_payload_decoded;
+            }
         }
     }
 }
