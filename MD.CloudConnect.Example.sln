@@ -20,6 +20,9 @@ Global
 		{F473D916-2536-465D-B4BE-44397DD24159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F473D916-2536-465D-B4BE-44397DD24159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MD.CloudConnect.Example\MD.CloudConnect.Example.csproj
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
