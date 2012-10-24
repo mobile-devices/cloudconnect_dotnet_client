@@ -11,5 +11,20 @@ namespace MD.CloudConnect.Data
         public string Name { get; set; }
         public string Serial { get; set; }
         public string Description { get; set; }
+
+        public List<MessageData> LoadMessage()
+        {
+            return null;
+        }
+
+        public void SendMessage()
+        {
+
+        }
+
+        public List<TrackingData> LoadLastTraking(int page, int per_page)
+        {
+            return null;
+        }
     }
 }

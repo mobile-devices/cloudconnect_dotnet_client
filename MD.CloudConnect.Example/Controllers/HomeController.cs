@@ -37,7 +37,7 @@ namespace MD.CloudConnect.Example.Controllers
                                                        Received_at = d.Received_at.ToString("yyyy/MM/dd HH:mm:ss"),
                                                        Recorded_at = d.Received_at.ToString("yyyy/MM/dd HH:mm:ss"),
                                                        IsValid = d.ContainsField(MD.CloudConnect.FieldDefinition.GPRMC_VALID.Key) ? d.IsValid : false,
-                                                       Speed = d.ContainsField(MD.CloudConnect.FieldDefinition.GPS_SPEED.Key) ? Math.Round(d.SpeedKmPerHour,2) : 0.0,
+                                                       Speed = d.ContainsField(MD.CloudConnect.FieldDefinition.GPS_SPEED.Key) ? Math.Round(d.SpeedKmPerHour, 2) : 0.0,
                                                        Latitude = d.Latitude,
                                                        Longitude = d.Longitude
                                                    }).ToList();
