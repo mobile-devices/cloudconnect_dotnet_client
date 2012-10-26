@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MD.CloudConnect
+namespace MD.CloudConnect.Data
 {
     public class Field
     {

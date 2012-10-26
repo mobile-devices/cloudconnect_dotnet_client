@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using MD.CloudConnect.Data;
 
 namespace MD.CloudConnect
 {
     public class Notification
     {
-        private Dictionary<string, Payload> _fieldsCache = new Dictionary<string, Payload>();
+        private Dictionary<string, TrackingData> _fieldsCache = new Dictionary<string, TrackingData>();
         private string[] _fieldsUse = null;
         private IDataCache _dataCache = null;
         private bool _autoFilter = true;
@@ -49,11 +50,11 @@ namespace MD.CloudConnect
             List<MDData> datas = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
             if (datas != null && datas.Count > 0)
             {
-                datas = datas.OrderBy(x => x.Payload.Recorded_at).ToList();
+                datas = datas.OrderBy(x => x.DateOfData).ToList();
 
                 if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
                 {
-                    Payload history = null;
+                    TrackingData history = null;
 
                     foreach (MD.CloudConnect.MDData data in datas)
                     {
@@ -77,17 +78,17 @@ namespace MD.CloudConnect
                             }
                             else if (_autoFilter)
                             {
-                                data.Payload.shouldBeIgnore = true;
+                                data.ShouldBeIgnore = true;
                             }
                         }
                     }
                 }
-                return datas.Where(x => !x.Payload.shouldBeIgnore).ToList();
+                return datas.Where(x => !x.ShouldBeIgnore).ToList();
             }
             else return new List<MDData>();
         }
 
-        private void FillTrackingDataUserChoice(ITracking data, Payload history)
+        private void FillTrackingDataUserChoice(ITracking data, TrackingData history)
         {
             foreach (string field in _fieldsUse)
             {
@@ -98,25 +99,24 @@ namespace MD.CloudConnect
                 else
                 {
                     if (history.fields.ContainsKey(field))
-                        ((Payload)data).fields.Add(field, history.fields[field]);
+                        ((TrackingData)data).fields.Add(field, history.fields[field]);
                     else
-                        ((Payload)data).fields.Add(field, new Field());
+                        ((TrackingData)data).fields.Add(field, new Field());
                 }
             }
-
         }
 
-        private void UpdateCache(Payload history, string field, ITracking data)
+        private void UpdateCache(TrackingData history, string field, ITracking data)
         {
             if (!history.fields.ContainsKey(field))
-                history.fields.Add(field, ((Payload)data).fields[field]);
+                history.fields.Add(field, ((TrackingData)data).fields[field]);
             else
-                history.fields[field] = ((Payload)data).fields[field];
+                history.fields[field] = ((TrackingData)data).fields[field];
         }
 
-        private Payload GeneratePayload(string asset, string[] fields)
+        private TrackingData GeneratePayload(string asset, string[] fields)
         {
-            Payload result = new Payload();
+            TrackingData result = new TrackingData();
 
             result.Asset = asset;
             result.fields = new Dictionary<string, Field>();

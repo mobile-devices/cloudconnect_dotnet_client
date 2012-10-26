@@ -30,5 +30,17 @@ namespace MD.CloudConnect
         public static FieldDetail DIO_ALARM = new FieldDetail() { Key = "DIO_ALARM", Id = 26, Type = FieldType.Boolean };
         public static FieldDetail DRIVER_ID = new FieldDetail() { Key = "DRIVER_ID", Id = 27, Type = FieldType.String };
         public static FieldDetail DIO_IN_TOR = new FieldDetail() { Key = "DIO_IN_TOR", Id = 38, Type = FieldType.Integer };
+
+
+        public static FieldDetail BATT = new FieldDetail() { Key = "BATT", Id = 15, Type = FieldType.Integer };
+        public static FieldDetail GPRS_HEADER = new FieldDetail() { Key = "GPRS_HEADER", Id = 16, Type = FieldType.Integer };
+        public static FieldDetail RSSI = new FieldDetail() { Key = "RSSI", Id = 17, Type = FieldType.Integer };
+
+        public static FieldDetail TACHOGRAPH_FIRST_DRIVER_STATE = new FieldDetail() { Key = "TACHOGRAPH_FIRST_DRIVER_STATE", Id = 19, Type = FieldType.String };
+        public static FieldDetail TACHOGRAPH_FIRST_DRIVER_DRIVING_STATE = new FieldDetail() { Key = "TACHOGRAPH_FIRST_DRIVER_DRIVING_STATE", Id = 20, Type = FieldType.Integer };
+        public static FieldDetail TACHOGRAPH_DAILYMETER = new FieldDetail() { Key = "TACHOGRAPH_DAILYMETER", Id = 21, Type = FieldType.Integer };
+        public static FieldDetail TACHOGRAPH_ODOMETER = new FieldDetail() { Key = "TACHOGRAPH_ODOMETER", Id = 22, Type = FieldType.Integer };
+        public static FieldDetail ODO_PARTIAL_KM = new FieldDetail() { Key = "ODO_PARTIAL_KM", Id = 23, Type = FieldType.String };
+        public static FieldDetail TACHOGRAPH_DRIVING_TIME = new FieldDetail() { Key = "TACHOGRAPH_DRIVING_TIME", Id = 17, Type = FieldType.Integer };
     }
 }

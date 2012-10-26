@@ -5,11 +5,11 @@ using System.Text;
 
 namespace MD.CloudConnect.Data
 {
-    public class MessageData
+    public class MessageData : IMessage
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string StrId { get; set; }
-        public int ParentId { get; set; }
+        public string ParentId { get; set; }
         public string ParentIdStr { get; set; }
         public int ThreadId { get; set; }
         public string ThreadIdStr { get; set; }
@@ -36,6 +36,17 @@ namespace MD.CloudConnect.Data
                 }
                 return _payload;
             }
+        }
+
+
+        public string Message
+        {
+            get { return Payload; }
+        }
+
+        public string Id_str
+        {
+            get { return StrId; }
         }
     }
 }
