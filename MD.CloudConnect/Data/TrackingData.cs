@@ -15,7 +15,8 @@ namespace MD.CloudConnect.Data
         /* Tracking Fields */
         public DateTime Recorded_at { get; set; }
         public DateTime Received_at { get; set; }
-        public double[] loc { get; set; }
+        public double[] location;
+        public double[] loc { get { return location; } set { location = value; } }
         public Dictionary<string, Field> fields { get; set; }
 
         public double Longitude
