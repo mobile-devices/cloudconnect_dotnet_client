@@ -22,6 +22,9 @@ namespace MD.CloudConnect
         /// To know if the data have a valid gps position
         /// </summary>
         bool IsValid { get; set; }
+
+        bool IsMoving { get; set; }
+
         /// <summary>
         /// Speed in Knots
         /// </summary>

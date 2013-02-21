@@ -23,8 +23,8 @@ namespace MD.CloudConnect.Data
         {
             get
             {
-                if (loc != null && loc.Length >= 2)
-                    return loc[0];
+                if (location != null && location.Length >= 2)
+                    return location[0];
                 else
                     return 0.0;
             }
@@ -34,8 +34,8 @@ namespace MD.CloudConnect.Data
         {
             get
             {
-                if (loc != null && loc.Length >= 2)
-                    return loc[1];
+                if (location != null && location.Length >= 2)
+                    return location[1];
                 else
                     return 0.0;
             }
@@ -56,6 +56,23 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPRMC_VALID));
             }
         }
+
+        public bool IsMoving
+        {
+            get
+            {
+                if (fields.ContainsKey(FieldDefinition.MVT_STATE.Key))
+                    return fields[FieldDefinition.MVT_STATE.Key].GetValueAsBool();
+                else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.MVT_STATE));
+            }
+            set
+            {
+                if (fields.ContainsKey(FieldDefinition.MVT_STATE.Key))
+                    fields[FieldDefinition.MVT_STATE.Key].SetValueAsBool(value);
+                else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.MVT_STATE));
+            }
+        }
+
 
         public double Speed
         {

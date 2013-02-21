@@ -42,5 +42,7 @@ namespace MD.CloudConnect
         public static FieldDetail TACHOGRAPH_ODOMETER = new FieldDetail() { Key = "TACHOGRAPH_ODOMETER", Id = 22, Type = FieldType.Integer };
         public static FieldDetail ODO_PARTIAL_KM = new FieldDetail() { Key = "ODO_PARTIAL_KM", Id = 23, Type = FieldType.String };
         public static FieldDetail TACHOGRAPH_DRIVING_TIME = new FieldDetail() { Key = "TACHOGRAPH_DRIVING_TIME", Id = 17, Type = FieldType.Integer };
+
+        public static FieldDetail MVT_STATE = new FieldDetail() { Key = "MVT_STATE", Id = 56, Type = FieldType.Boolean };
     }
 }
