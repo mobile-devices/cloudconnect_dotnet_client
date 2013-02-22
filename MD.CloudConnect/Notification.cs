@@ -151,8 +151,15 @@ namespace MD.CloudConnect
                 }
             }
 
-            history.location[0] = data.Longitude;
-            history.location[1] = data.Latitude;
+            if (((TrackingData)data).location == null)
+            {
+                ((TrackingData)data).location = (double[])history.location.Clone();
+            }
+            else
+            {
+                history.location[0] = data.Longitude;
+                history.location[1] = data.Latitude;
+            }
         }
 
         private bool MinDistanceDetected(ITracking p1, ITracking p2)
@@ -172,13 +179,13 @@ namespace MD.CloudConnect
         {
             if (current.Longitude != 0.0 && previous.Longitude != 0.0)
             {
-                return MinDistanceDetected(previous, current);                     
+                return MinDistanceDetected(previous, current);
             }
             else
             {
                 if (current.ContainsField(MD.CloudConnect.FieldDefinition.MVT_STATE.Key))
-                    return current.IsMoving;               
-                else if(current.SpeedKmPerHour > 5.0)
+                    return current.IsMoving;
+                else if (current.SpeedKmPerHour > 5.0)
                     return true;
                 else
                     return false;
