@@ -5,10 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MD.CloudConnect.Example
+namespace CloudConnectReader
 {
-    // Remarque : pour obtenir des instructions sur l'activation du mode classique IIS6 ou IIS7, 
-    // visitez http://go.microsoft.com/?LinkId=9394801
+    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
+    // visit http://go.microsoft.com/?LinkId=9394801
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -22,9 +22,15 @@ namespace MD.CloudConnect.Example
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "Default", // Nom d'itinéraire
-                "{controller}/{action}/{id}", // URL avec des paramètres
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Paramètres par défaut
+                "Tracking",
+                "Tracking/{asset}/{year}/{month}/{day}",
+                new { controller = "Tracking", action = "Index" }
+            );
+
+            routes.MapRoute(
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
@@ -36,25 +42,11 @@ namespace MD.CloudConnect.Example
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            InitializeCloudConnect();
-        }
+            Tools.Log.Instance.Initialize();
+            CloudConnectReader.Models.Repository.RepositoryFactory.Instance.Initialize();
 
-        private void InitializeCloudConnect()
-        {
-            //List the field that i want in the notification result
-            string[] fieldsThatIWould = new string[]
-            {
-                MD.CloudConnect.FieldDefinition.GPRMC_VALID.Key,
-                MD.CloudConnect.FieldDefinition.GPS_SPEED.Key,
-                MD.CloudConnect.FieldDefinition.GPS_DIR.Key,
-                MD.CloudConnect.FieldDefinition.ODO_FULL.Key,
-                MD.CloudConnect.FieldDefinition.DIO_IGNITION.Key,
-                MD.CloudConnect.EasyFleet.MDI_DRIVING_JOURNEY.Key,
-                MD.CloudConnect.EasyFleet.MDI_IDLE_JOURNEY.Key,
-                MD.CloudConnect.EasyFleet.MDI_JOURNEY_TIME.Key
-            };
-
-            MD.CloudConnect.Notification.Instance.Initialize(fieldsThatIWould, MD.CloudConnect.Example.Tools.MyDataCacheRepository.Instance, true);
+            Tools.CloudConnectConnetor.Instance.InitializeFields();
+            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, Tools.CloudConnectConnetor.Instance, true, true);
         }
     }
 }
