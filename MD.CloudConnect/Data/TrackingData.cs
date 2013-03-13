@@ -13,8 +13,23 @@ namespace MD.CloudConnect.Data
         public string Id_str { get; set; }
 
         /* Tracking Fields */
-        public DateTime Recorded_at { get; set; }
+        private DateTime _recorded_at = DateTime.MinValue;
+        public DateTime Recorded_at
+        {
+            get
+            {
+                if (Recorded_at_ms.HasValue)
+                    return Recorded_at_ms.Value;
+                else return _recorded_at;
+            }
+            set
+            {
+                _recorded_at = value;
+            }
+        }
         public DateTime Received_at { get; set; }
+        public DateTime? Recorded_at_ms { get; set; }
+
         public double[] location;
         public double[] loc { get { return location; } set { location = value; } }
         public Dictionary<string, Field> fields { get; set; }
@@ -28,6 +43,11 @@ namespace MD.CloudConnect.Data
                 else
                     return 0.0;
             }
+            set
+            {
+                if (location != null && location.Length >= 2)
+                    location[0] = value;    
+            }
         }
 
         public double Latitude
@@ -38,6 +58,11 @@ namespace MD.CloudConnect.Data
                     return location[1];
                 else
                     return 0.0;
+            }
+            set
+            {
+                if (location != null && location.Length >= 2)
+                    location[1] = value;    
             }
         }
 

@@ -1,4 +1,4 @@
-The Coud Connect C# Wrapper
+The Cloud Connect C# Wrapper
 ==========================
 
 A C# wrapper for the Cloud Connect API
@@ -42,7 +42,7 @@ On your server create an HttpHandler.ashx to receive http notification coming fr
     }
 ```
 
-## Case where the library manage data cache for you (Beta feature)
+## Case where the library manage data cache for you
 
 The Cloud Connect notification system only sends updated fields (if a recorded field is identical to the previous one, it is not resend) thus previous state of each fields must be stored. This library helps you by  managing a part of this data cache. You only need to initialize the library with "Field" that you need and a special object MD.CloudConnect.IDataCache.
 
@@ -62,10 +62,7 @@ In the global.asax , Application_Start() :
             MD.CloudConnect.FieldDefinition.GPS_SPEED.Key,
             MD.CloudConnect.FieldDefinition.GPS_DIR.Key,
             MD.CloudConnect.FieldDefinition.ODO_FULL.Key,
-            MD.CloudConnect.FieldDefinition.DIO_IGNITION.Key,
-            MD.CloudConnect.EasyFleet.MDI_DRIVING_JOURNEY.Key,
-            MD.CloudConnect.EasyFleet.MDI_IDLE_JOURNEY.Key,
-            MD.CloudConnect.EasyFleet.MDI_JOURNEY_TIME.Key
+            MD.CloudConnect.FieldDefinition.DIO_IGNITION.Key
         };
 
         //initialize field and object (IDataCache)
@@ -106,6 +103,8 @@ An example of object that you could  implement for IDataCache interface :
             	data.IsValid = lastTracking.IsValid;
             	data.Direction = lastTracking.Direction;
 				
+                data.Longitude = lastTracking.Longitude;
+                data.Latitude = lastTracking.Latitude;
 				/*
 				* ...
 				*/
