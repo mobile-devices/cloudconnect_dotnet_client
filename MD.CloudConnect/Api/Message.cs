@@ -12,5 +12,10 @@ namespace MD.CloudConnect.Api
         {
             get { return "messages"; }
         }
+
+        public void PostMessage(string asset, string channel, string message)
+        {
+            
+        }
     }
 }

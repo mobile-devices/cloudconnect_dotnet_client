@@ -56,7 +56,34 @@ namespace MD.CloudConnect
 
         public void Post(string function, string parameter)
         {
+            if (String.IsNullOrEmpty(Token) || String.IsNullOrEmpty(Account) || String.IsNullOrEmpty(Environment))
+                throw new Exception("You must initialize Token, Account and Environment");
+            if (String.IsNullOrEmpty(parameter))
+                throw new ArgumentNullException("Content message for a post request can not be null or blank");
 
+            HttpWebRequest httpRequete = HttpWebRequest.Create(String.Format("http://{0}.{1}.cloudconnect.io/api/v3/{2}"
+                , Account
+                , Environment
+                , function)) as HttpWebRequest;
+            httpRequete.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(Token + ":X"));
+
+            httpRequete.Accept = "application/json";
+            httpRequete.CookieContainer = new CookieContainer();
+
+            httpRequete.Method = "POST";
+
+            using (StreamWriter sw = new StreamWriter(httpRequete.GetRequestStream()))
+            {
+                sw.Write(parameter);
+            }
+
+            HttpWebResponse httpReponse = httpRequete.GetResponse() as HttpWebResponse;
+
+            using (StreamReader sr = new StreamReader(httpReponse.GetResponseStream()))
+            {
+                _data = sr.ReadToEnd();
+                sr.Close();
+            }
         }
     }
 }

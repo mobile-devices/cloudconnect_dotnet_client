@@ -24,9 +24,9 @@ namespace MD.CloudConnect
             return JsonConvert.DeserializeObject<List<T>>(WebRequest.Data);
         }
 
-        public virtual void Post()
+        public virtual void Post(string json_params)
         {
-            throw new NotImplementedException();
+            WebRequest.Post(Function, json_params);
         }
     }
 }

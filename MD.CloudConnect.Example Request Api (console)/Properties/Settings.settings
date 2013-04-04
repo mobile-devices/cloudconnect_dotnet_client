@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CloudconnectExample.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="account" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">presalesinte</Value>
+    </Setting>
+    <Setting Name="token" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">7b1c5090ea8578b4c8274054d94380dff5c46783</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
