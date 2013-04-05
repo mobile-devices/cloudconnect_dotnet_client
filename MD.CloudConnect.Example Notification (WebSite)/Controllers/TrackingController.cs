@@ -8,6 +8,7 @@ using WebDemo.Models.Repository;
 using WebDemo.Tools;
 using System.IO;
 using System.Web.Script.Serialization;
+using MongoDB.Driver.Builders;
 
 namespace WebDemo.Controllers
 {
@@ -38,6 +39,22 @@ namespace WebDemo.Controllers
             }
 
             return View(tracks);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Drop(string asset = "", int year = 2013, int month = 2, int day = 28)
+        {
+            DateTime date = new DateTime(year, month, day);
+
+            if (!String.IsNullOrEmpty(asset))
+            {
+                MongoDB.Driver.MongoCollection<WebDemo.Models.TrackingModel> dataDb = Tools.MongoConnector.Instance.DataBase.GetCollection<WebDemo.Models.TrackingModel>("TRACKING");
+
+                var resultat = dataDb.Remove(Query.And(Query.EQ("Data.Asset", asset)
+                         , Query.EQ("RecordedDateKey", date.GenerateKey())));
+
+            }
+            return RedirectToAction("index");
         }
 
         public FileResult CsvExport(string asset = "", int dateKey = 20130228)

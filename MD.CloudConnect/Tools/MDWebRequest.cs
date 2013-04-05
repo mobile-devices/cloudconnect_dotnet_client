@@ -68,6 +68,7 @@ namespace MD.CloudConnect
             httpRequete.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(Token + ":X"));
 
             httpRequete.Accept = "application/json";
+            httpRequete.ContentType = "application/json";
             httpRequete.CookieContainer = new CookieContainer();
 
             httpRequete.Method = "POST";

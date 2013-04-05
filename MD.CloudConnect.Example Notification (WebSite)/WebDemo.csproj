@@ -7,21 +7,20 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{241FE41A-A4AC-4593-933C-01838DBF7E77}</ProjectGuid>
-    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebDemo</RootNamespace>
     <AssemblyName>WebDemo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +28,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -39,19 +38,7 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MD.CloudConnect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MD.CloudConnect.1.0.0.0\lib\MD.CloudConnect.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MongoDB.Bson, Version=1.8.0.124, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.8.0\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=1.8.0.124, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.8.0\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
     <Reference Include="MongoMembership">
       <HintPath>..\packages\MongoMembership.0.1.0\lib\MongoMembership.dll</HintPath>
     </Reference>
@@ -86,221 +73,226 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="MD.CloudConnect">
+      <HintPath>..\packages\MD.CloudConnect.1.0.0.0\lib\MD.CloudConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\SecurityGuard\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\SecurityGuard\Controllers\MembershipController.cs" />
-    <Compile Include="Areas\SecurityGuard\Controllers\RoleController.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ChangePasswordViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\DashboardViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ForgotPasswordViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\GrantRolesToUserViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\JsonResponse.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ManageRolesViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ManageUsersViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\RegisterViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ResponseItem.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\RoleViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\SelectObject.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\UserViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\SecurityGuardAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SGAccountController.cs" />
-    <Compile Include="Controllers\TrackingController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Controllers\DashboardController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Controllers\MembershipController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Controllers\RoleController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\ChangePasswordViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\DashboardViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\ForgotPasswordViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\GrantRolesToUserViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\JsonResponse.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\ManageRolesViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\ManageUsersViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\RegisterViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\ResponseItem.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\RoleViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\SelectObject.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Models\UserViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\SecurityGuardAreaRegistration.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Controllers\AccountController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Controllers\BaseController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Controllers\HomeController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Controllers\SGAccountController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Controllers\TrackingController.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Global.asax.cs">
+      <DependentUpon>..\MD.CloudConnect.Example Notification %28WebSite%29\Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="httphandler\Notifications.ashx.cs">
-      <DependentUpon>Notifications.ashx</DependentUpon>
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\httphandler\Notifications.ashx.cs">
+      <DependentUpon>..\..\MD.CloudConnect.Example Notification %28WebSite%29\httphandler\Notifications.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\DeviceModel.cs" />
-    <Compile Include="Models\FieldModel.cs" />
-    <Compile Include="Models\JsonTrackingModel.cs" />
-    <Compile Include="Models\LogOnViewModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="Models\Repository\AccountDb.cs" />
-    <Compile Include="Models\Repository\DataTrackingDB.cs" />
-    <Compile Include="Models\Repository\DeviceDb.cs" />
-    <Compile Include="Models\Repository\RepositoryBase.cs" />
-    <Compile Include="Models\Repository\RepositoryFactory.cs" />
-    <Compile Include="Models\TrackingModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\DateExtension.cs" />
-    <Compile Include="Tools\CloudConnectConnetor.cs" />
-    <Compile Include="Tools\Log.cs" />
-    <Compile Include="Tools\MongoConnector.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\AccountModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\DeviceModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\FieldModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\JsonTrackingModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\LogOnViewModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\MessageModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\Repository\AccountDb.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\Repository\DataTrackingDB.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\Repository\DeviceDb.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\Repository\RepositoryBase.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\Repository\RepositoryFactory.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Models\TrackingModel.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Properties\AssemblyInfo.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Tools\DateExtension.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Tools\CloudConnectConnetor.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Tools\Log.cs" />
+    <Compile Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Tools\MongoConnector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-responsive.css" />
-    <Content Include="Content\bootstrap-responsive.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\caution.png" />
-    <Content Include="Content\direction_left.png" />
-    <Content Include="Content\direction_right.png" />
-    <Content Include="Content\icy_road.png" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\SecurityGuard\images\blue_ico.png" />
-    <Content Include="Content\SecurityGuard\images\blue_message.gif" />
-    <Content Include="Content\SecurityGuard\images\go.gif" />
-    <Content Include="Content\SecurityGuard\images\green_ico.png" />
-    <Content Include="Content\SecurityGuard\images\green_message.gif" />
-    <Content Include="Content\SecurityGuard\images\negative.gif" />
-    <Content Include="Content\SecurityGuard\images\next.gif" />
-    <Content Include="Content\SecurityGuard\images\pag_bg.gif" />
-    <Content Include="Content\SecurityGuard\images\positive.gif" />
-    <Content Include="Content\SecurityGuard\images\prev.gif" />
-    <Content Include="Content\SecurityGuard\images\red_ico.png" />
-    <Content Include="Content\SecurityGuard\images\red_message.gif" />
-    <Content Include="Content\SecurityGuard\images\td_bg1.gif" />
-    <Content Include="Content\SecurityGuard\images\td_bg2.gif" />
-    <Content Include="Content\SecurityGuard\images\white_ico.png" />
-    <Content Include="Content\SecurityGuard\images\white_message.gif" />
-    <Content Include="Content\SecurityGuard\images\yellow_ico.png" />
-    <Content Include="Content\SecurityGuard\images\yellow_message.gif" />
-    <Content Include="Content\SecurityGuard\pagination.css" />
-    <Content Include="Content\SecurityGuard\scripts\jquery-1.6.1.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.jqia.selects.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.validate.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\modernizr-1.7.min.js" />
-    <Content Include="Content\SecurityGuard\securityguard.css" />
-    <Content Include="Content\stop.png" />
-    <Content Include="Content\themes\base\images\animated-overlay.gif" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
-    <Content Include="Content\themes\base\jquery.ui.all.css" />
-    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
-    <Content Include="Content\themes\base\jquery.ui.base.css" />
-    <Content Include="Content\themes\base\jquery.ui.button.css" />
-    <Content Include="Content\themes\base\jquery.ui.core.css" />
-    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
-    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
-    <Content Include="Content\themes\base\jquery.ui.menu.css" />
-    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
-    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
-    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
-    <Content Include="Content\themes\base\jquery.ui.slider.css" />
-    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
-    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
-    <Content Include="Content\themes\base\jquery.ui.theme.css" />
-    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
-    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="Global.asax" />
-    <Content Include="MailerTemplates\ResetPassword.html" />
-    <Content Include="README.jQuery.vsdoc.txt" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\home.js" />
-    <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.0.js" />
-    <Content Include="Scripts\jquery-ui-1.10.0.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jStorage.js" />
-    <Content Include="Scripts\modernizr-1.7.js" />
-    <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Scripts\table-fixed-header.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\bootstrap-responsive.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\bootstrap-responsive.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\bootstrap.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\bootstrap.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\caution.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\direction_left.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\direction_right.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\icy_road.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\images\glyphicons-halflings-white.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\images\glyphicons-halflings.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\blue_ico.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\blue_message.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\go.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\green_ico.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\green_message.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\negative.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\next.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\pag_bg.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\positive.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\prev.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\red_ico.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\red_message.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\td_bg1.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\td_bg2.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\white_ico.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\white_message.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\yellow_ico.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\images\yellow_message.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\pagination.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\scripts\jquery-1.6.1.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\scripts\jquery.jqia.selects.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\scripts\jquery.validate.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\scripts\modernizr-1.7.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\SecurityGuard\securityguard.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\stop.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery-ui.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.all.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.base.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.button.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.core.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.menu.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.spinner.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\animated-overlay.gif" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Global.asax" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\MailerTemplates\ResetPassword.html" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\README.jQuery.vsdoc.txt" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\bootstrap.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\bootstrap.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\home.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-1.9.1-vsdoc.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-1.9.1.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-1.9.1.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-ui-1.10.0.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-ui-1.10.0.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.validate.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.validate.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jStorage.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\modernizr-1.7.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\modernizr-1.7.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\table-fixed-header.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Web.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Web.Debug.config">
+      <DependentUpon>..\MD.CloudConnect.Example Notification %28WebSite%29\Web.config</DependentUpon>
     </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Web.Release.config">
+      <DependentUpon>..\MD.CloudConnect.Example Notification %28WebSite%29\Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\MicrosoftAjax.js" />
-    <Content Include="Scripts\MicrosoftAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.js" />
-    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Content\Site.css" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftAjax.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\_ViewStart.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Home\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Shared\Error.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Shared\_Layout.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Web.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\packages.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\log4net.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\httphandler\Notifications.ashx" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Web.config" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Shared\_SecurityGuardLayoutPage.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Role\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Membership\Update.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Membership\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Membership\GrantRolesToUser.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Membership\CreateUser.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Areas\SecurityGuard\Views\Dashboard\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Account\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Account\Edit.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\Tracking\Index.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\SGAccount\LogOn.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\SGAccount\ForgotPasswordSuccess.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\SGAccount\ForgotPassword.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\SGAccount\ChangePasswordSuccess.cshtml" />
+    <Content Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Views\SGAccount\ChangePassword.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="log4net.config" />
-    <Content Include="httphandler\Notifications.ashx" />
-    <Content Include="Areas\SecurityGuard\Views\Web.config" />
-    <Content Include="Areas\SecurityGuard\Views\Shared\_SecurityGuardLayoutPage.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Role\Index.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\Update.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\Index.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\GrantRolesToUser.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\CreateUser.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Dashboard\Index.cshtml" />
-    <None Include="log4net.config.example" />
-    <None Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Tracking\Index.cshtml" />
-    <Content Include="Views\SGAccount\LogOn.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPassword.cshtml" />
-    <Content Include="Views\SGAccount\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\ChangePassword.cshtml" />
+    <None Include="..\MD.CloudConnect.Example Notification %28WebSite%29\log4net.config.example" />
+    <None Include="..\MD.CloudConnect.Example Notification %28WebSite%29\Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -315,11 +307,11 @@
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49164</DevelopmentServerPort>
+          <DevelopmentServerPort>49166</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
@@ -331,6 +323,12 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
 </Project>

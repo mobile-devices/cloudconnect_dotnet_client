@@ -39,13 +39,16 @@ namespace CloudconnectExample
             if (messages.Count > 0)
             {
                 foreach (MessageData m in messages)
-                    Console.WriteLine("Assset: {0}; msg : {1}", m.Asset, m.Payload);
+                    Console.WriteLine("Asset: {0}; msg : {1}", m.Asset, m.Payload);
             }
 
-            MessageData newMessage = new MessageData()
-            {
+            List<ChannelData> channels = cc.Channel.Get();
 
-            };
+            if (cc.Message.PostMessage("351777047062540", "com.mdi.services.adminProtocol"
+                , "{\"request\": \"getval\", \"data\":{ \"pwrManager\":{ \"ignitionManagement\" }}}") > 0)
+            {
+                Console.WriteLine("Error happening with the POST message");
+            }
 
             Console.WriteLine("Press enter to exit");
             Console.ReadLine();

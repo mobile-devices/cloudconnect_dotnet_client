@@ -11,6 +11,8 @@ namespace MD.CloudConnect
     {
         internal MDWebRequest WebRequest { get; set; }
 
+        internal CloudConnect Cloud { get; set; }
+
         public abstract string Function { get; }
 
         public virtual List<T> Get(string query = null, string parameter = null, string per_page = null, string page = null)
@@ -22,6 +24,16 @@ namespace MD.CloudConnect
                 param += (String.IsNullOrEmpty(param) ? "" : "&") + parameter;
             WebRequest.Get(Function, param, per_page, page);
             return JsonConvert.DeserializeObject<List<T>>(WebRequest.Data);
+        }
+
+        public virtual T GetOne(string name = null)
+        {
+            if (!String.IsNullOrEmpty(name))
+            {
+                WebRequest.Get(Function + "/" + name, null);
+                return JsonConvert.DeserializeObject<T>(WebRequest.Data);
+            }
+            return default(T);
         }
 
         public virtual void Post(string json_params)

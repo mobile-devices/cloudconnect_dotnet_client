@@ -46,13 +46,23 @@ namespace MD.CloudConnect
             }
         }
 
+        private Channel _channel = null;
+        public Channel Channel
+        {
+            get
+            {
+                return _channel;
+            }
+        }
+
         public CloudConnect(string environment, string account, string token)
         {
             _webRequest = new MDWebRequest() { Account = account, Environment = environment, Token = token };
-            _asset = new Asset() { WebRequest = _webRequest };
-            _track = new Track() { WebRequest = _webRequest };
-            _message = new Message() { WebRequest = _webRequest };
-            _field = new Field() { WebRequest = _webRequest };
+            _asset = new Asset() { WebRequest = _webRequest, Cloud = this };
+            _track = new Track() { WebRequest = _webRequest, Cloud = this };
+            _message = new Message() { WebRequest = _webRequest, Cloud = this };
+            _field = new Field() { WebRequest = _webRequest, Cloud = this };
+            _channel = new Channel() { WebRequest = _webRequest, Cloud = this };
         }
     }
 }
