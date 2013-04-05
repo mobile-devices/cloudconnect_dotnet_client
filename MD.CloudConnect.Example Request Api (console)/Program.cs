@@ -42,12 +42,14 @@ namespace CloudconnectExample
                     Console.WriteLine("Asset: {0}; msg : {1}", m.Asset, m.Payload);
             }
 
-            List<ChannelData> channels = cc.Channel.Get();
 
-            if (cc.Message.PostMessage("351777047062540", "com.mdi.services.adminProtocol"
-                , "{\"request\": \"getval\", \"data\":{ \"pwrManager\":{ \"ignitionManagement\" }}}") > 0)
+            if (assets.Count > 0)
             {
-                Console.WriteLine("Error happening with the POST message");
+                if (cc.Message.PostMessage(assets[0].Imei, "com.mdi.services.adminProtocol"
+                    , "{\"request\": \"getval\", \"data\":{ \"pwrManager\":{ \"ignitionManagement\" }}}") > 0)
+                {
+                    Console.WriteLine("Error happening with the POST message");
+                }
             }
 
             Console.WriteLine("Press enter to exit");

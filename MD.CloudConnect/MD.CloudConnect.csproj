@@ -57,7 +57,7 @@
     <Compile Include="Data\FieldData.cs" />
     <Compile Include="Data\MessageData.cs" />
     <Compile Include="Data\TrackingData.cs" />
-    <Compile Include="Extension\EasyFleet.cs" />
+    <Compile Include="Extension\Easyconnect.cs" />
     <Compile Include="Data\Field.cs" />
     <Compile Include="Data\FieldDefinition.cs" />
     <Compile Include="Interface\ICommonData.cs" />

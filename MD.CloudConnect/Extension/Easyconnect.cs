@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MD.CloudConnect
 {
-    public class EasyFleet
+    public class Easyconnect
     {
         public static FieldDetail MDI_OBD_PID = new FieldDetail() { Key = "MDI_OBD_PID", Id = 212, Type = FieldType.String };
         public static FieldDetail MDI_JOURNEY_TIME = new FieldDetail() { Key = "MDI_JOURNEY_TIME", Id = 240, Type = FieldType.Integer };
@@ -61,7 +61,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsString(EasyFleet.MDI_OBD_PID.Key);
+            return trackingData.GetFieldAsString(Easyconnect.MDI_OBD_PID.Key);
         }
         /// <summary>
         /// Time since the beginning of the Journey in milliseconds
@@ -70,7 +70,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_JOURNEY_TIME.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_JOURNEY_TIME.Key);
         }
         /// <summary>
         /// Time since the beginning of the Journey while vehicle is stopped in milliseconds
@@ -80,7 +80,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_IDLE_JOURNEY.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_IDLE_JOURNEY.Key);
         }
         /// <summary>
         /// Journey driving time in milliseconds
@@ -89,7 +89,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_DRIVING_JOURNEY.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_DRIVING_JOURNEY.Key);
         }
         /// <summary>
         /// true if Hashbraking, false if not
@@ -98,7 +98,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_HASHBRAKING.Key) == 0 ? false : true;
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_HASHBRAKING.Key) == 0 ? false : true;
         }
         /// <summary>
         /// Number of overspeeds since the beginning of the Journey
@@ -107,7 +107,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_OVERSPEED_COUNTER.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_OVERSPEED_COUNTER.Key);
         }
         /// <summary>
         /// Number of overspeeds since the beginning of the Journey
@@ -116,7 +116,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_TOW_AWAY.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_TOW_AWAY.Key);
         }
         /// <summary>
         /// Journey odometer in kilometers
@@ -125,7 +125,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_ODO_JOURNEY.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_ODO_JOURNEY.Key);
         }
         /// <summary>
         /// Overspeed state – When GPS speed is higher than  overspeed.speedThreshold  
@@ -136,7 +136,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_OVERSPEED.Key) == 0 ? false : true;
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_OVERSPEED.Key) == 0 ? false : true;
         }
         /// <summary>
         /// Max speed detected since the beginning of the Journey
@@ -146,7 +146,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_MAX_SPEED_JOURNEY.Key);
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_MAX_SPEED_JOURNEY.Key);
         }
         /// <summary>
         /// Journey state  - on C4Evo, when Ignition is ON – On C4Dongle, when RPM is not available (No RPM or C4Dongle offline)
@@ -156,7 +156,7 @@ namespace MD.CloudConnect
         {
             if (trackingData == null)
                 throw new NullReferenceException("ITracking is not initialize");
-            return trackingData.GetFieldAsInt(EasyFleet.MDI_JOURNEY_STATE.Key) == 0 ? false : true;
+            return trackingData.GetFieldAsInt(Easyconnect.MDI_JOURNEY_STATE.Key) == 0 ? false : true;
         }
     }
 }
