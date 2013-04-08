@@ -16,8 +16,8 @@ namespace MD.CloudConnect
         /// </summary>
         DateTime Received_at { get; }
 
-        double Longitude { get; }
-        double Latitude { get; }
+        double Longitude { get; set; }
+        double Latitude { get; set; }
         /// <summary>
         /// To know if the data have a valid gps position
         /// </summary>

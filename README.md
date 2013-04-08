@@ -131,6 +131,20 @@ This first of the library does not implement all fields. here the list of field 
 * DIO_ALARM
 * DRIVER_ID
 * DIO_IN_TOR
+* BATT
+* GPRS_HEADER
+* RSSI
+* TACHOGRAPH_FIRST_DRIVER_STATE
+* TACHOGRAPH_FIRST_DRIVER_DRIVING_STATE
+* TACHOGRAPH_DAILYMETER
+* TACHOGRAPH_ODOMETER
+* ODO_PARTIAL_KM
+* TACHOGRAPH_DRIVING_TIME
+* MVT_STATE
+* MDI_EXT_BATT_LOW
+* MDI_EXT_BATT_VOLTAGE
+
+We also manage Driver Behavior, Car diagnostic and Easyconnect modules with specific extension. See wiki for more details.
 
 In the case where you need a field which is not present you can use special function to decode directly your field : 
 ```csharp

@@ -45,17 +45,6 @@ namespace WebDemo.Models
             }
 
         }
-
-        //public void Convert(Field field)
-        //{
-        //    switch (Type)
-        //    {
-        //        case ExtendedFieldType.Boolean: field.GetValueAsBool(); break;
-        //        case ExtendedFieldType.Integer: field.GetValueAsInt(); break;
-        //        case ExtendedFieldType.String: field.GetValueAsString(); break;
-        //        default: break;
-        //    }
-        //}
     }
 
     public class ExtendedFieldDefinition

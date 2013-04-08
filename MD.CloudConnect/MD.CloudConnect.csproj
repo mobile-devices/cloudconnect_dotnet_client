@@ -57,6 +57,8 @@
     <Compile Include="Data\FieldData.cs" />
     <Compile Include="Data\MessageData.cs" />
     <Compile Include="Data\TrackingData.cs" />
+    <Compile Include="Extension\CarDiagnostic.cs" />
+    <Compile Include="Extension\DriverBehavior.cs" />
     <Compile Include="Extension\Easyconnect.cs" />
     <Compile Include="Data\Field.cs" />
     <Compile Include="Data\FieldDefinition.cs" />
@@ -66,7 +68,6 @@
     <Compile Include="Interface\ITracking.cs" />
     <Compile Include="Tools\Base64Encoder.cs" />
     <Compile Include="Tools\MDWebRequest.cs" />
-    <Compile Include="Data\MetaType.cs" />
     <Compile Include="Data\MDData.cs" />
     <Compile Include="Data\Meta.cs" />
     <Compile Include="Notification.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Tools\Base64Decoder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CHANGELOG.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
