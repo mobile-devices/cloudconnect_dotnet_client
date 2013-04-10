@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace MD.CloudConnect.Data
 {
@@ -29,11 +30,11 @@ namespace MD.CloudConnect.Data
         }
         public DateTime Received_at { get; set; }
         public DateTime? Recorded_at_ms { get; set; }
-
+        [JsonIgnore]
         public double[] location;
         public double[] loc { get { return location; } set { location = value; } }
         public Dictionary<string, Field> fields { get; set; }
-
+        [JsonIgnore]
         public double Longitude
         {
             get
@@ -49,7 +50,7 @@ namespace MD.CloudConnect.Data
                     location[0] = value;    
             }
         }
-
+        [JsonIgnore]
         public double Latitude
         {
             get
@@ -65,7 +66,7 @@ namespace MD.CloudConnect.Data
                     location[1] = value;    
             }
         }
-
+        [JsonIgnore]
         public bool IsValid
         {
             get
@@ -81,7 +82,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPRMC_VALID));
             }
         }
-
+        [JsonIgnore]
         public bool IsMoving
         {
             get
@@ -98,7 +99,7 @@ namespace MD.CloudConnect.Data
             }
         }
 
-
+        [JsonIgnore]
         public double Speed
         {
             get
@@ -114,7 +115,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPS_SPEED));
             }
         }
-
+        [JsonIgnore]
         public double SpeedKmPerHour
         {
             get
@@ -130,7 +131,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPS_SPEED));
             }
         }
-
+        [JsonIgnore]
         public float Direction
         {
             get
@@ -146,7 +147,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPS_DIR));
             }
         }
-
+        [JsonIgnore]
         public double FullOdometer
         {
             get
@@ -162,7 +163,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.ODO_FULL));
             }
         }
-
+        [JsonIgnore]
         public string DriverId
         {
             get
@@ -178,7 +179,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.DRIVER_ID));
             }
         }
-
+        [JsonIgnore]
         public bool Ignition
         {
             get
@@ -194,6 +195,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.DIO_IGNITION));
             }
         }
+        [JsonIgnore]
         public bool Alarm
         {
             get
@@ -209,6 +211,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.DIO_ALARM));
             }
         }
+        [JsonIgnore]
         public byte Inputs
         {
             get

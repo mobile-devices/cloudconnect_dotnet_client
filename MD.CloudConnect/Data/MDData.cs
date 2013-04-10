@@ -12,6 +12,7 @@ namespace MD.CloudConnect
     {
         public Meta Meta { get; set; }
 
+        [JsonIgnore]
         public DateTime DateOfData
         {
             get
@@ -36,6 +37,7 @@ namespace MD.CloudConnect
         public Newtonsoft.Json.Linq.JObject Payload { get; set; }
 
         private TrackingData _tracking = null;
+        [JsonIgnore]
         public ITracking Tracking
         {
             get
@@ -50,6 +52,7 @@ namespace MD.CloudConnect
         }
 
         private MessageData _message = null;
+        [JsonIgnore]
         public IMessage Message
         {
             get
@@ -62,7 +65,7 @@ namespace MD.CloudConnect
                 return _message;
             }
         }
-
+        [JsonIgnore]
         public bool ShouldBeIgnore { get; set; }
     }
 }
