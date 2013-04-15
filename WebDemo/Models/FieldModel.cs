@@ -51,10 +51,10 @@ namespace WebDemo.Models
         public static Dictionary<string, ExtendedFieldDetail> Fields = new Dictionary<string, ExtendedFieldDetail>()
         {
             { "GPRMC_VALID",  new ExtendedFieldDetail() { Key = "GPRMC_VALID", Id = 3, Type = ExtendedFieldType.String, DisplayName = "Valid" }},
-            { "GPS_SPEED",  new ExtendedFieldDetail() { Key = "GPS_SPEED", Id = 8, Type = ExtendedFieldType.Speed , DisplayName = "Speed (Km/h)" }},
+            { "GPS_SPEED",  new ExtendedFieldDetail() { Key = "GPS_SPEED", Id = 8, Type = ExtendedFieldType.Speed , DisplayName = "Gps Speed (Km/h)" }},
             { "GPS_DIR",  new  ExtendedFieldDetail() { Key = "GPS_DIR", Id = 9, Type = ExtendedFieldType.Int100, DisplayName = "Dir" }},
             { "DIO_IGNITION",  new  ExtendedFieldDetail() { Key = "DIO_IGNITION", Id = 14, Type = ExtendedFieldType.Boolean, DisplayName="Ignition" }},
-            { "ODO_FULL",new ExtendedFieldDetail() { Key = "ODO_FULL", Id = 24, Type = ExtendedFieldType.Integer ,DisplayName = "Km"}},
+            { "ODO_FULL",new ExtendedFieldDetail() { Key = "ODO_FULL", Id = 24, Type = ExtendedFieldType.Integer ,DisplayName = "Odo. Full"}},
             { "DIO_ALARM", new ExtendedFieldDetail() { Key = "DIO_ALARM", Id = 26, Type = ExtendedFieldType.Boolean }},
             { "DRIVER_ID",new ExtendedFieldDetail() { Key = "DRIVER_ID", Id = 27, Type = ExtendedFieldType.String}},
             { "DIO_IN_TOR", new ExtendedFieldDetail() { Key = "DIO_IN_TOR", Id = 38, Type = ExtendedFieldType.Integer }},
@@ -93,7 +93,7 @@ namespace WebDemo.Models
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
             { "MDI_OBD_FUEL", new ExtendedFieldDetail() { Key = "MDI_OBD_FUEL", Id = 237, Type = ExtendedFieldType.Integer , DisplayName = "Obd Fuel"}},
             { "MDI_OBD_VIN", new ExtendedFieldDetail() { Key = "MDI_OBD_VIN", Id = 238, Type = ExtendedFieldType.String , DisplayName = "Obd Vin"}},
-            { "MDI_OBD_MILEAGE", new ExtendedFieldDetail() { Key = "MDI_OBD_MILEAGE", Id = 239, Type = ExtendedFieldType.Integer , DisplayName = "Obd Km"}},
+            { "MDI_OBD_MILEAGE", new ExtendedFieldDetail() { Key = "MDI_OBD_MILEAGE", Id = 239, Type = ExtendedFieldType.Integer , DisplayName = "Obd Mileage"}},
 
             { "MDI_JOURNEY_TIME", new ExtendedFieldDetail() { Key = "MDI_JOURNEY_TIME", Id = 240, Type = ExtendedFieldType.Second , DisplayName = "Journey Time"}},
             { "MDI_IDLE_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_IDLE_JOURNEY", Id = 241, Type = ExtendedFieldType.Second , DisplayName = "Idle journey"}},

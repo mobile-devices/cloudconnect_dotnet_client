@@ -37,7 +37,7 @@ namespace WebDemo.httphandler
                     }
                     catch (Exception ex)
                     {
-                        Tools.Log.Instance.Notification.Error("[" + ex.Message + "]" + data);
+                        Tools.Log.Instance.General.Error("[" + ex.Message + "]" + data);
                         throw ex;
                     }
                     finally

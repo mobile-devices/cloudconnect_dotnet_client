@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MD.DevTools.NotificationSender.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Asset" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">357322041761211</Value>
+    </Setting>
+    <Setting Name="Date" Type="System.DateTime" Scope="Application">
+      <Value Profile="(Default)">2013-04-10</Value>
+    </Setting>
+    <Setting Name="ItemsPerPage" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="PauseBetweenRequest" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Url" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:51366/httphandler/notifications.ashx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

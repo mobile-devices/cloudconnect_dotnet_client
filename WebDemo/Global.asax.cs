@@ -68,7 +68,9 @@ namespace WebDemo
                 }
                 log.AppendLine(error.StackTrace);
                 if (Tools.Log.Instance != null && Tools.Log.Instance.IsReady)
+                {
                     Tools.Log.Instance.General.Error(log.ToString());
+                }
             }
         }
     }

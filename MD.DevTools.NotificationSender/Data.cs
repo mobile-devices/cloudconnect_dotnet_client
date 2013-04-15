@@ -13,6 +13,6 @@ namespace MD.DevTools.NotificationSender
         public int TotalPages { get; set; }
         public int TotalItems { get; set; }
 
-        public Newtonsoft.Json.Linq.JObject Content { get; set; }
+        public MD.CloudConnect.MDData[] Content { get; set; }
     }
 }

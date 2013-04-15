@@ -152,25 +152,31 @@ namespace WebDemo.Controllers
                     Dictionary<string, MD.CloudConnect.Data.Field> previousFields = null;
                     foreach (TrackingModel t in tracks)
                     {
-                        if (previousFields != null)
+                        if (previousFields == null)
                         {
-                            //remove not usefull fields to simulate the cloud alogrithm
-                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in previousFields)
+                            previousFields = new Dictionary<string, MD.CloudConnect.Data.Field>();
+                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.fields)
                             {
-                                if (t.Data.fields.ContainsKey(item.Key))
+                                if (item.Value.b64_value != null)
+                                    previousFields.Add(item.Key, item.Value);
+                            }
+                            t.Data.fields = previousFields;
+                        }
+                        else
+                        {
+                            Dictionary<string, MD.CloudConnect.Data.Field> tmp = new Dictionary<string, MD.CloudConnect.Data.Field>();
+                            //remove not usefull fields to simulate the cloud alogrithm
+                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.fields)
+                            {
+                                if ((previousFields.ContainsKey(item.Key) && previousFields[item.Key].b64_value != item.Value.b64_value)
+                                    && t.Data.fields[item.Key].b64_value != null)
                                 {
-                                    if (t.Data.fields[item.Key].b64_value == null || t.Data.fields[item.Key].b64_value == item.Value.b64_value)
-                                    {
-                                        t.Data.fields.Remove(item.Key);
-                                    }
-                                    else
-                                    {
-                                        previousFields[item.Key].b64_value = item.Value.b64_value;
-                                    }
+                                    tmp.Add(item.Key, item.Value);
+                                    previousFields[item.Key].b64_value = item.Value.b64_value;
                                 }
                             }
+                            t.Data.fields = tmp;
                         }
-                        else previousFields = t.Data.fields;
                     }
 
                     result.TotalItems = tracks.Count;

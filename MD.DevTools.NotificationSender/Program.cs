@@ -17,15 +17,52 @@ namespace MD.DevTools.NotificationSender
             Console.WriteLine("Press enter");
             Console.ReadLine();
 
-            Data test = LoadData("357322041761211", 2013, 04, 09, 0, 30);
-
-            if (test != null)
+            Data currentData = null;
+            int page = 0;
+            do
             {
-                Console.WriteLine("{0} items", test.TotalItems);
-            }
+                currentData = LoadData(NotificationSender.Properties.Settings.Default.Asset
+                    , NotificationSender.Properties.Settings.Default.Date.Year, NotificationSender.Properties.Settings.Default.Date.Month, NotificationSender.Properties.Settings.Default.Date.Day
+                    , page, NotificationSender.Properties.Settings.Default.ItemsPerPage);
+                if (currentData.Content != null)
+                {
+                    Console.WriteLine("Page {0}/{1}", page, currentData.TotalPages);
+                    SendData(JsonConvert.SerializeObject(currentData.Content, Formatting.None));
+                    if (Properties.Settings.Default.PauseBetweenRequest)
+                    {
+                        Console.WriteLine("press enter to continue");
+                        Console.ReadLine();
+                    }
+                }
+
+                page++;
+            } while (currentData.Page != currentData.TotalPages);
 
             Console.WriteLine("Press enter to quit");
             Console.ReadLine();
+        }
+
+        public static void SendData(string content)
+        {
+            try
+            {
+                WebRequest request = HttpWebRequest.Create(Properties.Settings.Default.Url);
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                StreamWriter sw = new StreamWriter(request.GetRequestStream());
+                sw.Write(content);
+                sw.Close();
+                WebResponse rep = request.GetResponse();
+                StreamReader loResponseStream = new StreamReader(rep.GetResponseStream());
+                string Response = loResponseStream.ReadToEnd();
+                Console.WriteLine(Response);
+                loResponseStream.Close();
+                rep.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: {0}", ex.Message);
+            }
         }
 
         public static Data LoadData(string asset, int year, int month, int day, int page, int itemperpage)
@@ -41,8 +78,6 @@ namespace MD.DevTools.NotificationSender
                 WebResponse rep = request.GetResponse();
                 StreamReader loResponseStream = new StreamReader(rep.GetResponseStream());
                 string jsonData = loResponseStream.ReadToEnd();
-                Console.WriteLine(jsonData);
-
                 result = JsonConvert.DeserializeObject<Data>(jsonData);
 
                 loResponseStream.Close();

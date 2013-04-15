@@ -59,13 +59,12 @@ namespace WebDemo.Tools
 
         public void Initialize()
         {
-            _isReady = true;
-
             string configFile = HttpContext.Current.Server.MapPath(@"~\log4net.config");
             XmlConfigurator.Configure(new FileInfo(configFile));
 
             _general = LogManager.GetLogger("General");
             _notification = LogManager.GetLogger("Notification");
+            _isReady = true;
         }
     }
 }
