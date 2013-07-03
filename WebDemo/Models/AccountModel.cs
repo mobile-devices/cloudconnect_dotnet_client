@@ -17,25 +17,25 @@ namespace WebDemo.Models
 
         public string Name { get; set; }
 
-        public string[] UrlForwarding { get; set; }
+        public Dictionary<string, string> UrlForwarding { get; set; }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
-        public string FlatUrlForwarding
-        {
-            get
-            {
-                string result = "";
-                if (UrlForwarding != null)
-                {
-                    foreach (String s in UrlForwarding)
-                        result += s + ";";
-                }
-                return result;
-            }
-            set
-            {
-                UrlForwarding = value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            }
-        }
+        //[MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        //public string FlatUrlForwarding
+        //{
+        //    get
+        //    {
+        //        string result = "";
+        //        if (UrlForwarding != null)
+        //        {
+        //            foreach (String s in UrlForwarding)
+        //                result += s + ";";
+        //        }
+        //        return result;
+        //    }
+        //    set
+        //    {
+        //        UrlForwarding = value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        //    }
+        //}
     }
 }

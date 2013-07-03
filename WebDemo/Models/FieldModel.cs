@@ -15,7 +15,9 @@ namespace WebDemo.Models
         Int100,
         Int1000,
         MilliSecond,
-        Second
+        Second,
+        DateDbehav,
+        TimeDbehav
     }
 
     public struct ExtendedFieldDetail
@@ -41,6 +43,26 @@ namespace WebDemo.Models
                 case ExtendedFieldType.Int1000: return (Math.Round(field.GetValueAsInt() / 1000.00, 3)).ToString();
                 case ExtendedFieldType.MilliSecond: return new TimeSpan(0, 0, 0, 0, field.GetValueAsInt()).ToString();
                 case ExtendedFieldType.Second: return new TimeSpan(0, 0, field.GetValueAsInt()).ToString("c");
+                case ExtendedFieldType.DateDbehav:
+                    try
+                    {
+                        return DateTime.ParseExact(field.GetValueAsInt().ToString(), "yyMMdd", null).ToString("yyyy/MM/dd");
+                    }
+                    catch
+                    {
+                        return "-";
+                    }
+                case ExtendedFieldType.TimeDbehav:
+                    try
+                    {
+                        string timeString = field.GetValueAsInt().ToString();
+                        if (timeString.Length < 6) timeString = "0" + timeString;
+                        return DateTime.ParseExact(timeString, "HHmmss", null).ToString("HH:mm:ss");
+                    }
+                    catch
+                    {
+                        return "-";
+                    }
                 default: return field.b64_value;
             }
         }
@@ -66,8 +88,8 @@ namespace WebDemo.Models
             { "BEHAVE_ID", new ExtendedFieldDetail() { Key = "BEHAVE_ID", Id = 100, Type = ExtendedFieldType.Integer, FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "Behv. ID" }},
             { "BEHAVE_LONG", new ExtendedFieldDetail() { Key = "BEHAVE_LONG", Id = 101, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Long."}},
             { "BEHAVE_LAT", new ExtendedFieldDetail() { Key = "BEHAVE_LAT", Id = 102, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Lat."}},
-            { "BEHAVE_DAY_OF_YEAR", new ExtendedFieldDetail() { Key = "BEHAVE_DAY_OF_YEAR", Id = 103, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Date"}},
-            { "BEHAVE_TIME_OF_DAY", new ExtendedFieldDetail() { Key = "BEHAVE_TIME_OF_DAY", Id = 104, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Time"}},
+            { "BEHAVE_DAY_OF_YEAR", new ExtendedFieldDetail() { Key = "BEHAVE_DAY_OF_YEAR", Id = 103, Type = ExtendedFieldType.DateDbehav , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Date"}},
+            { "BEHAVE_TIME_OF_DAY", new ExtendedFieldDetail() { Key = "BEHAVE_TIME_OF_DAY", Id = 104, Type = ExtendedFieldType.TimeDbehav , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Time"}},
             { "BEHAVE_GPS_SPEED_BEGIN", new ExtendedFieldDetail() { Key = "BEHAVE_GPS_SPEED_BEGIN", Id = 105, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Speed Begin" }},
             { "BEHAVE_GPS_SPEED_PEAK", new ExtendedFieldDetail() { Key = "BEHAVE_GPS_SPEED_PEAK", Id = 106, Type = ExtendedFieldType.Integer, FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Speed Peak" }},
             { "BEHAVE_GPS_SPEED_END", new ExtendedFieldDetail() { Key = "BEHAVE_GPS_SPEED_END", Id = 107, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Speed End"}},
@@ -89,6 +111,16 @@ namespace WebDemo.Models
             { "MDI_EXT_BATT_LOW", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_LOW", Id = 150, Type = ExtendedFieldType.Boolean , DisplayName = "Ext. Batt. Low"}},
             { "MDI_EXT_BATT_VOLTAGE", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_VOLTAGE", Id = 151 , Type = ExtendedFieldType.Int1000 , DisplayName = "Ext. Batt. Voltage"}},
 
+            { "MDI_DTC_MIL", new ExtendedFieldDetail() { Key = "MDI_DTC_MIL", Id = 154 , Type = ExtendedFieldType.Boolean , DisplayName = "Malfunction Indicator Lamp (MIL)"}},
+            { "MDI_DTC_NUMBER", new ExtendedFieldDetail() { Key = "MDI_DTC_NUMBER", Id = 155 , Type = ExtendedFieldType.Integer , DisplayName = "Number of DTC"}},
+            { "MDI_DTC_LIST", new ExtendedFieldDetail() { Key = "MDI_DTC_LIST", Id = 156 , Type = ExtendedFieldType.String , DisplayName = "List of DTC(s)"}},
+
+             { "MDI_RPM_MAX", new ExtendedFieldDetail() { Key = "MDI_RPM_MAX", Id = 157 , Type = ExtendedFieldType.Integer , DisplayName = "Max. Rpm"}},
+             { "MDI_RPM_MIN", new ExtendedFieldDetail() { Key = "MDI_RPM_MIN", Id = 158 , Type = ExtendedFieldType.Integer , DisplayName = "Min. Rpm"}},
+             { "MDI_RPM_AVERAGE", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE", Id = 159 , Type = ExtendedFieldType.Integer , DisplayName = "Avg. Rpm"}},
+             { "MDI_RPM_OVER", new ExtendedFieldDetail() { Key = "MDI_RPM_OVER", Id = 160 , Type = ExtendedFieldType.Boolean , DisplayName = "Over Rpm"}},
+
+
             { "MDI_OBD_SPEED", new ExtendedFieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = ExtendedFieldType.Integer, DisplayName = "Obd Speed (km/h)" }},
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
             { "MDI_OBD_FUEL", new ExtendedFieldDetail() { Key = "MDI_OBD_FUEL", Id = 237, Type = ExtendedFieldType.Integer , DisplayName = "Obd Fuel"}},
@@ -104,10 +136,19 @@ namespace WebDemo.Models
             { "MDI_OVERSPEED", new ExtendedFieldDetail() { Key = "MDI_OVERSPEED", Id = 247, Type = ExtendedFieldType.Boolean , DisplayName = "Overspeed Status"}},
             { "MDI_MAX_SPEED_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_MAX_SPEED_JOURNEY", Id = 248, Type = ExtendedFieldType.Integer , DisplayName = "Overspeed Max"}},
             { "MDI_JOURNEY_STATE", new ExtendedFieldDetail() { Key = "MDI_JOURNEY_STATE", Id = 249, Type = ExtendedFieldType.Integer , DisplayName = "Journey State"}},
-
-            { "MDI_BOOT_REASON", new ExtendedFieldDetail() { Key = "MDI_BOOT_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Boot Reason", IgnoreInHistory = true}},
-            { "MDI_SHUTDOWN_REASON", new ExtendedFieldDetail() { Key = "MDI_SHUTDOWN_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Shutd. Reason", IgnoreInHistory = true}}
           
+            { "MDI_VEHICLE_STATE", new ExtendedFieldDetail() { Key = "MDI_VEHICLE_STATE", Id = 249, Type = ExtendedFieldType.String , DisplayName = "Vehicle State"}},
+        
+
+            { "MDI_RECORD_REASON", new ExtendedFieldDetail() { Key = "MDI_RECORD_REASON", Id = 250, Type = ExtendedFieldType.String , DisplayName = "Record Reason", IgnoreInHistory = true}},
+            
+            { "MDI_BOOT_REASON", new ExtendedFieldDetail() { Key = "MDI_BOOT_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Boot Reason", IgnoreInHistory = true}},
+            { "MDI_SHUTDOWN_REASON", new ExtendedFieldDetail() { Key = "MDI_SHUTDOWN_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Shutd. Reason", IgnoreInHistory = true}},
+    
+      
+            { "MDI_PANIC_STATE", new ExtendedFieldDetail() { Key = "MDI_PANIC_STATE", Id = 0, Type = ExtendedFieldType.Boolean , DisplayName = "Panic state"}},
+            { "MDI_PANIC_MESSAGE", new ExtendedFieldDetail() { Key = "MDI_PANIC_MESSAGE", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Panic Message"}}
+    
         };
     }
 

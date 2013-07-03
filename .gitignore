@@ -1,3 +1,5 @@
+.DS_store
+
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Bb]in/
 [Oo]bj/
@@ -26,6 +28,7 @@ x64/
 *.meta
 *.obj
 *.pch
+*.pidb
 *.pdb
 *.pgc
 *.pgd
@@ -109,3 +112,6 @@ UpgradeLog*.XML
 
 log4net.config
 app.config
+
+*mobile*
+*Conflict*

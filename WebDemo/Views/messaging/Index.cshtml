@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style>
+    input
+    {
+        margin: 5px 5px 0 0;
+    }
+    
+    .messageBox
+    {
+        position: absolute;
+        z-index: 1;
+        top: 140px;
+        left: 20px;
+    }
+    .taskBox
+    {
+        position: absolute;
+        z-index: 1;
+        top: 235px;
+        left: 20px;
+    }
+    .alert-area
+    {
+        position: absolute;
+        z-index: 10;
+        top: 55px;
+        left: 400px;
+        width: 300px;
+    }
+</style>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </a><a class="brand" href="#">Messaging Demo</a>
+            <form class="navbar-form" action="#">
+            <input type="text" placeholder="asset" id="asset" />
+            <input type="text" placeholder="Environment" id="env" />
+            <input type="text" placeholder="Token" id="token" />
+            <input type="text" placeholder="Account" id="account" />
+            </form>
+        </div>
+    </div>
+</div>
+<div id="mainContainer" style="padding-top: 40px">
+    <div id="message" class="messageBox well">
+        <input type="text" placeholder="your message" id="msg" />
+        <button type="button" class="btn btn-success" id="bt_send">
+            Send
+        </button>
+    </div>
+    <div id="task" class="taskBox well">
+        <div id="tasklist">
+            <p>
+                Click on the map to add new task</p>
+        </div>
+        <button type="button" class="btn btn-success" id="bt_send_task">
+            Send Tasks
+        </button>
+    </div>
+    <div id="alert-area" class="alert-area">
+    </div>
+    <div id="map_canvas" style="width: 1175px; height: 500px; margin-left: auto; margin-right: auto">
+    </div>
+</div>
+<script type="text/javascript">
+    var idx = 0;
+    var firstClick = true;
+
+    var markersArray = [];
+
+    function newAlert(type, message) {
+        $("#alert-area").append($("<div class='alert " + type + " fade in' data-alert><button type='button' class='close' data-dismiss='alert'>&times;</button><p> " + message + " </p></div>"));
+        $(".alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+    }
+
+    function resize() {
+        var authorizeHeight = $(window).height() - 40;
+        var width = $("#mainContainer").width();
+        $("#map_canvas").css('width', width);
+        $("#map_canvas").css('height', authorizeHeight);
+    }
+
+    function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(null);
+        }
+        markersArray = [];
+    }
+
+    function initialize() {
+        var mapOptions = {
+            zoom: 6,
+            center: new google.maps.LatLng(48.81499, 2.4237),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.LARGE,
+                position: google.maps.ControlPosition.TOP_RIGHT
+            },
+            panControl: true,
+            scaleControl: true
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (firstClick) {
+                firstClick = false;
+                $("#tasklist").html("<input id='taskname' placeholder='Task name'/><br/><input id='taskdetail' placeholder='Info'/><ol></ol>");
+            }
+            position = event.latLng;
+            $("#tasklist ol").append("<li id='task_" + idx + "' data-id='" + idx + "'><strong style='padding-right:10px'>Task " + idx + "</strong><input id='msg_" + idx + "' placeholder='enter detail'/><br/><em>Long / lat :" + position + "</em></li><input type='hidden' id='lat_" + idx + "' value='" + Math.round(position.lat() * 100000) + "'/><input type='hidden' id='long_" + idx + "' value='" + Math.round(position.lng() * 100000 )+ "'/>");
+
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: "Task " + idx
+            });
+            markersArray.push(marker);
+            idx++;
+        });
+    }
+
+    function getData() {
+        //        //data: "asset=" + $("#asset").val() + "&environment=" + $("#env").val() + "&account=" + $("#account").val() + "&token=" + $("#token").val() + "&message=" + $("#msg").val(),
+        //            public class JsonTask
+        //    {
+        //        public int Id { get; set; }
+        //        public string Info { get; set; }
+        //        public string Longitude { get; set; }
+        //        public string Latitude { get; set; }
+        //    }
+
+        var tasks = {
+            asset: $("#asset").val() + '',
+            account: $("#account").val() + '',
+            environment: $("#env").val() + '',
+            token: $("#token").val() + '',
+            taskName: $("#taskname").val() + '',
+            info: $("#taskdetail").val() + '',
+            tasks: []
+        }
+        $("#tasklist li").each(function () {
+            var id = $(this).attr("data-id");
+
+            tasks.tasks.push({
+                id: id,
+                info: $("#msg_" + id).val() + '',
+                longitude: $("#long_" + id).val() + '',
+                latitude: $("#lat_" + id).val() + ''
+            });
+        });
+
+        return tasks;
+    }
+
+    function checkMsg(asset, environment, account, token) {
+        $.ajax({
+            url: '/messaging/CheckMessage',
+            type: 'GET',
+            data: "asset=" + asset + "&environment=" + environment + "&account=" + account + "&token=" + token,
+            success: function (res) {
+                if (res != "") {
+                    alert(res);
+                    newAlert('alert-info', res);
+                }
+                setTimeout(function () {
+                    checkMsg(asset, environment, account, token);
+                }, 3000);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        resize();
+
+        $("#bt_send").bind('click', function () {
+            $.ajax({
+                url: '/messaging/SendMessage',
+                type: 'GET',
+                data: "asset=" + $("#asset").val() + "&environment=" + $("#env").val() + "&account=" + $("#account").val() + "&token=" + $("#token").val() + "&message=" + $("#msg").val(),
+                success: function (res) {
+                    $("#msg").val("");
+
+                    if (res == "OK") {
+                        newAlert('alert-success', "Your message has been sent!");
+
+                        setTimeout(function () {
+                            checkMsg($("#asset").val(), $("#env").val(), $("#account").val(), $("#token").val());
+                        }, 3000);
+                    }
+                    else
+                        newAlert('alert-error', "Warn : server does not accept this message");
+                }
+            });
+        });
+
+        $("#bt_send_task").bind('click', function () {
+
+            data = getData();
+
+            $.ajax({
+                url: '/messaging/SendTasks',
+                type: 'POST',
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (res) {
+                    newAlert('alert-success', "Tasks have been sent!");
+                }
+            });
+
+            $("#tasklist").html("<p>Click on the map to add new task</p>");
+            firstClick = true;
+            idx = 1;
+            clearOverlays();
+        });
+    });
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>

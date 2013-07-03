@@ -9,12 +9,16 @@ namespace MD.CloudConnect.Data
     public class TrackingData : ITracking
     {
         /* Common Fields */
+        [JsonProperty("asset")]
         public string Asset { get; set; }
+        [JsonProperty("id")]
         public string Id { get; set; }
+        [JsonProperty("id_str")]
         public string Id_str { get; set; }
 
         /* Tracking Fields */
         private DateTime _recorded_at = DateTime.MinValue;
+        [JsonProperty("recorded_at")]
         public DateTime Recorded_at
         {
             get
@@ -28,7 +32,9 @@ namespace MD.CloudConnect.Data
                 _recorded_at = value;
             }
         }
+        [JsonProperty("received_at")]
         public DateTime Received_at { get; set; }
+        [JsonProperty("recorded_at_ms")]
         public DateTime? Recorded_at_ms { get; set; }
         [JsonIgnore]
         public double[] location;
@@ -47,7 +53,7 @@ namespace MD.CloudConnect.Data
             set
             {
                 if (location != null && location.Length >= 2)
-                    location[0] = value;    
+                    location[0] = value;
             }
         }
         [JsonIgnore]
@@ -63,7 +69,7 @@ namespace MD.CloudConnect.Data
             set
             {
                 if (location != null && location.Length >= 2)
-                    location[1] = value;    
+                    location[1] = value;
             }
         }
         [JsonIgnore]

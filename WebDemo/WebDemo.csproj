@@ -104,8 +104,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LognotificationController.cs" />
+    <Compile Include="Controllers\messagingController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SGAccountController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
+    <Compile Include="Extensions\SelectExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -117,9 +121,10 @@
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\FieldModel.cs" />
     <Compile Include="Models\JsonExportData.cs" />
+    <Compile Include="Models\JsonTasksModel.cs" />
     <Compile Include="Models\JsonTrackingModel.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Repository\AccountDb.cs" />
     <Compile Include="Models\Repository\DataTrackingDB.cs" />
     <Compile Include="Models\Repository\DeviceDb.cs" />
@@ -133,6 +138,7 @@
     <Compile Include="Tools\MongoConnector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\renault.xml" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -140,6 +146,11 @@
     <Content Include="Content\caution.png" />
     <Content Include="Content\direction_left.png" />
     <Content Include="Content\direction_right.png" />
+    <Content Include="Content\font-awesome-ie7.css" />
+    <Content Include="Content\font-awesome-ie7.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\icy_road.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
@@ -238,9 +249,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -259,6 +268,10 @@
     <Content Include="Areas\SecurityGuard\Views\Membership\GrantRolesToUser.cshtml" />
     <Content Include="Areas\SecurityGuard\Views\Membership\CreateUser.cshtml" />
     <Content Include="Areas\SecurityGuard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\font\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
@@ -269,6 +282,11 @@
     <Content Include="Views\SGAccount\ForgotPasswordSuccess.cshtml" />
     <Content Include="Views\SGAccount\LogOn.cshtml" />
     <Content Include="Views\Tracking\Index.cshtml" />
+    <Content Include="Views\messaging\Index.cshtml" />
+    <Content Include="Views\Mobile\Index.cshtml" />
+    <Content Include="Views\Mobile\Upload.cshtml" />
+    <Content Include="Views\Mobile\Collect.cshtml" />
+    <Content Include="Views\Mobile\CollectResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MD.CloudConnect\MD.CloudConnect.csproj">

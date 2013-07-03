@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebDemo.Models.Repository;
 using WebDemo.Models;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters;
 
 namespace WebDemo.Controllers
 {
@@ -26,6 +28,8 @@ namespace WebDemo.Controllers
         public ActionResult Edit(string id)
         {
             AccountModel account = RepositoryFactory.Instance.AccountDb.GetAccounts().Where(x => x.Id.ToString() == id).FirstOrDefault();
+            @ViewBag.Notification = JsonConvert.SerializeObject(account.UrlForwarding, Formatting.None);
+
             return View(account);
         }
 
@@ -33,13 +37,12 @@ namespace WebDemo.Controllers
         // POST: /Account/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(string id, AccountModel accountForm)
+        public ActionResult Edit(string id, AccountModel accountForm, string dataNotification)
         {
             try
             {
                 AccountModel account = RepositoryFactory.Instance.AccountDb.GetAccounts().Where(x => x.Id.ToString() == id).FirstOrDefault();
-                account.UrlForwarding = accountForm.UrlForwarding;
-
+                account.UrlForwarding = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataNotification);
                 RepositoryFactory.Instance.AccountDb.Save(account);
 
                 return RedirectToAction("Index");

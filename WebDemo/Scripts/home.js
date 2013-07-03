@@ -151,6 +151,7 @@ var mapObject = {
     polylines: null,
     isfocusMap: true,
     currentInfo: null,
+    colors: ["#FF0000", "#00FF00", "#0000FF", "#FF0000", "#FF0000"],
     emptyArray: function (data) {
         if (data) {
             var tmp = null;
@@ -194,12 +195,18 @@ var mapObject = {
             this.isFocusMap = true;
         }
     },
+    IncIdxColor: function () {
+        if (this.idxColor < this.Colors.length)
+            this.idxColor++;
+        else
+            this.idxColor = 0;
+    },
     update: function () {
 
         if (this.polylines && this.polylines.length > 0) {
             this.polylineMap = new google.maps.Polyline({
                 path: this.polylines,
-                strokeColor: '#FF0000',
+                strokeColor: this.colors[0],
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
@@ -244,10 +251,13 @@ function DataDriverBehavior() {
     this.AccZPeak = 0;
     this.AccZEnd = 0;
     this.Elapsed = "";
+    this.Recorded_at = "";
+    this.hack_3_1_28 = false;
 
     this.getDriverBehaviorEventLabel = function () {
         var result = "-";
         switch (this.IdEvent) {
+            case "2": result = "HARSH BRAKING"; break;
             case "10": result = "DECELERATION"; break;
             case "11": result = "ACCELERATION"; break;
             case "12": result = "TURN LEFT"; break;
@@ -260,21 +270,34 @@ function DataDriverBehavior() {
     };
 
     this.getContent = function () {
-        return "<b>Event : </b>" + this.getDriverBehaviorEventLabel() + "<br />"
-        + "<b>Date : </b>" + this.Date + "<br />"
-        + "<b>Time : </b>" + this.Time + "<br />"
-        + "<b>Long/Lat : </b>" + this.Longitude + " / " + this.Latitude + "<br />"
-        + "<b>Speed Begin/Peak/End : </b>" + this.SpeedBegin + " / " + this.SpeedPeak + " / " + this.SpeedEnd + "<br />"
-        + "<b>Heading Begin/Peak/End : </b>" + this.HeadingBegin + " / " + this.HeadingPeak + " / " + this.HeadingEnd + "<br />"
-        + "<b>AccX Begin/Peak/End : </b>" + this.AccXBegin + " / " + this.AccXPeak + " / " + this.AccXEnd + "<br />"
-        + "<b>AccY Begin/Peak/End : </b>" + this.AccYBegin + " / " + this.AccYPeak + " / " + this.AccYEnd + "<br />"
-        + "<b>AccZ Begin/Peak/End : </b>" + this.AccZBegin + " / " + this.AccZPeak + " / " + this.AccZEnd + "<br />"
-        + "<b>Elasped : </b>" + this.Elapsed + "<br />";
+        if (this.hack_3_1_28)
+            return "<b>Event : </b>" + this.getDriverBehaviorEventLabel() + "<br />"
+            + "<b>Record time : </b>" + this.Recorded_at + "<br />"
+            + "<b>Long/Lat : </b>" + this.Longitude + " / " + this.Latitude + "<br />"
+            + "<b>Speed Begin/Peak/End : </b>" + this.SpeedBegin + " / " + this.SpeedPeak + " / " + this.SpeedEnd + "<br />"
+            + "<b>Heading Begin/Peak/End : </b>" + this.HeadingBegin + " / " + this.HeadingPeak + " / " + this.HeadingEnd + "<br />"
+            + "<b>AccX Begin/Peak/End : </b>" + this.AccXBegin + " / " + this.AccXPeak + " / " + this.AccXEnd + "<br />"
+            + "<b>AccY Begin/Peak/End : </b>" + this.AccYBegin + " / " + this.AccYPeak + " / " + this.AccYEnd + "<br />"
+            + "<b>AccZ Begin/Peak/End : </b>" + this.AccZBegin + " / " + this.AccZPeak + " / " + this.AccZEnd + "<br />"
+            + "<b>Elasped : </b>" + this.Elapsed + "<br />";
+        else
+            return "<b>Event : </b>" + this.getDriverBehaviorEventLabel() + "<br />"
+            + "<b>Record time : </b>" + this.Recorded_at + "<br />"
+            + "<b>Event Date : </b>" + this.Date + "<br />"
+            + "<b>Event Time : </b>" + this.Time + "<br />"
+            + "<b>Long/Lat : </b>" + this.Longitude + " / " + this.Latitude + "<br />"
+            + "<b>Speed Begin/Peak/End : </b>" + this.SpeedBegin + " / " + this.SpeedPeak + " / " + this.SpeedEnd + "<br />"
+            + "<b>Heading Begin/Peak/End : </b>" + this.HeadingBegin + " / " + this.HeadingPeak + " / " + this.HeadingEnd + "<br />"
+            + "<b>AccX Begin/Peak/End : </b>" + this.AccXBegin + " / " + this.AccXPeak + " / " + this.AccXEnd + "<br />"
+            + "<b>AccY Begin/Peak/End : </b>" + this.AccYBegin + " / " + this.AccYPeak + " / " + this.AccYEnd + "<br />"
+            + "<b>AccZ Begin/Peak/End : </b>" + this.AccZBegin + " / " + this.AccZPeak + " / " + this.AccZEnd + "<br />"
+            + "<b>Elasped : </b>" + this.Elapsed + "<br />";
     };
 
     this.getUrlMarker = function () {
         var result = "-";
         switch (this.IdEvent) {
+            case "2": result = "http://webdemo.integration.cloudconnect.io/content/stop.png"; break;
             case "10": result = "http://webdemo.integration.cloudconnect.io/content/stop.png"; break;
             case "11": result = "http://webdemo.integration.cloudconnect.io/content/caution.png"; break;
             case "12": result = "http://webdemo.integration.cloudconnect.io/content/direction_left.png"; break;
@@ -284,6 +307,16 @@ function DataDriverBehavior() {
             default: result = "http://labs.google.com/ridefinder/images/mm_20_red.png"; break;
         }
         return result;
+    };
+
+    this.checkDateAndTime = function (data) {
+        if (this.IsDriverEvent && this.Date != " - " && this.Time != " - ") {
+            this.Longitude = data.Longitude;
+            this.Latitude = data.Latitude;
+            this.hack_3_1_28 = true;
+            return true;
+        }
+        return false;
     };
 
     this.update = function (data) {
@@ -296,7 +329,7 @@ function DataDriverBehavior() {
                 case "BEHAVE_DAY_OF_YEAR": this.Date = data.Value; break;
                 case "BEHAVE_TIME_OF_DAY": this.Time = data.Value; break;
                 case "BEHAVE_TIMESTAMP": this.Timestamp = data.Value; break;
-                case "BEHAVE_GPS_SPEED_BEGIN": this.SpeedBegin = Math.round(data.Value * 1.852 / 10000); break;
+                case "BEHAVE_GPS_SPEED_BEGIN": this.SpeedBegin = Math.round(data.Value * 1.852 / 1000); break;
                 case "BEHAVE_GPS_SPEED_PEAK": this.SpeedPeak = Math.round(data.Value * 1.852 / 1000); break;
                 case "BEHAVE_GPS_SPEED_END": this.SpeedEnd = Math.round(data.Value * 1.852 / 1000); break;
                 case "BEHAVE_GPS_HEADING_BEGIN": this.HeadingBegin = data.Value / 1000; break;
@@ -325,7 +358,7 @@ function initialize() {
         zoom: 6,
         center: new google.maps.LatLng(48.81499, 2.4237),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        panControl : true,
+        panControl: true,
         scaleControl: true
     };
     map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
@@ -348,6 +381,7 @@ function AddHeaderTable(data) {
 function AddLineInTable(data, idx) {
     var line = "<tr line=" + data.Id + "><td>" + data.Id + "</td><td>" + data.Recorded_at + "</td>";
     var dBeahvData = new DataDriverBehavior();
+    dBeahvData.Recorded_at = data.Recorded_at;
 
     for (var i = 0; i < data.Fields.length; i++) {
         dBeahvData.update(data.Fields[i]);
@@ -368,7 +402,6 @@ function AddLineInTable(data, idx) {
         $('#bodyTable').html(line);
     } else
         $('#bodyTable tr:last').after(line);
-
     return dBeahvData;
 }
 
@@ -415,7 +448,7 @@ function AddPointOnMap(data, idx) {
     }
 }
 
-function AddDriverBehavPointOnMap(data, idx) {
+function AddDriverBehavPointOnMap(data, idx, replace_loc_map) {
     if (data.Latitude != 0) {
         var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
 
@@ -455,8 +488,17 @@ function loadTrackingData() {
 
                     driverBehavData = AddLineInTable(res[i], i);
                     AddPointOnMap(res[i], i);
-                    if (config.displayDriverBehavOnMap && driverBehavData)
-                        AddDriverBehavPointOnMap(driverBehavData, i);
+                    if (config.displayDriverBehavOnMap && driverBehavData) {
+
+                        //hack 3.1.27
+                        if (driverBehavData.checkDateAndTime(res[i])) {
+                            AddDriverBehavPointOnMap(driverBehavData, i, true);
+                        }
+                        else {
+                            AddPointOnMap(res[i], i);
+                            AddDriverBehavPointOnMap(driverBehavData, i, false);
+                        }
+                    }
                 }
 
                 // make the header fixed on scroll

@@ -147,7 +147,7 @@ namespace WebDemo.Controllers
                 DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
                 if (device != null)
                 {
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).ToList();
 
                     Dictionary<string, MD.CloudConnect.Data.Field> previousFields = null;
                     foreach (TrackingModel t in tracks)
@@ -226,6 +226,20 @@ namespace WebDemo.Controllers
                     List<string> keys = device.GetOrderFieldName();
 
                     JsonTrackingModel jtrack = null;
+
+                    //for (int i = 0; i < tracks.Count; i++)
+                    //{
+                    //    TrackingModel t = tracks[i];
+                    //    WriteCsvCell(writer, t.Data.Recorded_at.ToString("HH:mm:ss"));
+                    //    WriteCsvCell(writer, t.Data.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    //    WriteCsvCell(writer, t.Data.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    //    foreach (string key in keys)
+                    //    {
+                    //        WriteCsvCell(writer, t.GetDisplayDataFor(key, (i < tracks.Count - 1 ? tracks[i + 1].Data.fields : null)));
+                    //    }
+                    //    writer.WriteLine();
+                    //}
+
                     for (int i = 0; i < tracks.Count; i++)
                     {
                         TrackingModel t = tracks[i];
@@ -234,7 +248,7 @@ namespace WebDemo.Controllers
                             Id = i,
                             Latitude = t.Data.Latitude,
                             Longitude = t.Data.Longitude,
-                            Recorded_at = t.Data.Recorded_at.ToString("HH:mm:ss"),
+                            Recorded_at = t.Data.Recorded_at.ToString("HH:mm:ss.fff"),
                             Received_at = t.Data.Received_at.ToString("dd/MM/yyyy HH:mm:ss"),
                             Fields = new List<JsonFieldModel>()
                         };
@@ -245,7 +259,7 @@ namespace WebDemo.Controllers
                             {
                                 Key = key,
                                 DisplayName = t.GetDisplayNameField(key),
-                                Value = t.GetDisplayDataFor(key, (i < tracks.Count - 1 ? tracks[i + 1].Data.fields : null))
+                                Value = t.GetDisplayDataFor(key, (i > 0 ? tracks[i - 1].Data.fields : null))
                             });
                         }
 

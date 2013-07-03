@@ -10,6 +10,7 @@ namespace MD.CloudConnect
     [Serializable]
     public class MDData
     {
+        [JsonProperty("meta")]
         public Meta Meta { get; set; }
 
         [JsonIgnore]
@@ -34,6 +35,7 @@ namespace MD.CloudConnect
             }
         }
 
+        [JsonProperty("payload")]
         public Newtonsoft.Json.Linq.JObject Payload { get; set; }
 
         private TrackingData _tracking = null;

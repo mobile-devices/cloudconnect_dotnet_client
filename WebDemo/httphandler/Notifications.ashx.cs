@@ -7,6 +7,7 @@ using System.Text;
 using WebDemo.Models;
 using WebDemo.Models.Repository;
 using WebDemo.Tools;
+using System.Web.Caching;
 
 namespace WebDemo.httphandler
 {
@@ -15,7 +16,49 @@ namespace WebDemo.httphandler
     /// </summary>
     public class Notifications : IHttpHandler
     {
-        private static readonly object _verrou = new object();
+        private static readonly object _lock = new object();
+
+        public static List<Notification> _notificationQ = new List<Notification>();
+
+        public static void NotificationTask(String k, Object v, CacheItemRemovedReason r)
+        {
+            if (k == "Notification"
+                && (r == CacheItemRemovedReason.Expired
+                || r == CacheItemRemovedReason.Underused
+                || r == CacheItemRemovedReason.DependencyChanged))
+            {
+                while (_notificationQ.Count > 0)
+                {
+                    List<Notification> currentNotification = new List<Notification>();
+                    lock (_notificationQ)
+                    {
+                        currentNotification = _notificationQ.OrderBy(x => x.Created_at).ToList();
+                        _notificationQ = new List<Notification>();
+                    }
+                    Dictionary<string, List<Notification>> blacklisted = new Dictionary<string, List<Notification>>();
+                    foreach (Notification notif in currentNotification)
+                    {
+                        if (!blacklisted.ContainsKey(notif.url))
+                        {
+                            if (!notif.SendData())
+                            {
+                                //black listed for this current loop, will be re-send on the next event
+                                blacklisted.Add(notif.url, currentNotification.Where(x => x.url == notif.url).ToList());
+                            }
+                        }
+                    }
+
+                    if (blacklisted.Count > 0)
+                    {
+                        lock (_notificationQ)
+                        {
+                            foreach (KeyValuePair<string, List<Notification>> item in blacklisted)
+                                _notificationQ.AddRange(item.Value);
+                        }
+                    }
+                }
+            }
+        }
 
         public void ProcessRequest(HttpContext context)
         {
@@ -23,7 +66,7 @@ namespace WebDemo.httphandler
 
             if (context.Request.HttpMethod == "POST")
             {
-                if (System.Threading.Monitor.TryEnter(_verrou, 10000))
+                if (System.Threading.Monitor.TryEnter(_lock, 10000))
                 {
                     try
                     {
@@ -42,7 +85,7 @@ namespace WebDemo.httphandler
                     }
                     finally
                     {
-                        System.Threading.Monitor.Exit(_verrou);
+                        System.Threading.Monitor.Exit(_lock);
                     }
                 }
             }
@@ -86,6 +129,8 @@ namespace WebDemo.httphandler
         {
             List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
 
+            ForwadNotification(data);
+
             List<TrackingModel> saveTracks = new List<TrackingModel>();
             List<DeviceModel> saveDevices = new List<DeviceModel>();
 
@@ -120,6 +165,57 @@ namespace WebDemo.httphandler
                 RepositoryFactory.Instance.DeviceDb.Save(saveDevices);
         }
 
+        private void ForwadNotification(string rawData)
+        {
+            if (HttpRuntime.Cache["Notification"] == null)
+            {
+                HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 10)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
+            }
+
+            List<AccountModel> accounts = RepositoryFactory.Instance.AccountDb.GetAccounts();
+            List<Notification> cache = new List<Notification>();
+            foreach (AccountModel acc in accounts)
+            {
+                if (acc.UrlForwarding != null && acc.UrlForwarding.Count > 0)
+                {
+                    Notification notif = null;
+                    string[] assets = null;
+                    foreach (KeyValuePair<string, string> item in acc.UrlForwarding)
+                    {
+
+                        if (!String.IsNullOrEmpty(item.Value))
+                        {
+                            assets = item.Value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                            notif = new Notification()
+                            {
+                                Created_at = DateTime.UtcNow,
+                                Name = acc.Name,
+                                url = item.Key
+                            };
+                            notif.CreateContent(assets, rawData, acc.Name);
+                        }
+                        else
+                        {
+                            notif = new Notification()
+                            {
+                                Created_at = DateTime.UtcNow,
+                                Name = acc.Name,
+                                url = item.Key
+                            };
+                            notif.CreateContent(null, rawData, acc.Name);
+                        }
+                        if (!String.IsNullOrEmpty(notif.content))
+                            cache.Add(notif);
+                    }
+                }
+            }
+
+            lock (_notificationQ)
+            {
+                _notificationQ.AddRange(cache);
+            }
+        }
+
         private void DecodeTracking(MD.CloudConnect.ITracking t, AccountModel account, List<TrackingModel> saveTracks, List<DeviceModel> saveDevices)
         {
             string imei = t.Asset;
@@ -129,6 +225,8 @@ namespace WebDemo.httphandler
             if (device == null)
             {
                 device = new DeviceModel() { Imei = imei };
+                RepositoryFactory.Instance.DeviceDb.Save(device);
+                device = RepositoryFactory.Instance.DeviceDb.GetDevice(imei);
             }
 
             device.LastReport = t.Recorded_at;

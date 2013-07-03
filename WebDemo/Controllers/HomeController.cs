@@ -12,8 +12,9 @@ namespace WebDemo.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string id = "")
         {
+            ViewBag.Imei = id;
             return View();
         }
 

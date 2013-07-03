@@ -20,6 +20,8 @@ namespace WebDemo.Models
 
         public Dictionary<string, FieldModel> LastFields { get; set; }
 
+        public int? IdLastTask { get; set; }
+        
         public List<string> GetOrderFieldName()
         {
             List<string> result = new List<string>();
