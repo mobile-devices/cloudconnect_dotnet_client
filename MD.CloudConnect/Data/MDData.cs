@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using MD.CloudConnect.Data;
 using Newtonsoft.Json;
@@ -28,7 +27,7 @@ namespace MD.CloudConnect
                     else if (Meta.Event == "message")
                     {
                         if (this.Message != null)
-                            return this.Message.Recorded_at;
+                            return this.Message.Recorded_at.Value;
                     }
                 }
                 return DateTime.MinValue;

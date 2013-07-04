@@ -20,9 +20,9 @@ namespace MD.CloudConnect.Data
         public string Asset { get; set; }
         public string Length { get; set; }
         public string b64_payload { get; set; }
-        public DateTime Received_at { get; set; }
-        public DateTime Recorded_at { get; set; }
-        public DateTime Created_at { get; set; }
+        public DateTime? Received_at { get; set; }
+        public DateTime? Recorded_at { get; set; }
+        public DateTime? Created_at { get; set; }
         public string Url { get; set; }
 
         private string _payload = string.Empty;
@@ -37,7 +37,6 @@ namespace MD.CloudConnect.Data
                 return _payload;
             }
         }
-
 
         public string Message
         {

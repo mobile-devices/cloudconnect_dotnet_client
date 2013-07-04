@@ -54,7 +54,8 @@ namespace WebDemo.Controllers
                 List<MessageData> messages = cc.Message.Get("asset:" + asset);
                 foreach (MessageData msg in messages)
                 {
-                    if (msg.Channel == "com.mdi.applications.message" && msg.Asset == asset && msg.Sender == asset && msg.Received_at.Ticks > date.Ticks)
+                    if (msg.Channel == "com.mdi.applications.message" && msg.Asset == asset && msg.Sender == asset
+                        && msg.Received_at.HasValue && msg.Received_at.Value.Ticks > date.Ticks)
                     {
                         res = msg.Message;
                     }
