@@ -38,6 +38,7 @@ namespace MD.CloudConnect.Data
             }
         }
 
+
         public string Message
         {
             get { return Payload; }

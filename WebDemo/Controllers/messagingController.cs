@@ -58,6 +58,10 @@ namespace WebDemo.Controllers
                         && msg.Received_at.HasValue && msg.Received_at.Value.Ticks > date.Ticks)
                     {
                         res = msg.Message;
+                        if (msg.Received_at.HasValue)
+                            Session["MsgDate"] = msg.Received_at.Value;
+                        else
+                            Session["MsgDate"] = DateTime.Now;
                     }
                 }
             }

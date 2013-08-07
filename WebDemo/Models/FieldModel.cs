@@ -83,6 +83,10 @@ namespace WebDemo.Models
             { "BATT",new ExtendedFieldDetail() { Key = "BATT", Id = 15, Type = ExtendedFieldType.Integer }},
             { "GPRS_HEADER", new ExtendedFieldDetail() { Key = "GPRS_HEADER", Id = 16, Type = ExtendedFieldType.Integer }},
             { "RSSI", new ExtendedFieldDetail() { Key = "RSSI", Id = 17, Type = ExtendedFieldType.Integer }},
+
+            { "BATT_VOLT", new ExtendedFieldDetail() { Key = "BATT_VOLT", Id = 51, Type = ExtendedFieldType.Integer, DisplayName = "Batt. volt(mV)" }},
+            { "MDI_AREA_LIST", new ExtendedFieldDetail() { Key = "MDI_AREA_LIST", Id = 53, Type = ExtendedFieldType.String, DisplayName = "Area List" }},
+
             { "MVT_STATE", new ExtendedFieldDetail() { Key = "MVT_STATE", Id = 56, Type = ExtendedFieldType.Boolean }},
 
             { "BEHAVE_ID", new ExtendedFieldDetail() { Key = "BEHAVE_ID", Id = 100, Type = ExtendedFieldType.Integer, FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "Behv. ID" }},
@@ -108,6 +112,9 @@ namespace WebDemo.Models
             { "BEHAVE_ELAPSED", new ExtendedFieldDetail() { Key = "BEHAVE_ELAPSED", Id = 120, Type = ExtendedFieldType.Integer , FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "B. Elapsed"}},
             { "BEHAVE_UNIQUE_ID", new ExtendedFieldDetail() { Key = "BEHAVE_UNIQUE_ID", Id = 121, Type = ExtendedFieldType.Integer, DisplayName = "B. UniqueID", FieldDependency ="BEHAVE_UNIQUE_ID" }},
 
+            { "MDI_CRASH_DETECTED", new ExtendedFieldDetail() { Key = "MDI_CRASH_DETECTED", Id = 122, Type = ExtendedFieldType.String , DisplayName = "Crash Detected", IgnoreInHistory = true}},
+          
+
             { "MDI_EXT_BATT_LOW", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_LOW", Id = 150, Type = ExtendedFieldType.Boolean , DisplayName = "Ext. Batt. Low"}},
             { "MDI_EXT_BATT_VOLTAGE", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_VOLTAGE", Id = 151 , Type = ExtendedFieldType.Int1000 , DisplayName = "Ext. Batt. Voltage"}},
 
@@ -120,6 +127,11 @@ namespace WebDemo.Models
              { "MDI_RPM_AVERAGE", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE", Id = 159 , Type = ExtendedFieldType.Integer , DisplayName = "Avg. Rpm"}},
              { "MDI_RPM_OVER", new ExtendedFieldDetail() { Key = "MDI_RPM_OVER", Id = 160 , Type = ExtendedFieldType.Boolean , DisplayName = "Over Rpm"}},
 
+             { "MDI_OBD_PID_1", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_1", Id = 215, Type = ExtendedFieldType.String, DisplayName = "OBD PID 1" }},
+             { "MDI_OBD_PID_2", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_2", Id = 216, Type = ExtendedFieldType.String, DisplayName = "OBD PID 2" }},
+             { "MDI_OBD_PID_3", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_3", Id = 217, Type = ExtendedFieldType.String, DisplayName = "OBD PID 3" }},
+             { "MDI_OBD_PID_4", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_4", Id = 218, Type = ExtendedFieldType.String, DisplayName = "OBD PID 4" }},
+             { "MDI_OBD_PID_5", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_5", Id = 219, Type = ExtendedFieldType.String, DisplayName = "OBD PID 5" }},
 
             { "MDI_OBD_SPEED", new ExtendedFieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = ExtendedFieldType.Integer, DisplayName = "Obd Speed (km/h)" }},
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
