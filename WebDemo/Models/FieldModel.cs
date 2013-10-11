@@ -133,6 +133,10 @@ namespace WebDemo.Models
              { "MDI_OBD_PID_4", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_4", Id = 218, Type = ExtendedFieldType.String, DisplayName = "OBD PID 4" }},
              { "MDI_OBD_PID_5", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_5", Id = 219, Type = ExtendedFieldType.String, DisplayName = "OBD PID 5" }},
 
+             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", Id = 220, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 1" }},
+             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", Id = 221, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 2" }},
+             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", Id = 222, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 3" }},
+
             { "MDI_OBD_SPEED", new ExtendedFieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = ExtendedFieldType.Integer, DisplayName = "Obd Speed (km/h)" }},
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
             { "MDI_OBD_FUEL", new ExtendedFieldDetail() { Key = "MDI_OBD_FUEL", Id = 237, Type = ExtendedFieldType.Integer , DisplayName = "Obd Fuel"}},

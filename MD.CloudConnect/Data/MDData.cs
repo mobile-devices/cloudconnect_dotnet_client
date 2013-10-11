@@ -22,13 +22,15 @@ namespace MD.CloudConnect
                 {
                     if (Meta.Event == "track")
                     {
-                        if (this.Tracking != null)
+                        if (this.Tracking != null && this.Tracking.Recorded_at != null)
                             return this.Tracking.Recorded_at;
+                        else return DateTime.UtcNow;
                     }
                     else if (Meta.Event == "message")
                     {
-                        if (this.Message != null)
+                        if (this.Message != null && this.Message.Recorded_at != null)
                             return this.Message.Recorded_at.Value;
+                        else return DateTime.UtcNow;
                     }
                 }
                 return DateTime.MinValue;

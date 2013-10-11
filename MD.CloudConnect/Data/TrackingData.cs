@@ -36,7 +36,7 @@ namespace MD.CloudConnect.Data
         public DateTime Received_at { get; set; }
         [JsonProperty("recorded_at_ms")]
         public DateTime? Recorded_at_ms { get; set; }
-        [JsonIgnore]
+        /* better should be found. Because for Api request we need Location and for notification we need loc*/
         public double[] location;
         public double[] loc { get { return location; } set { location = value; } }
         public Dictionary<string, Field> fields { get; set; }

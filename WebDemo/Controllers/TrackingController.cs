@@ -69,6 +69,7 @@ namespace WebDemo.Controllers
                 if (device != null)
                 {
                     List<string> keys = device.GetOrderFieldName();
+                    WriteCsvCell(writer, "Date");
                     WriteCsvCell(writer, "Recorded_at");
                     WriteCsvCell(writer, "Longitude");
                     WriteCsvCell(writer, "Latitude");
@@ -82,6 +83,7 @@ namespace WebDemo.Controllers
                     for (int i = 0; i < tracks.Count; i++)
                     {
                         TrackingModel t = tracks[i];
+                        WriteCsvCell(writer, t.Data.Recorded_at.ToString("yyyy/MM/dd"));
                         WriteCsvCell(writer, t.Data.Recorded_at.ToString("HH:mm:ss"));
                         WriteCsvCell(writer, t.Data.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture));
                         WriteCsvCell(writer, t.Data.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture));

@@ -25,7 +25,7 @@ namespace CloudconnectExample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("presalesinte")]
+        [global::System.Configuration.DefaultSettingValueAttribute("account")]
         public string account {
             get {
                 return ((string)(this["account"]));
@@ -34,7 +34,7 @@ namespace CloudconnectExample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7b1c5090ea8578b4c8274054d94380dff5c46783")]
+        [global::System.Configuration.DefaultSettingValueAttribute("000000")]
         public string token {
             get {
                 return ((string)(this["token"]));
