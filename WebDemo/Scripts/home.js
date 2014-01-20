@@ -353,6 +353,19 @@ function DataDriverBehavior() {
 
 /* end Driver Behavior */
 
+function isValid(data) {
+    for (var i = 0; i < data.Fields.length; i++) {
+        if (data.Fields[i].Key == "GPRMC_VALID") {
+            if (data.Fields[i].Value == "A")
+                return true;
+            else
+                return false;
+        }
+    }
+    return true;
+}
+
+
 function initialize() {
     var mapOptions = {
         zoom: 6,
@@ -427,7 +440,7 @@ function clickevent(marker, content) {
 
 function AddPointOnMap(data, idx) {
 
-    if (data.Latitude != 0 && data.Latitude != -0.00001 && data.Latitude != 0.00001) {
+    if (data.Latitude != 0 && data.Latitude != -0.00001 && data.Latitude != 0.00001 && isValid(data)) {
         var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
 
         mapObject.bounds.extend(myLatlng);
@@ -563,10 +576,14 @@ $(document).ready(function () {
     google.maps.event.addDomListener(window, 'load', initialize);
     resize();
 
+    if ($("#autoload_asset").val() != "") {
+        $("#autoload_asset").val("");
+        loadTrackingData();
+    }
     $("#bt_rawdata").bind("click", function () {
         var datevalue = $("#date").datepicker('getDate');
         if ($("#asset").val())
-            window.open('/tracking/' + $("#asset").val() + "/" + datevalue.getFullYear() + "/" + (datevalue.getMonth() + 1).toString() + "/" + datevalue.getDate());
+            window.open('/tracking/index/' + $("#asset").val() + "/" + datevalue.getFullYear() + "/" + (datevalue.getMonth() + 1).toString() + "/" + datevalue.getDate());
     });
 
     $("#bt_execute").bind("click", loadTrackingData);

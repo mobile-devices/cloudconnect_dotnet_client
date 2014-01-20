@@ -9,7 +9,8 @@
             </a><a class="brand" href="#">Map Tool</a>
             <form class="navbar-form" action="#">
             <input type="text" placeholder="asset" id="asset" value="@ViewBag.Imei" />
-            <input type="text" placeholder="date" id="date" value="@DateTime.Today.ToString("dd/MM/yyyy")" />
+            <input type="hidden" id="autoload_asset" value="@ViewBag.Imei" />
+            <input type="text" placeholder="date" id="date" value="@ViewBag.Date.ToString("dd/MM/yyyy")" />
             <button type="button" class="btn btn-success" id="bt_execute">
                 Submit</button>
             <button type="button" class="btn btn-warning" id="bt_configure">

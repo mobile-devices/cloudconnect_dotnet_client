@@ -52,5 +52,15 @@ namespace MD.CloudConnect.Tools
             }
             return result;
         }
+
+        public static byte[] GetRawValue(string b64_value)
+        {
+            byte[] result = null;
+            if (!String.IsNullOrEmpty(b64_value))
+            {
+                result = Convert.FromBase64String(b64_value);
+            }
+            return result;
+        }
     }
 }

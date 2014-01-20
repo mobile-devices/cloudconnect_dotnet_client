@@ -8,6 +8,7 @@ using WebDemo.Models;
 using WebDemo.Models.Repository;
 using WebDemo.Tools;
 using System.Web.Caching;
+using System.Threading;
 
 namespace WebDemo.httphandler
 {
@@ -18,7 +19,7 @@ namespace WebDemo.httphandler
     {
         private static readonly object _lock = new object();
 
-        public static List<Notification> _notificationQ = new List<Notification>();
+        public static Queue<string> _notificationQ = new Queue<string>();
 
         public static void NotificationTask(String k, Object v, CacheItemRemovedReason r)
         {
@@ -27,35 +28,29 @@ namespace WebDemo.httphandler
                 || r == CacheItemRemovedReason.Underused
                 || r == CacheItemRemovedReason.DependencyChanged))
             {
+                string data = "";
                 while (_notificationQ.Count > 0)
                 {
-                    List<Notification> currentNotification = new List<Notification>();
-                    lock (_notificationQ)
+                    string tmp = "";
+                    data = _notificationQ.Dequeue();
+                    int counter = 1;
+                    // rebuild a full data (concat all json data)
+                    while (_notificationQ.Count > 0 && counter < 1000)
                     {
-                        currentNotification = _notificationQ.OrderBy(x => x.Created_at).ToList();
-                        _notificationQ = new List<Notification>();
+                        tmp = _notificationQ.Dequeue();
+                        data = data.Remove(data.Length - 1, 1) + " , " + tmp.Remove(0, 1);
+                        counter++;
                     }
-                    Dictionary<string, List<Notification>> blacklisted = new Dictionary<string, List<Notification>>();
-                    foreach (Notification notif in currentNotification)
-                    {
-                        if (!blacklisted.ContainsKey(notif.url))
-                        {
-                            if (!notif.SendData())
-                            {
-                                //black listed for this current loop, will be re-send on the next event
-                                blacklisted.Add(notif.url, currentNotification.Where(x => x.url == notif.url).ToList());
-                            }
-                        }
-                    }
+                }
+                try
+                {
+                    Decode(data);
+                }
+                catch (Exception ex)
+                {
+                    _notificationQ.Enqueue(data);
+                    Tools.Log.Instance.Notification.Error("Decode Error in notification task : " + ex.Message);
 
-                    if (blacklisted.Count > 0)
-                    {
-                        lock (_notificationQ)
-                        {
-                            foreach (KeyValuePair<string, List<Notification>> item in blacklisted)
-                                _notificationQ.AddRange(item.Value);
-                        }
-                    }
                 }
             }
         }
@@ -66,22 +61,33 @@ namespace WebDemo.httphandler
 
             if (context.Request.HttpMethod == "POST")
             {
+
+                if (_notificationQ.Count > 1000)
+                {
+                    throw new Exception("Too Many data in cache");
+                }
                 if (System.Threading.Monitor.TryEnter(_lock, 10000))
                 {
                     try
                     {
-                        using (StreamReader fluxDonnees = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+                        using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                         {
-                            data = fluxDonnees.ReadToEnd();
+                            data = stream.ReadToEnd();
                             Tools.Log.Instance.Notification.Info(data);
                         }
+                        lock (_notificationQ)
+                        {
+                            _notificationQ.Enqueue(data);
+                        }
+                        if (HttpRuntime.Cache["Notification"] == null)
+                        {
+                            HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
+                        }
 
-                        Decode(data);
                     }
                     catch (Exception ex)
                     {
                         Tools.Log.Instance.General.Error("[" + ex.Message + "]" + data);
-                        throw ex;
                     }
                     finally
                     {
@@ -125,11 +131,11 @@ namespace WebDemo.httphandler
             }
         }
 
-        private void Decode(string data)
+        private static void Decode(string data)
         {
             List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
 
-            ForwadNotification(data);
+            // ForwadNotification(data);
 
             List<TrackingModel> saveTracks = new List<TrackingModel>();
             List<DeviceModel> saveDevices = new List<DeviceModel>();
@@ -165,58 +171,53 @@ namespace WebDemo.httphandler
                 RepositoryFactory.Instance.DeviceDb.Save(saveDevices);
         }
 
-        private void ForwadNotification(string rawData)
-        {
-            if (HttpRuntime.Cache["Notification"] == null)
-            {
-                HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 10)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
-            }
+        //private void ForwadNotification(string rawData)
+        //{
+        //    if (HttpRuntime.Cache["Notification"] == null)
+        //    {
+        //        HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 10)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
+        //    }
 
-            List<AccountModel> accounts = RepositoryFactory.Instance.AccountDb.GetAccounts();
-            List<Notification> cache = new List<Notification>();
-            foreach (AccountModel acc in accounts)
-            {
-                if (acc.UrlForwarding != null && acc.UrlForwarding.Count > 0)
-                {
-                    Notification notif = null;
-                    string[] assets = null;
-                    foreach (KeyValuePair<string, string> item in acc.UrlForwarding)
-                    {
+        //    List<AccountModel> accounts = RepositoryFactory.Instance.AccountDb.GetAccounts();
+        //    List<Notification> cache = new List<Notification>();
+        //    foreach (AccountModel acc in accounts)
+        //    {
+        //        if (acc.UrlForwarding != null && acc.UrlForwarding.Count > 0)
+        //        {
+        //            Notification notif = null;
+        //            string[] assets = null;
+        //            foreach (KeyValuePair<string, string> item in acc.UrlForwarding)
+        //            {
 
-                        if (!String.IsNullOrEmpty(item.Value))
-                        {
-                            assets = item.Value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                            notif = new Notification()
-                            {
-                                Created_at = DateTime.UtcNow,
-                                Name = acc.Name,
-                                url = item.Key
-                            };
-                            notif.CreateContent(assets, rawData, acc.Name);
-                        }
-                        else
-                        {
-                            notif = new Notification()
-                            {
-                                Created_at = DateTime.UtcNow,
-                                Name = acc.Name,
-                                url = item.Key
-                            };
-                            notif.CreateContent(null, rawData, acc.Name);
-                        }
-                        if (!String.IsNullOrEmpty(notif.content))
-                            cache.Add(notif);
-                    }
-                }
-            }
+        //                if (!String.IsNullOrEmpty(item.Value))
+        //                {
+        //                    assets = item.Value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        //                    notif = new Notification()
+        //                    {
+        //                        Created_at = DateTime.UtcNow,
+        //                        Name = acc.Name,
+        //                        url = item.Key
+        //                    };
+        //                    notif.CreateContent(assets, rawData, acc.Name);
+        //                }
+        //                else
+        //                {
+        //                    notif = new Notification()
+        //                    {
+        //                        Created_at = DateTime.UtcNow,
+        //                        Name = acc.Name,
+        //                        url = item.Key
+        //                    };
+        //                    notif.CreateContent(null, rawData, acc.Name);
+        //                }
+        //                if (!String.IsNullOrEmpty(notif.content))
+        //                    cache.Add(notif);
+        //            }
+        //        }
+        //    }
+        //}
 
-            lock (_notificationQ)
-            {
-                _notificationQ.AddRange(cache);
-            }
-        }
-
-        private void DecodeTracking(MD.CloudConnect.ITracking t, AccountModel account, List<TrackingModel> saveTracks, List<DeviceModel> saveDevices)
+        private static void DecodeTracking(MD.CloudConnect.ITracking t, AccountModel account, List<TrackingModel> saveTracks, List<DeviceModel> saveDevices)
         {
             string imei = t.Asset;
 

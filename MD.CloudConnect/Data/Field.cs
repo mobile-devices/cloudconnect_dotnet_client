@@ -46,6 +46,11 @@ namespace MD.CloudConnect.Data
             }
         }
 
+        public byte[] GetRawValue()
+        {
+            return MD.CloudConnect.Tools.Base64Decoder.GetRawValue(b64_value);
+        }
+
         public string GetValueAsString()
         {
             if (_type == null)

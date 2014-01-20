@@ -115,7 +115,8 @@ namespace WebDemo.Controllers
                     "MDI_OBD_SPEED",
                     "MDI_OBD_RPM",
                     "MDI_OBD_FUEL",
-                    "MDI_OBD_MILEAGE"
+                    "MDI_OBD_MILEAGE",
+                    "MDI_RECORD_REASON"
                 },
                 defaultKeyTable = new string[] 
                 { 
@@ -129,7 +130,8 @@ namespace WebDemo.Controllers
                     "MDI_OBD_RPM",
                     "MDI_OBD_FUEL",
                     "MDI_OBD_VIN",
-                    "MDI_OBD_MILEAGE"
+                    "MDI_OBD_MILEAGE",
+                    "MDI_RECORD_REASON"
                 }
             };
             return new ContentResult()

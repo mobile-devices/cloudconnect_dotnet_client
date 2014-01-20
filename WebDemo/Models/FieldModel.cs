@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MD.CloudConnect.Data;
+using System.Text;
 
 namespace WebDemo.Models
 {
@@ -17,7 +18,8 @@ namespace WebDemo.Models
         MilliSecond,
         Second,
         DateDbehav,
-        TimeDbehav
+        TimeDbehav,
+        Sensor4hz
     }
 
     public struct ExtendedFieldDetail
@@ -63,6 +65,18 @@ namespace WebDemo.Models
                     {
                         return "-";
                     }
+                case ExtendedFieldType.Sensor4hz:
+                    try
+                    {
+                        byte[] ba = field.GetRawValue();
+                        var hexString = BitConverter.ToString(ba);
+                        hexString = hexString.Replace("-", "");
+                        return hexString;
+                    }
+                    catch
+                    {
+                        return "-";
+                    }
                 default: return field.b64_value;
             }
         }
@@ -76,17 +90,41 @@ namespace WebDemo.Models
             { "GPS_SPEED",  new ExtendedFieldDetail() { Key = "GPS_SPEED", Id = 8, Type = ExtendedFieldType.Speed , DisplayName = "Gps Speed (Km/h)" }},
             { "GPS_DIR",  new  ExtendedFieldDetail() { Key = "GPS_DIR", Id = 9, Type = ExtendedFieldType.Int100, DisplayName = "Dir" }},
             { "DIO_IGNITION",  new  ExtendedFieldDetail() { Key = "DIO_IGNITION", Id = 14, Type = ExtendedFieldType.Boolean, DisplayName="Ignition" }},
-            { "ODO_FULL",new ExtendedFieldDetail() { Key = "ODO_FULL", Id = 24, Type = ExtendedFieldType.Integer ,DisplayName = "Odo. Full"}},
-            { "DIO_ALARM", new ExtendedFieldDetail() { Key = "DIO_ALARM", Id = 26, Type = ExtendedFieldType.Boolean }},
-            { "DRIVER_ID",new ExtendedFieldDetail() { Key = "DRIVER_ID", Id = 27, Type = ExtendedFieldType.String}},
-            { "DIO_IN_TOR", new ExtendedFieldDetail() { Key = "DIO_IN_TOR", Id = 38, Type = ExtendedFieldType.Integer }},
             { "BATT",new ExtendedFieldDetail() { Key = "BATT", Id = 15, Type = ExtendedFieldType.Integer }},
             { "GPRS_HEADER", new ExtendedFieldDetail() { Key = "GPRS_HEADER", Id = 16, Type = ExtendedFieldType.Integer }},
             { "RSSI", new ExtendedFieldDetail() { Key = "RSSI", Id = 17, Type = ExtendedFieldType.Integer }},
 
+            { "TACHOGRAPH_FIRST_DRIVER_STATE", new ExtendedFieldDetail() { Key = "TACHOGRAPH_FIRST_DRIVER_STATE", Id = 19, Type = ExtendedFieldType.String }},
+            { "TACHOGRAPH_FIRST_DRIVER_DRIVING_STATE", new ExtendedFieldDetail() { Key = "TACHOGRAPH_FIRST_DRIVER_DRIVING_STATE", Id = 20, Type = ExtendedFieldType.String }},
+            { "TACHOGRAPH_DAILYMETER", new ExtendedFieldDetail() { Key = "TACHOGRAPH_DAILYMETER", Id = 21, Type = ExtendedFieldType.Integer }},
+            { "TACHOGRAPH_ODOMETER", new ExtendedFieldDetail() { Key = "TACHOGRAPH_ODOMETER", Id = 22, Type = ExtendedFieldType.Integer }},
+            
+            { "ODO_FULL",new ExtendedFieldDetail() { Key = "ODO_FULL", Id = 24, Type = ExtendedFieldType.Integer ,DisplayName = "Odo. Full"}},
+            { "TACHOGRAPH_DRIVING_TIME", new ExtendedFieldDetail() { Key = "TACHOGRAPH_DRIVING_TIME", Id = 25, Type = ExtendedFieldType.Integer }},
+            { "DIO_ALARM", new ExtendedFieldDetail() { Key = "DIO_ALARM", Id = 26, Type = ExtendedFieldType.Boolean }},
+            { "DRIVER_ID",new ExtendedFieldDetail() { Key = "DRIVER_ID", Id = 27, Type = ExtendedFieldType.String}},
+
+            { "TEMP_1",new ExtendedFieldDetail() { Key = "TEMP_1", Id = 28, Type = ExtendedFieldType.Integer}},
+            { "TEMP_2",new ExtendedFieldDetail() { Key = "TEMP_2", Id = 29, Type = ExtendedFieldType.Integer}},
+            { "TEMP_3",new ExtendedFieldDetail() { Key = "TEMP_3", Id = 30, Type = ExtendedFieldType.Integer}},
+            { "TEMP_4",new ExtendedFieldDetail() { Key = "TEMP_4", Id = 31, Type = ExtendedFieldType.Integer}},
+            { "TEMP_5",new ExtendedFieldDetail() { Key = "TEMP_5", Id = 32, Type = ExtendedFieldType.Integer}},
+            { "TEMP_6",new ExtendedFieldDetail() { Key = "TEMP_6", Id = 33, Type = ExtendedFieldType.Integer}},
+            { "TEMP_7",new ExtendedFieldDetail() { Key = "TEMP_7", Id = 34, Type = ExtendedFieldType.Integer}},
+            { "TEMP_8",new ExtendedFieldDetail() { Key = "TEMP_8", Id = 35, Type = ExtendedFieldType.Integer}},
+
+            { "DIO_IN_TOR", new ExtendedFieldDetail() { Key = "DIO_IN_TOR", Id = 38, Type = ExtendedFieldType.Integer }},
+            { "GPS_HDOP", new ExtendedFieldDetail() { Key = "GPS_HDOP", Id = 39, Type = ExtendedFieldType.Integer }},
+            { "GPS_VDOP", new ExtendedFieldDetail() { Key = "GPS_VDOP", Id = 40, Type = ExtendedFieldType.Integer }},
+            { "GPS_PDOP", new ExtendedFieldDetail() { Key = "GPS_PDOP", Id = 41, Type = ExtendedFieldType.Integer }},
+
+            { "BATT_TEMP", new ExtendedFieldDetail() { Key = "BATT_TEMP", Id = 42, Type = ExtendedFieldType.Int1000 }},
+            { "CASE_TEMP", new ExtendedFieldDetail() { Key = "CASE_TEMP", Id = 43, Type = ExtendedFieldType.Int1000 }},
+
             { "BATT_VOLT", new ExtendedFieldDetail() { Key = "BATT_VOLT", Id = 51, Type = ExtendedFieldType.Integer, DisplayName = "Batt. volt(mV)" }},
             { "MDI_AREA_LIST", new ExtendedFieldDetail() { Key = "MDI_AREA_LIST", Id = 53, Type = ExtendedFieldType.String, DisplayName = "Area List" }},
 
+            { "GPS_FIXED_SAT_NUM", new ExtendedFieldDetail() { Key = "GPS_FIXED_SAT_NUM", Id = 55, Type = ExtendedFieldType.Integer }},
             { "MVT_STATE", new ExtendedFieldDetail() { Key = "MVT_STATE", Id = 56, Type = ExtendedFieldType.Boolean }},
 
             { "BEHAVE_ID", new ExtendedFieldDetail() { Key = "BEHAVE_ID", Id = 100, Type = ExtendedFieldType.Integer, FieldDependency ="BEHAVE_UNIQUE_ID", DisplayName = "Behv. ID" }},
@@ -114,7 +152,6 @@ namespace WebDemo.Models
 
             { "MDI_CRASH_DETECTED", new ExtendedFieldDetail() { Key = "MDI_CRASH_DETECTED", Id = 122, Type = ExtendedFieldType.String , DisplayName = "Crash Detected", IgnoreInHistory = true}},
           
-
             { "MDI_EXT_BATT_LOW", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_LOW", Id = 150, Type = ExtendedFieldType.Boolean , DisplayName = "Ext. Batt. Low"}},
             { "MDI_EXT_BATT_VOLTAGE", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_VOLTAGE", Id = 151 , Type = ExtendedFieldType.Int1000 , DisplayName = "Ext. Batt. Voltage"}},
 
@@ -122,20 +159,28 @@ namespace WebDemo.Models
             { "MDI_DTC_NUMBER", new ExtendedFieldDetail() { Key = "MDI_DTC_NUMBER", Id = 155 , Type = ExtendedFieldType.Integer , DisplayName = "Number of DTC"}},
             { "MDI_DTC_LIST", new ExtendedFieldDetail() { Key = "MDI_DTC_LIST", Id = 156 , Type = ExtendedFieldType.String , DisplayName = "List of DTC(s)"}},
 
-             { "MDI_RPM_MAX", new ExtendedFieldDetail() { Key = "MDI_RPM_MAX", Id = 157 , Type = ExtendedFieldType.Integer , DisplayName = "Max. Rpm"}},
-             { "MDI_RPM_MIN", new ExtendedFieldDetail() { Key = "MDI_RPM_MIN", Id = 158 , Type = ExtendedFieldType.Integer , DisplayName = "Min. Rpm"}},
-             { "MDI_RPM_AVERAGE", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE", Id = 159 , Type = ExtendedFieldType.Integer , DisplayName = "Avg. Rpm"}},
-             { "MDI_RPM_OVER", new ExtendedFieldDetail() { Key = "MDI_RPM_OVER", Id = 160 , Type = ExtendedFieldType.Boolean , DisplayName = "Over Rpm"}},
+            { "MDI_RPM_MAX", new ExtendedFieldDetail() { Key = "MDI_RPM_MAX", Id = 157 , Type = ExtendedFieldType.Integer , DisplayName = "Max. Rpm"}},
+            { "MDI_RPM_MIN", new ExtendedFieldDetail() { Key = "MDI_RPM_MIN", Id = 158 , Type = ExtendedFieldType.Integer , DisplayName = "Min. Rpm"}},
+            { "MDI_RPM_AVERAGE", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE", Id = 159 , Type = ExtendedFieldType.Integer , DisplayName = "Avg. Rpm"}},
+            { "MDI_RPM_OVER", new ExtendedFieldDetail() { Key = "MDI_RPM_OVER", Id = 160 , Type = ExtendedFieldType.Boolean , DisplayName = "Over Rpm"}},
 
-             { "MDI_OBD_PID_1", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_1", Id = 215, Type = ExtendedFieldType.String, DisplayName = "OBD PID 1" }},
-             { "MDI_OBD_PID_2", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_2", Id = 216, Type = ExtendedFieldType.String, DisplayName = "OBD PID 2" }},
-             { "MDI_OBD_PID_3", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_3", Id = 217, Type = ExtendedFieldType.String, DisplayName = "OBD PID 3" }},
-             { "MDI_OBD_PID_4", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_4", Id = 218, Type = ExtendedFieldType.String, DisplayName = "OBD PID 4" }},
-             { "MDI_OBD_PID_5", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_5", Id = 219, Type = ExtendedFieldType.String, DisplayName = "OBD PID 5" }},
+            { "MDI_RPM_AVERAGE_RANGE_1", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE_RANGE_1", Id = 161 , Type = ExtendedFieldType.Integer , DisplayName = "Rpm Average\nRange 1"}},
+            { "MDI_RPM_AVERAGE_RANGE_2", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE_RANGE_2", Id = 162 , Type = ExtendedFieldType.Integer , DisplayName = "Rpm Average Range 2"}},
+            { "MDI_RPM_AVERAGE_RANGE_3", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE_RANGE_3", Id = 163 , Type = ExtendedFieldType.Integer , DisplayName = "Rpm Average Range 3"}},
+            { "MDI_RPM_AVERAGE_RANGE_4", new ExtendedFieldDetail() { Key = "MDI_RPM_AVERAGE_RANGE_4", Id = 164 , Type = ExtendedFieldType.Integer , DisplayName = "Rpm Average Range 4"}},
 
-             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", Id = 220, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 1" }},
-             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", Id = 221, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 2" }},
-             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", Id = 222, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 3" }},
+            { "MDI_SENSORS_RECORDER_DATA", new ExtendedFieldDetail() { Key = "MDI_SENSORS_RECORDER_DATA", Id = 165 , Type = ExtendedFieldType.Sensor4hz , DisplayName = "Sensors recorder data"}},
+            { "MDI_SENSORS_RECORDER_CALIBRATION", new ExtendedFieldDetail() { Key = "MDI_SENSORS_RECORDER_CALIBRATION", Id = 166 , Type = ExtendedFieldType.Sensor4hz , DisplayName = "Sensors recorder calibration"}},
+
+            { "MDI_OBD_PID_1", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_1", Id = 215, Type = ExtendedFieldType.String, DisplayName = "OBD PID 1" }},
+            { "MDI_OBD_PID_2", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_2", Id = 216, Type = ExtendedFieldType.String, DisplayName = "OBD PID 2" }},
+            { "MDI_OBD_PID_3", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_3", Id = 217, Type = ExtendedFieldType.String, DisplayName = "OBD PID 3" }},
+            { "MDI_OBD_PID_4", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_4", Id = 218, Type = ExtendedFieldType.String, DisplayName = "OBD PID 4" }},
+            { "MDI_OBD_PID_5", new ExtendedFieldDetail() { Key = "MDI_OBD_PID_5", Id = 219, Type = ExtendedFieldType.String, DisplayName = "OBD PID 5" }},
+
+            { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_1", Id = 220, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 1" }},
+            { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", Id = 221, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 2" }},
+            { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", Id = 222, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 3" }},
 
             { "MDI_OBD_SPEED", new ExtendedFieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = ExtendedFieldType.Integer, DisplayName = "Obd Speed (km/h)" }},
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
@@ -152,12 +197,10 @@ namespace WebDemo.Models
             { "MDI_OVERSPEED", new ExtendedFieldDetail() { Key = "MDI_OVERSPEED", Id = 247, Type = ExtendedFieldType.Boolean , DisplayName = "Overspeed Status"}},
             { "MDI_MAX_SPEED_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_MAX_SPEED_JOURNEY", Id = 248, Type = ExtendedFieldType.Integer , DisplayName = "Overspeed Max"}},
             { "MDI_JOURNEY_STATE", new ExtendedFieldDetail() { Key = "MDI_JOURNEY_STATE", Id = 249, Type = ExtendedFieldType.Integer , DisplayName = "Journey State"}},
-          
-            { "MDI_VEHICLE_STATE", new ExtendedFieldDetail() { Key = "MDI_VEHICLE_STATE", Id = 249, Type = ExtendedFieldType.String , DisplayName = "Vehicle State"}},
-        
-
             { "MDI_RECORD_REASON", new ExtendedFieldDetail() { Key = "MDI_RECORD_REASON", Id = 250, Type = ExtendedFieldType.String , DisplayName = "Record Reason", IgnoreInHistory = true}},
-            
+    
+            { "MDI_VEHICLE_STATE", new ExtendedFieldDetail() { Key = "MDI_VEHICLE_STATE", Id = 249, Type = ExtendedFieldType.String , DisplayName = "Vehicle State"}},
+
             { "MDI_BOOT_REASON", new ExtendedFieldDetail() { Key = "MDI_BOOT_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Boot Reason", IgnoreInHistory = true}},
             { "MDI_SHUTDOWN_REASON", new ExtendedFieldDetail() { Key = "MDI_SHUTDOWN_REASON", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Shutd. Reason", IgnoreInHistory = true}},
     
