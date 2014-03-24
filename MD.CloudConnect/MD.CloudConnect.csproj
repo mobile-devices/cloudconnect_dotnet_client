@@ -54,6 +54,7 @@
     <Compile Include="CloudConnect.cs" />
     <Compile Include="Data\AssetData.cs" />
     <Compile Include="Data\ChannelData.cs" />
+    <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\FieldData.cs" />
     <Compile Include="Data\MessageData.cs" />
     <Compile Include="Data\TrackingData.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Extension\Easyconnect.cs" />
     <Compile Include="Data\Field.cs" />
     <Compile Include="Data\FieldDefinition.cs" />
+    <Compile Include="Interface\ICollection.cs" />
     <Compile Include="Interface\ICommonData.cs" />
     <Compile Include="Interface\IDataCache.cs" />
     <Compile Include="Interface\IMessage.cs" />

@@ -77,6 +77,7 @@ namespace WebDemo.Models.Repository
             _factory.Register<AccountDb>("AccountDb");
             _factory.Register<DeviceDb>("DeviceDb");
             _factory.Register<DataTrackingDB>("DataTrackingDB");
+            _factory.Register<DataCollectionDb>("DataCollectionDb");
         }
 
         public RepositoryBase RepoFactory(string name)
@@ -98,6 +99,11 @@ namespace WebDemo.Models.Repository
         public DataTrackingDB DataTrackingDB
         {
             get { return this.RepoFactory("DataTrackingDB") as DataTrackingDB; }
+        }
+
+        public DataCollectionDb DataCollectionDb
+        {
+            get { return this.RepoFactory("DataCollectionDb") as DataCollectionDb; }
         }
     }
 }

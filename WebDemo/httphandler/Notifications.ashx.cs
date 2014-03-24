@@ -135,10 +135,9 @@ namespace WebDemo.httphandler
         {
             List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
 
-            // ForwadNotification(data);
-
             List<TrackingModel> saveTracks = new List<TrackingModel>();
             List<DeviceModel> saveDevices = new List<DeviceModel>();
+            List<CollectionModel> saveCollections = new List<CollectionModel>();
 
             List<AccountModel> accounts = RepositoryFactory.Instance.AccountDb.GetAccounts();
             AccountModel currentAccount = null;
@@ -164,58 +163,47 @@ namespace WebDemo.httphandler
                 {
                     //MD.CloudConnect.IMessage m = dData.Message;
                 }
+
+                if (dData.Meta.Event == "collection")
+                {
+                    DecodeCollection(dData.Collection, currentAccount, saveCollections);
+                }
             }
             if (saveTracks.Count > 0)
                 RepositoryFactory.Instance.DataTrackingDB.Save(saveTracks);
             if (saveDevices.Count > 0)
                 RepositoryFactory.Instance.DeviceDb.Save(saveDevices);
+            if (saveCollections.Count > 0)
+                RepositoryFactory.Instance.DataCollectionDb.Save(saveCollections);
+
         }
 
-        //private void ForwadNotification(string rawData)
-        //{
-        //    if (HttpRuntime.Cache["Notification"] == null)
-        //    {
-        //        HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 10)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
-        //    }
+        private static void DecodeCollection(MD.CloudConnect.ICollection c, AccountModel account, List<CollectionModel> saveCollections)
+        {
+            string imei = c.Asset;
+            DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(imei);
 
-        //    List<AccountModel> accounts = RepositoryFactory.Instance.AccountDb.GetAccounts();
-        //    List<Notification> cache = new List<Notification>();
-        //    foreach (AccountModel acc in accounts)
-        //    {
-        //        if (acc.UrlForwarding != null && acc.UrlForwarding.Count > 0)
-        //        {
-        //            Notification notif = null;
-        //            string[] assets = null;
-        //            foreach (KeyValuePair<string, string> item in acc.UrlForwarding)
-        //            {
+            if (device == null)
+            {
+                device = new DeviceModel() { Imei = imei };
+                RepositoryFactory.Instance.DeviceDb.Save(device);
+                device = RepositoryFactory.Instance.DeviceDb.GetDevice(imei);
+            }
 
-        //                if (!String.IsNullOrEmpty(item.Value))
-        //                {
-        //                    assets = item.Value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        //                    notif = new Notification()
-        //                    {
-        //                        Created_at = DateTime.UtcNow,
-        //                        Name = acc.Name,
-        //                        url = item.Key
-        //                    };
-        //                    notif.CreateContent(assets, rawData, acc.Name);
-        //                }
-        //                else
-        //                {
-        //                    notif = new Notification()
-        //                    {
-        //                        Created_at = DateTime.UtcNow,
-        //                        Name = acc.Name,
-        //                        url = item.Key
-        //                    };
-        //                    notif.CreateContent(null, rawData, acc.Name);
-        //                }
-        //                if (!String.IsNullOrEmpty(notif.content))
-        //                    cache.Add(notif);
-        //            }
-        //        }
-        //    }
-        //}
+            CollectionModel collection = new CollectionModel()
+            {
+                DeviceID = device.Id,
+                Name = c.Name,
+                Id_str = c.Id_str,
+                StartDateKey = c.Start_at.Value.GenerateKey(),
+                Start_at = c.Start_at,
+                Stop_at = c.Stop_at,
+                Tracks = c.Tracks,
+                Messages = c.Messages
+            };
+
+            saveCollections.Add(collection);
+        }
 
         private static void DecodeTracking(MD.CloudConnect.ITracking t, AccountModel account, List<TrackingModel> saveTracks, List<DeviceModel> saveDevices)
         {

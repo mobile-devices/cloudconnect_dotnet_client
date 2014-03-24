@@ -11,7 +11,26 @@ namespace MD.CloudConnect
     public class MDData
     {
         [JsonProperty("meta")]
-        public Meta Meta { get; set; }
+        public Dictionary<string, string> MetaData { get; set; }
+
+        private Meta _meta = null;
+        public Meta Meta
+        {
+            get
+            {
+                if (_meta == null && this.MetaData != null)
+                {
+                    _meta = new Meta();
+                    if (this.MetaData.ContainsKey("account"))
+                        _meta.Account = (string)this.MetaData["account"];
+                    if (this.MetaData.ContainsKey("event"))
+                        _meta.Event = (string)this.MetaData["event"];
+                }
+                return _meta;
+            }
+            set { _meta = value; }
+
+        }
 
         [JsonIgnore]
         public DateTime DateOfData
@@ -54,6 +73,22 @@ namespace MD.CloudConnect
                 return _tracking;
             }
         }
+
+        private CollectionData _collection = null;
+        [JsonIgnore]
+        public ICollection Collection
+        {
+            get
+            {
+                if (Meta != null && Meta.Event == "collection" && Payload != null)
+                {
+                    if (_collection == null)
+                        _collection = JsonConvert.DeserializeObject<CollectionData>(Payload.ToString());
+                }
+                return _collection;
+            }
+        }
+
 
         private MessageData _message = null;
         [JsonIgnore]

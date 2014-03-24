@@ -30,6 +30,11 @@ namespace WebDemo
                 new { controller = "Tracking", action = "Index", asset = UrlParameter.Optional, year = UrlParameter.Optional, month = UrlParameter.Optional, day = UrlParameter.Optional }
             );
             routes.MapRoute(
+                "Collection",
+                "Collection/index/{asset}/{year}/{month}/{day}",
+                new { controller = "Collection", action = "Index", asset = UrlParameter.Optional, year = UrlParameter.Optional, month = UrlParameter.Optional, day = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                "HomeIndex",
                "Home/index/{id}",
                new { controller = "Home", action = "Index", id = UrlParameter.Optional }

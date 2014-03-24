@@ -182,6 +182,15 @@ namespace WebDemo.Models
             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_2", Id = 221, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 2" }},
             { "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", new ExtendedFieldDetail() { Key = "MDI_SQUARELL_LAST_RECORDED_MESSAGE_PART_3", Id = 222, Type = ExtendedFieldType.String, DisplayName = "SQUARELL 3" }},
 
+
+            { "MDI_DASHBOARD_MILEAGE", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_MILEAGE", Id = 223, Type = ExtendedFieldType.Integer, DisplayName = "MDI_DASHBOARD_MILEAGE)" }},
+            { "MDI_DASHBOARD_FUEL", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_FUEL", Id = 224, Type = ExtendedFieldType.Integer, DisplayName = "MDI_DASHBOARD_FUEL" }},
+            { "MDI_DASHBOARD_FUEL_LEVEL", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_FUEL_LEVEL", Id = 225, Type = ExtendedFieldType.Integer , DisplayName = "MDI_DASHBOARD_FUEL_LEVEL"}},
+            { "MDI_DIAG_1", new ExtendedFieldDetail() { Key = "MDI_DIAG_1", Id = 226, Type = ExtendedFieldType.String, DisplayName = "MDI_DIAG_1" }},
+            { "MDI_DIAG_2", new ExtendedFieldDetail() { Key = "MDI_DIAG_2", Id = 227, Type = ExtendedFieldType.String, DisplayName = "MDI_DIAG_2" }},
+            { "MDI_DIAG_3", new ExtendedFieldDetail() { Key = "MDI_DIAG_3", Id = 228, Type = ExtendedFieldType.String , DisplayName = "MDI_DIAG_3"}},
+            
+
             { "MDI_OBD_SPEED", new ExtendedFieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = ExtendedFieldType.Integer, DisplayName = "Obd Speed (km/h)" }},
             { "MDI_OBD_RPM", new ExtendedFieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = ExtendedFieldType.Integer, DisplayName = "Obd Rpm" }},
             { "MDI_OBD_FUEL", new ExtendedFieldDetail() { Key = "MDI_OBD_FUEL", Id = 237, Type = ExtendedFieldType.Integer , DisplayName = "Obd Fuel"}},
