@@ -50,7 +50,7 @@ namespace WebDemo.Controllers
                 //for this demo, we just use the first data
                 MD.CloudConnect.MDData newdata = decodedData[0];
 
-                if (newdata.Meta.Event == "message")
+                if (newdata.Meta.Event == "message" && newdata.Message.Channel == "com.mdi.applications.obdstacks")
                 {
                     //The message is encode in Base64 value "b64_payload", you must decode the payload before deserializeObject
                     ObdStackMessage obdMessage = JsonConvert.DeserializeObject<ObdStackMessage>(newdata.Message.Message);

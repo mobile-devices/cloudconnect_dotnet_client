@@ -17,7 +17,7 @@ namespace WebDemo.Models
         public DateTime? Start_at { get; set; }
         public DateTime? Stop_at { get; set; }
 
-        public List<MD.CloudConnect.Data.TrackingData> Tracks { get; set; }
-        public List<MD.CloudConnect.Data.MessageData> Messages { get; set; }
+        public MD.CloudConnect.Data.TrackingData[] Tracks { get; set; }
+        public MD.CloudConnect.Data.MessageData[] Messages { get; set; }
     }
 }

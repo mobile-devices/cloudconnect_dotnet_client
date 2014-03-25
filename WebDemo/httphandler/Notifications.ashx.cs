@@ -198,9 +198,21 @@ namespace WebDemo.httphandler
                 StartDateKey = c.Start_at.Value.GenerateKey(),
                 Start_at = c.Start_at,
                 Stop_at = c.Stop_at,
-                Tracks = c.Tracks,
-                Messages = c.Messages
+                Tracks = ((IEnumerable<MD.CloudConnect.Data.TrackingData>)c.Tracks).ToArray(),
+                Messages = ((IEnumerable<MD.CloudConnect.Data.MessageData>)c.Messages).ToArray()
             };
+
+            //List<TrackingModel> tracks = new List<TrackingModel>();
+            //foreach (MD.CloudConnect.Data.TrackingData data in c.Tracks)
+            //{
+            //    tracks.Add(new TrackingModel()
+            //    {
+            //        Data = data,
+            //        DeviceID = device.Id,
+            //        RecordedDateKey = data.Recorded_at.GenerateKey()
+            //    });
+            //}
+            //collection.Tracks = ((List<ITracking>tracks).ToArray();
 
             saveCollections.Add(collection);
         }

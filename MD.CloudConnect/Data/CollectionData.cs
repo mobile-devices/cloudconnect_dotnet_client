@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace MD.CloudConnect.Data
 {
@@ -19,8 +20,37 @@ namespace MD.CloudConnect.Data
 
         public string Id_str { get; set; }
 
-        public List<MD.CloudConnect.Data.TrackingData> Tracks { get; set; }
+        [JsonProperty("tracks")]
+        Newtonsoft.Json.Linq.JArray RawTracks { get; set; }
+        private List<TrackingData> _tracks = null;
+        [JsonIgnore]
+        public IEnumerable<ITracking> Tracks
+        {
+            get
+            {
+                if (RawTracks != null && _tracks == null)
+                {
+                    _tracks = JsonConvert.DeserializeObject<List<TrackingData>>(RawTracks.ToString());
+                }
+                return _tracks;
+            }
+        }
 
-        public List<MD.CloudConnect.Data.MessageData> Messages { get; set; }
+        [JsonProperty("messages")]
+        public Newtonsoft.Json.Linq.JArray RawMessages { get; set; }
+
+        private List<MessageData> _messages;
+        [JsonIgnore]
+        public IEnumerable<IMessage> Messages
+        {
+            get
+            {
+                if (RawMessages != null && _messages == null)
+                {
+                    _messages = JsonConvert.DeserializeObject<List<MessageData>>(RawMessages.ToString());
+                }
+                return _messages;
+            }
+        }
     }
 }

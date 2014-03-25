@@ -32,14 +32,17 @@ namespace MD.CloudConnect.Data
                 _recorded_at = value;
             }
         }
+        
         [JsonProperty("received_at")]
         public DateTime Received_at { get; set; }
+        
         [JsonProperty("recorded_at_ms")]
         public DateTime? Recorded_at_ms { get; set; }
         /* better should be found. Because for Api request we need Location and for notification we need loc*/
         public double[] location;
         public double[] loc { get { return location; } set { location = value; } }
         public Dictionary<string, Field> fields { get; set; }
+
         [JsonIgnore]
         public double Longitude
         {
@@ -56,6 +59,7 @@ namespace MD.CloudConnect.Data
                     location[0] = value;
             }
         }
+
         [JsonIgnore]
         public double Latitude
         {
@@ -72,6 +76,7 @@ namespace MD.CloudConnect.Data
                     location[1] = value;
             }
         }
+
         [JsonIgnore]
         public bool IsValid
         {
@@ -88,6 +93,7 @@ namespace MD.CloudConnect.Data
                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.GPRMC_VALID));
             }
         }
+
         [JsonIgnore]
         public bool IsMoving
         {

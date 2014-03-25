@@ -11,7 +11,7 @@ namespace MD.CloudConnect
         DateTime? Start_at { get; }
         DateTime? Stop_at { get; }
         string Name { get; }
-        List<TrackingData> Tracks { get; }
-        List<MessageData> Messages { get; }
+        IEnumerable<ITracking> Tracks { get; }
+        IEnumerable<IMessage> Messages { get; }
     }
 }
