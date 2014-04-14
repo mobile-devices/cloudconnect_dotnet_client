@@ -186,6 +186,7 @@ namespace WebDemo.Models
             { "MDI_DASHBOARD_MILEAGE", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_MILEAGE", Id = 223, Type = ExtendedFieldType.Integer, DisplayName = "MDI_DASHBOARD_MILEAGE)" }},
             { "MDI_DASHBOARD_FUEL", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_FUEL", Id = 224, Type = ExtendedFieldType.Integer, DisplayName = "MDI_DASHBOARD_FUEL" }},
             { "MDI_DASHBOARD_FUEL_LEVEL", new ExtendedFieldDetail() { Key = "MDI_DASHBOARD_FUEL_LEVEL", Id = 225, Type = ExtendedFieldType.Integer , DisplayName = "MDI_DASHBOARD_FUEL_LEVEL"}},
+           
             { "MDI_DIAG_1", new ExtendedFieldDetail() { Key = "MDI_DIAG_1", Id = 226, Type = ExtendedFieldType.String, DisplayName = "MDI_DIAG_1" }},
             { "MDI_DIAG_2", new ExtendedFieldDetail() { Key = "MDI_DIAG_2", Id = 227, Type = ExtendedFieldType.String, DisplayName = "MDI_DIAG_2" }},
             { "MDI_DIAG_3", new ExtendedFieldDetail() { Key = "MDI_DIAG_3", Id = 228, Type = ExtendedFieldType.String , DisplayName = "MDI_DIAG_3"}},
@@ -215,8 +216,12 @@ namespace WebDemo.Models
     
       
             { "MDI_PANIC_STATE", new ExtendedFieldDetail() { Key = "MDI_PANIC_STATE", Id = 0, Type = ExtendedFieldType.Boolean , DisplayName = "Panic state"}},
-            { "MDI_PANIC_MESSAGE", new ExtendedFieldDetail() { Key = "MDI_PANIC_MESSAGE", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Panic Message"}}
-    
+            { "MDI_PANIC_MESSAGE", new ExtendedFieldDetail() { Key = "MDI_PANIC_MESSAGE", Id = 0, Type = ExtendedFieldType.String , DisplayName = "Panic Message"}},
+        
+            { "ENH_DASHBOARD_MILEAGE", new ExtendedFieldDetail() { Key = "ENH_DASHBOARD_MILEAGE", Id = 10223, Type = ExtendedFieldType.Integer, DisplayName = "ENH_DASHBOARD_MILEAGE)" }},
+            { "ENH_DASHBOARD_FUEL", new ExtendedFieldDetail() { Key = "ENH_DASHBOARD_FUEL", Id = 10224, Type = ExtendedFieldType.Integer, DisplayName = "ENH_DASHBOARD_FUEL" }},
+            { "ENH_DASHBOARD_FUEL_LEVEL", new ExtendedFieldDetail() { Key = "ENH_DASHBOARD_FUEL_LEVEL", Id = 10225, Type = ExtendedFieldType.Integer , DisplayName = "ENH_DASHBOARD_FUEL_LEVEL"}}
+           
         };
     }
 

@@ -78,6 +78,7 @@ namespace WebDemo.Models.Repository
             _factory.Register<DeviceDb>("DeviceDb");
             _factory.Register<DataTrackingDB>("DataTrackingDB");
             _factory.Register<DataCollectionDb>("DataCollectionDb");
+            _factory.Register<NotificationRepository>("NotificationRepository");
         }
 
         public RepositoryBase RepoFactory(string name)
@@ -104,6 +105,11 @@ namespace WebDemo.Models.Repository
         public DataCollectionDb DataCollectionDb
         {
             get { return this.RepoFactory("DataCollectionDb") as DataCollectionDb; }
+        }
+
+        public NotificationRepository NotificationRepository
+        {
+            get { return this.RepoFactory("NotificationRepository") as NotificationRepository; }
         }
     }
 }

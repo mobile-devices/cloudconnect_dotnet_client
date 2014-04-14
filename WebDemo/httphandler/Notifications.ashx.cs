@@ -66,33 +66,30 @@ namespace WebDemo.httphandler
                 {
                     throw new Exception("Too Many data in cache");
                 }
-                if (System.Threading.Monitor.TryEnter(_lock, 10000))
-                {
-                    try
-                    {
-                        using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
-                        {
-                            data = stream.ReadToEnd();
-                            Tools.Log.Instance.Notification.Info(data);
-                        }
-                        lock (_notificationQ)
-                        {
-                            _notificationQ.Enqueue(data);
-                        }
-                        if (HttpRuntime.Cache["Notification"] == null)
-                        {
-                            HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
-                        }
 
-                    }
-                    catch (Exception ex)
+                try
+                {
+                    using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                     {
-                        Tools.Log.Instance.General.Error("[" + ex.Message + "]" + data);
+                        data = stream.ReadToEnd();
                     }
-                    finally
+                    lock (_notificationQ)
                     {
-                        System.Threading.Monitor.Exit(_lock);
+                        _notificationQ.Enqueue(data);
                     }
+                    if (HttpRuntime.Cache["Notification"] == null)
+                    {
+                        HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Tools.Log.Instance.General.Error("[" + ex.Message + "]" + data);
+                }
+                finally
+                {
+                    System.Threading.Monitor.Exit(_lock);
                 }
             }
             else
@@ -166,7 +163,7 @@ namespace WebDemo.httphandler
 
                 if (dData.Meta.Event == "collection")
                 {
-                    DecodeCollection(dData.Collection, currentAccount, saveCollections);
+                    //DecodeCollection(dData.Collection, currentAccount, saveCollections);
                 }
             }
             if (saveTracks.Count > 0)

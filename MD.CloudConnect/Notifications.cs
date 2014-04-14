@@ -5,12 +5,14 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using MD.CloudConnect.Data;
+using MD.CloudConnect.Interface;
+using MD.CloudConnect.CacheProvider;
 
 namespace MD.CloudConnect
 {
     public class Notification
     {
-        private Dictionary<string, TrackingData> _fieldsCache = new Dictionary<string, TrackingData>();
+        private ICacheProvider _cacheProvider = null;
         private string[] _fieldsUse = null;
         private IDataCache _dataCache = null;
         private bool _autoFilter = true;
@@ -48,10 +50,11 @@ namespace MD.CloudConnect
         {
             TrackingData currentHistory = null;
 
-            if (_fieldsCache.ContainsKey(asset))
+            currentHistory = _cacheProvider.findCache(asset);
+            if (currentHistory != null)
             {
-                currentHistory = _fieldsCache[asset];
                 UpdateCache(currentHistory, field, data);
+                _cacheProvider.UpdateCache(asset,currentHistory);
             }
         }
 
@@ -62,14 +65,16 @@ namespace MD.CloudConnect
         /// <param name="dataCache">Class call one time to load a previous data save in your database</param>
         /// <param name="autoFilter">Activate auto filter function. Remove bad data like data with date in the future or not order</param>
         /// <param name="fixMoving">Activate function to detect when a unit move or not.This information is send by the unit but can be not correct in some case</param>
-        public void Initialize(string[] fieldsName, IDataCache dataCache, bool autoFilter = true, bool fixMoving = false)
+        public void Initialize(string[] fieldsName, IDataCache dataCache, bool autoFilter = true, bool fixMoving = false, ICacheProvider cacheProvider = null)
         {
             if (fieldsName != null && fieldsName.Length > 0)
             {
-                _fieldsCache.Clear();
                 _fieldsUse = fieldsName;
                 _dataCache = dataCache;
             }
+
+            if (cacheProvider == null)
+                _cacheProvider = new InMemory();
             _autoFilter = autoFilter;
             _fixMoving = fixMoving;
         }
@@ -90,15 +95,13 @@ namespace MD.CloudConnect
                         if (data.Meta.Event == "track")
                         {
                             ITracking track = (ITracking)data.Tracking;
-                            if (!_fieldsCache.ContainsKey(track.Asset))
+                            history = _cacheProvider.findCache(track.Asset);
+                            if (history == null)
                             {
                                 history = GeneratePayload(track.Asset, _fieldsUse);
                                 history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
-
-                                _fieldsCache.Add(track.Asset, history);
+                                _cacheProvider.AddCache(track.Asset, history);
                             }
-                            else
-                                history = _fieldsCache[track.Asset];
 
                             if (track.Recorded_at.Ticks > history.Recorded_at.Ticks && track.Recorded_at.Ticks <= track.Received_at.Ticks)
                             {
@@ -109,6 +112,8 @@ namespace MD.CloudConnect
                                 data.ShouldBeIgnore = true;
                             else
                                 FillTrackingDataUserChoice(track, history, false);
+
+                            _cacheProvider.UpdateCache(track.Asset, history);
                         }
                     }
                 }

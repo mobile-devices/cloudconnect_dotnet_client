@@ -17,8 +17,6 @@ namespace WebDemo.Controllers
         {
             MemoryStream memStream = new MemoryStream();
             StreamWriter writer = new StreamWriter(memStream);
-
-
             writer.Flush();
             memStream.Seek(0, SeekOrigin.Begin);
             FileStreamResult file = new FileStreamResult(memStream, "text/csv");

@@ -135,6 +135,7 @@
     <Compile Include="Models\Repository\DataCollectionDb.cs" />
     <Compile Include="Models\Repository\DataTrackingDB.cs" />
     <Compile Include="Models\Repository\DeviceDb.cs" />
+    <Compile Include="Models\Repository\NotificationRepository.cs" />
     <Compile Include="Models\Repository\RepositoryBase.cs" />
     <Compile Include="Models\Repository\RepositoryFactory.cs" />
     <Compile Include="Models\TrackingModel.cs" />
