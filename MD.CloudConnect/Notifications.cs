@@ -54,7 +54,7 @@ namespace MD.CloudConnect
             if (currentHistory != null)
             {
                 UpdateCache(currentHistory, field, data);
-                _cacheProvider.UpdateCache(asset,currentHistory);
+                _cacheProvider.UpdateCache(asset, currentHistory);
             }
         }
 
@@ -156,11 +156,11 @@ namespace MD.CloudConnect
                 }
             }
 
-            if (((TrackingData)data).location == null)
-            {
-                ((TrackingData)data).location = (double[])history.location.Clone();
-            }
-            else
+            if (((TrackingData)data).location != null)
+            //{
+            //    ((TrackingData)data).location = (double[])history.location.Clone();
+            //}
+            //else
             {
                 history.location[0] = data.Longitude;
                 history.location[1] = data.Latitude;

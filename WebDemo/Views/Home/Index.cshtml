@@ -76,4 +76,11 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="@Url.Content("~/Scripts/table-fixed-header.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jStorage.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/home.js")" type="text/javascript"></script>
+@if (ViewBag.oldjs)
+{
+    <script src="@Url.Content("~/Scripts/old_home.js")" type="text/javascript"></script>
+}
+else
+{
+    <script src="@Url.Content("~/Scripts/home.js")" type="text/javascript"></script>
+}

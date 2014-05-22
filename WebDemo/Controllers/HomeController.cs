@@ -14,6 +14,8 @@ namespace WebDemo.Controllers
     {
         public ActionResult Index(string id = "", int year = 0, int month = 0, int day = 0)
         {
+            ViewBag.oldjs = (Request["oldjs"] == "1");
+             
             if (year == 0 || month == 0 || day == 0)
                 ViewBag.Date = DateTime.Now;
             else

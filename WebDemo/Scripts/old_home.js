@@ -149,10 +149,9 @@ var mapObject = {
     infosDbehav: null,
     bounds: null,
     polylines: null,
-    currentPolyline: null,
     isfocusMap: true,
     currentInfo: null,
-    colors: ["#E03C31", "#72A0C1", "#29AB87", "#9D81BA", "#FF8F00"],
+    colors: ["#FF0000", "#00FF00", "#0000FF", "#FF0000", "#FF0000"],
     emptyArray: function (data) {
         if (data) {
             var tmp = null;
@@ -166,15 +165,9 @@ var mapObject = {
     },
     clear: function () {
         if (this.polylineMap) {
-            for (var i = 0; i < this.polylineMap.length; i++) {
-                if (this.polylineMap[i]) {
-                    this.polylineMap[i].setMap(null);
-                    this.polylineMap[i] = null;
-                }
-            }
-            for (var i = 0; i < this.polylines.length; i++) {
-                this.emptyArray(this.polylines[i]);
-            }
+            this.polylineMap.setMap(null);
+            this.polylineMap = null;
+            this.emptyArray(this.polylines);
         }
         this.emptyArray(this.markers);
         this.emptyArray(this.infos);
@@ -203,46 +196,22 @@ var mapObject = {
         }
     },
     IncIdxColor: function () {
-        if (this.currentPolyline.length > 0) {
-            this.displayCurrentPolyline();
-            if (this.idxColor < this.colors.length)
-                this.idxColor++;
-            else
-                this.idxColor = 0;
-        }
+        if (this.idxColor < this.Colors.length)
+            this.idxColor++;
+        else
+            this.idxColor = 0;
     },
-    displayCurrentPolyline: function () {
-        if (this.currentPolyline && this.currentPolyline.length > 0) {
+    update: function () {
 
-            this.polylines.push(this.currentPolyline);
-
-            var pMap = new google.maps.Polyline({
-                path: this.currentPolyline,
-                strokeColor: this.colors[this.idxColor],
+        if (this.polylines && this.polylines.length > 0) {
+            this.polylineMap = new google.maps.Polyline({
+                path: this.polylines,
+                strokeColor: this.colors[0],
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
-
-            this.polylineMap.push(pMap);
-            pMap.setMap(map);
-            this.currentPolyline = new Array();
+            this.polylineMap.setMap(map);
         }
-    },
-    pushOnCurentPolyline: function (myLatlng) {
-        this.currentPolyline.push(myLatlng);
-        //this.polylines.push(myLatlng);
-    },
-    update: function () {
-        this.displayCurrentPolyline();
-        //        if (this.polylines && this.polylines.length > 0) {
-        //            this.polylineMap = new google.maps.Polyline({
-        //                path: this.polylines,
-        //                strokeColor: this.colors[this.idxColor],
-        //                strokeOpacity: 1.0,
-        //                strokeWeight: 2
-        //            });
-        //            this.polylineMap.setMap(map);
-        //        }
 
         map.fitBounds(this.bounds);
     },
@@ -251,12 +220,8 @@ var mapObject = {
         this.markersDbehav = new Array();
         this.bounds = new google.maps.LatLngBounds();
         this.polylines = new Array();
-        this.currentPolyline = new Array();
-        this.polylines.push(this.currentPolyline);
         this.infos = new Array();
         this.infosDbehav = new Array();
-        this.polylineMap = new Array();
-        this.idxColor = 0;
     }
 };
 /* End MapObject */
@@ -389,19 +354,14 @@ function DataDriverBehavior() {
 /* end Driver Behavior */
 
 function isValid(data) {
-    return data.Longitude && data.Longitude != 0.0 && data.Latitude && data.Latitude != 0.0 && data.Latitude != 0 && data.Latitude != -0.00001 && data.Latitude != 0.00001
-}
-
-function ignitionOn(data) {
     for (var i = 0; i < data.Fields.length; i++) {
-        if (data.Fields[i].Key == "DIO_IGNITION") {
-            if (data.Fields[i].Value == "True")
+        if (data.Fields[i].Key == "GPRMC_VALID") {
+            if (data.Fields[i].Value == "A")
                 return true;
             else
                 return false;
         }
     }
-    //if field does not exist with return true
     return true;
 }
 
@@ -480,15 +440,12 @@ function clickevent(marker, content) {
 
 function AddPointOnMap(data, idx) {
 
-    if (isValid(data)) {
+    if (data.Latitude != 0 && data.Latitude != -0.00001 && data.Latitude != 0.00001 && isValid(data)) {
         var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
 
         mapObject.bounds.extend(myLatlng);
-        if (ignitionOn(data)) {
-            mapObject.pushOnCurentPolyline(myLatlng);
-        } else {
-            mapObject.IncIdxColor();
-        }
+        mapObject.polylines.push(myLatlng);
+
         var marker = new google.maps.Marker(
         {
             position: myLatlng,

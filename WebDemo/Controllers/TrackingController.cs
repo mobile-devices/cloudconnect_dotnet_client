@@ -18,12 +18,14 @@ namespace WebDemo.Controllers
         //
         // GET: /Tracking/
 
-        public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28)
+        public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28, string options = "")
         {
             List<TrackingModel> tracks = new List<TrackingModel>();
             ViewBag.Imei = "";
             ViewBag.Fields = new Dictionary<string, MD.CloudConnect.Data.Field>();
             ViewBag.Date = DateTime.MinValue;
+
+
 
             if (!String.IsNullOrEmpty(asset))
             {
@@ -33,6 +35,16 @@ namespace WebDemo.Controllers
                 {
                     ViewBag.Imei = device.Imei;
                     tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).ToList();
+
+                    //if (!String.IsNullOrEmpty(options) && options == "ED")
+                    //{
+                    //    foreach (TrackingModel t in tracks)
+                    //    {
+                    //        MD.CloudConnect.Data.Field field = new MD.CloudConnect.Data.Field();
+                    //        field.SetValueAsInt(42);
+                    //        t.Data.fields.Add("ED", field);
+                    //    }
+                    //}
                     ViewBag.DateKey = date.GenerateKey();
                     ViewBag.Date = date;
                     ViewBag.Fields = device.GetOrderFieldName();

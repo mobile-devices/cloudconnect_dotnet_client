@@ -17,7 +17,7 @@ namespace WebDemo.httphandler
     /// </summary>
     public class Notifications : IHttpHandler
     {
-        private static readonly object _lock = new object();
+        // private static readonly object _lock = new object();
 
         public static Queue<string> _notificationQ = new Queue<string>();
 
@@ -61,35 +61,23 @@ namespace WebDemo.httphandler
 
             if (context.Request.HttpMethod == "POST")
             {
-
                 if (_notificationQ.Count > 1000)
                 {
                     throw new Exception("Too Many data in cache");
                 }
 
-                try
+                using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                 {
-                    using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
-                    {
-                        data = stream.ReadToEnd();
-                    }
-                    lock (_notificationQ)
-                    {
-                        _notificationQ.Enqueue(data);
-                    }
-                    if (HttpRuntime.Cache["Notification"] == null)
-                    {
-                        HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
-                    }
-
+                    data = stream.ReadToEnd();
                 }
-                catch (Exception ex)
+                lock (_notificationQ)
                 {
-                    Tools.Log.Instance.General.Error("[" + ex.Message + "]" + data);
+                    _notificationQ.Enqueue(data);
+                    Tools.Log.Instance.Notification.Info(data);
                 }
-                finally
+                if (HttpRuntime.Cache["Notification"] == null)
                 {
-                    System.Threading.Monitor.Exit(_lock);
+                    HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
                 }
             }
             else
