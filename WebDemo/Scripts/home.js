@@ -234,16 +234,6 @@ var mapObject = {
     },
     update: function () {
         this.displayCurrentPolyline();
-        //        if (this.polylines && this.polylines.length > 0) {
-        //            this.polylineMap = new google.maps.Polyline({
-        //                path: this.polylines,
-        //                strokeColor: this.colors[this.idxColor],
-        //                strokeOpacity: 1.0,
-        //                strokeWeight: 2
-        //            });
-        //            this.polylineMap.setMap(map);
-        //        }
-
         map.fitBounds(this.bounds);
     },
     init: function () {
@@ -478,16 +468,20 @@ function clickevent(marker, content) {
     return infowindow;
 }
 
-function AddPointOnMap(data, idx) {
+function AddPointOnMap(data, idx, format) {
 
     if (isValid(data)) {
         var myLatlng = new google.maps.LatLng(data.Latitude, data.Longitude);
 
         mapObject.bounds.extend(myLatlng);
-        if (ignitionOn(data)) {
+        if (format == "0")
             mapObject.pushOnCurentPolyline(myLatlng);
-        } else {
-            mapObject.IncIdxColor();
+        else {
+            if (ignitionOn(data)) {
+                mapObject.pushOnCurentPolyline(myLatlng);
+            } else {
+                mapObject.IncIdxColor();
+            }
         }
         var marker = new google.maps.Marker(
         {
@@ -525,6 +519,7 @@ function AddDriverBehavPointOnMap(data, idx, replace_loc_map) {
 
 function loadTrackingData() {
     var datevalue = $("#date").datepicker('getDate');
+    var format = $("#format_view option:selected").val();
 
     $.ajax({
         url: '/tracking/loadData',
@@ -543,7 +538,7 @@ function loadTrackingData() {
                         AddHeaderTable(res[i]);
 
                     driverBehavData = AddLineInTable(res[i], i);
-                    AddPointOnMap(res[i], i);
+                    AddPointOnMap(res[i], i, format);
                     if (config.displayDriverBehavOnMap && driverBehavData) {
 
                         //hack 3.1.27
@@ -551,7 +546,7 @@ function loadTrackingData() {
                             AddDriverBehavPointOnMap(driverBehavData, i, true);
                         }
                         else {
-                            AddPointOnMap(res[i], i);
+                            AddPointOnMap(res[i], i, format);
                             AddDriverBehavPointOnMap(driverBehavData, i, false);
                         }
                     }
