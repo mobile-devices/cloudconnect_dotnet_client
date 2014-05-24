@@ -32,6 +32,25 @@ namespace MD.CloudConnect
 
         }
 
+        private DateTime _dateOfData = DateTime.MinValue;
+        private UInt64 _idOfData = 0;
+        [JsonIgnore]
+        public UInt64 IdOfData
+        {
+            get
+            {
+                if (Meta != null)
+                {
+                    if (_idOfData == 0)
+                    {
+                        ICommonData tmp = JsonConvert.DeserializeObject<ICommonData>(Payload.ToString());
+                        _idOfData = tmp.Id;
+                    }
+                }
+                return _idOfData;
+            }
+        }
+
         [JsonIgnore]
         public DateTime DateOfData
         {
@@ -39,20 +58,36 @@ namespace MD.CloudConnect
             {
                 if (Meta != null)
                 {
-                    if (Meta.Event == "track")
+                    if (_dateOfData == DateTime.MinValue)
                     {
-                        if (this.Tracking != null && this.Tracking.Recorded_at != null)
-                            return this.Tracking.Recorded_at;
-                        else return DateTime.UtcNow;
-                    }
-                    else if (Meta.Event == "message")
-                    {
-                        if (this.Message != null && this.Message.Recorded_at != null)
-                            return this.Message.Recorded_at.Value;
-                        else return DateTime.UtcNow;
-                    }
+                        // TODO : find a way to optimize this
+                        if (Meta.Event == "track")
+                        {
+                            if (this.Tracking != null)
+                                return this.Tracking.Recorded_at;
+                            else return DateTime.UtcNow;
+                        }
+                        else if (Meta.Event == "message")
+                        {
+                            if (this.Message != null && this.Message.Recorded_at.HasValue)
+                                return this.Message.Recorded_at.Value;
+                            else return DateTime.UtcNow;
+                        }
+                        else if (Meta.Event == "presence")
+                        {
+                            if (this.Presence != null && this.Presence.Time.HasValue)
+                                return this.Presence.Time.Value;
+                            else return DateTime.UtcNow;
+                        }
+                        else if (Meta.Event == "collection")
+                        {
+                            if (this.Collection != null && this.Collection.Start_at.HasValue)
+                                return this.Collection.Start_at.Value;
+                            else return DateTime.UtcNow;
+                        }
+                    } 
                 }
-                return DateTime.MinValue;
+                return _dateOfData;
             }
         }
 
@@ -89,6 +124,20 @@ namespace MD.CloudConnect
             }
         }
 
+        private PresenceData _presence = null;
+        [JsonIgnore]
+        public IPresence Presence
+        {
+            get
+            {
+                if (Meta != null && Meta.Event == "presence" && Payload != null)
+                {
+                    if (_presence == null)
+                        _presence = JsonConvert.DeserializeObject<PresenceData>(Payload.ToString());
+                }
+                return _presence;
+            }
+        }
 
         private MessageData _message = null;
         [JsonIgnore]

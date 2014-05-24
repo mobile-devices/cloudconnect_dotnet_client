@@ -15,8 +15,8 @@ namespace MD.CloudConnect
         public List<MDData> Data { get; set; }
         public DateTime DateOfGroup { get; set; }
 
-        private Int64 _maxId = 0;
-        public Int64 MaxID
+        private UInt64 _maxId = 0;
+        public UInt64 MaxID
         {
             get
             {
@@ -24,22 +24,25 @@ namespace MD.CloudConnect
             }
         }
 
-        private DateTime _maxRecordedAt = DateTime.MinValue;
-        public DateTime MaxRecorededAt
-        {
-            get
-            {
-                return _maxRecordedAt;
-            }
-        }
+        //private DateTime _maxRecordedAt = DateTime.MinValue;
+        //public DateTime MaxRecorededAt
+        //{
+        //    get
+        //    {
+        //        return _maxRecordedAt;
+        //    }
+        //}
 
-        DecodedNotificationData(DateTime date, string json)
+        public DecodedNotificationData(DateTime date, string json)
         {
             Data = JsonConvert.DeserializeObject<List<MDData>>(json);
             DateOfGroup = date;
-            foreach(MDData data in Data)
+            foreach (MDData data in Data)
             {
-                //data.Payload.
+                if (_maxId < data.IdOfData)
+                    _maxId = data.IdOfData;
+                //if (_maxRecordedAt < data.DateOfData)
+                //    _maxRecordedAt = data.DateOfData;
             }
         }
     }
@@ -177,14 +180,26 @@ namespace MD.CloudConnect
                 DateTime timeLimit = DateTime.UtcNow.AddSeconds(-_maxBufferTime);
 
                 IDictionary<DateTime, string> jsonData = _notificationCacheProvider.RequestNotificationCache("GEN_NOTIF", maxTimeLimit);
-                Dictionary<DateTime, List<MDData>> decodedData = new Dictionary<DateTime, List<MDData>>();
+                List<DecodedNotificationData> decodedData = new List<DecodedNotificationData>();
 
                 if (jsonData.Keys.LastOrDefault() > timeLimit)
                 {
+                    //step 1 : new Class with 2 important things = DateTime notification and MaxID in Json
                     foreach (KeyValuePair<DateTime, string> d in jsonData)
                     {
-
+                        decodedData.Add(new DecodedNotificationData(d.Key, d.Value));
                     }
+
+                    //step 2 : order by ID (because IDs are always generate by the cloud in a correct order so it's a good way to re-order received data)
+                    decodedData.OrderBy(d => d.MaxID);
+
+                    //step 3 : consider K-sort constraint, we can only decode data from the current buffer limit by the Max time size
+                    foreach(DecodedNotificationData newData in decodedData)
+                    {
+                        if (newData.DateOfGroup <= timeLimit)
+                            data.AddRange(newData.Data);
+                    }
+
                     hash = data.GetHashCode();
                 }
             }
