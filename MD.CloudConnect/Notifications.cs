@@ -10,12 +10,51 @@ using MD.CloudConnect.CacheProvider;
 
 namespace MD.CloudConnect
 {
+    internal class DecodedNotificationData
+    {
+        public List<MDData> Data { get; set; }
+        public DateTime DateOfGroup { get; set; }
+
+        private Int64 _maxId = 0;
+        public Int64 MaxID
+        {
+            get
+            {
+                return _maxId;
+            }
+        }
+
+        private DateTime _maxRecordedAt = DateTime.MinValue;
+        public DateTime MaxRecorededAt
+        {
+            get
+            {
+                return _maxRecordedAt;
+            }
+        }
+
+        DecodedNotificationData(DateTime date, string json)
+        {
+            Data = JsonConvert.DeserializeObject<List<MDData>>(json);
+            DateOfGroup = date;
+            foreach(MDData data in Data)
+            {
+                //data.Payload.
+            }
+        }
+    }
+
     public class Notification
     {
-        private ICacheProvider _cacheProvider = null;
+        private ITrackingCacheProvider _trackingCacheProvider = null;
+        private INotificationCacheProvider _notificationCacheProvider = null;
         private string[] _fieldsUse = null;
         private IDataCache _dataCache = null;
         private bool _autoFilter = true;
+
+        private int _maxBufferTime;
+        private bool _splitCacheByAsset;
+        private Dictionary<int, List<DateTime>> _currentDataInPipe = new Dictionary<int, List<DateTime>>();
 
         private bool _fixMoving = false;
         //Decimal degrees (11.1 meters)
@@ -50,11 +89,11 @@ namespace MD.CloudConnect
         {
             TrackingData currentHistory = null;
 
-            currentHistory = _cacheProvider.findCache(asset);
+            currentHistory = _trackingCacheProvider.FindTrackingCache(asset);
             if (currentHistory != null)
             {
                 UpdateCache(currentHistory, field, data);
-                _cacheProvider.UpdateCache(asset, currentHistory);
+                _trackingCacheProvider.UpdateTrackingCache(asset, currentHistory);
             }
         }
 
@@ -65,61 +104,150 @@ namespace MD.CloudConnect
         /// <param name="dataCache">Class call one time to load a previous data save in your database</param>
         /// <param name="autoFilter">Activate auto filter function. Remove bad data like data with date in the future or not order</param>
         /// <param name="fixMoving">Activate function to detect when a unit move or not.This information is send by the unit but can be not correct in some case</param>
-        public void Initialize(string[] fieldsName, IDataCache dataCache, bool autoFilter = true, bool fixMoving = false, ICacheProvider cacheProvider = null)
+        public void Initialize(string[] fieldsName, IDataCache dataCache, bool autoFilter = true, bool fixMoving = false)
         {
+            _splitCacheByAsset = false;
+            _maxBufferTime = 5;
             if (fieldsName != null && fieldsName.Length > 0)
             {
                 _fieldsUse = fieldsName;
                 _dataCache = dataCache;
             }
 
-            if (cacheProvider == null)
-                _cacheProvider = new InMemory();
+            _trackingCacheProvider = new InMemory();
+            _notificationCacheProvider = new InMemory();
+
             _autoFilter = autoFilter;
             _fixMoving = fixMoving;
         }
 
+        public void Initialize(string[] fieldsName, bool autoFilter = true, bool fixMoving = false
+            , ITrackingCacheProvider trackingCacheProvider = null, INotificationCacheProvider notificationCacheProvider = null
+            , int maxBufferTime = 5, bool splitCacheByAsset = false)
+        {
+            _splitCacheByAsset = splitCacheByAsset;
+            _maxBufferTime = maxBufferTime;
+            if (fieldsName != null && fieldsName.Length > 0)
+            {
+                _fieldsUse = fieldsName;
+                _dataCache = null;
+            }
+
+            if (trackingCacheProvider == null)
+                _trackingCacheProvider = new InMemory();
+            if (notificationCacheProvider == null)
+                _notificationCacheProvider = new InMemory();
+
+            _autoFilter = autoFilter;
+            _fixMoving = fixMoving;
+        }
+
+
+        public void PrepareDataToDecode(string jsonData)
+        {
+            if (_splitCacheByAsset)
+            {
+                List<MDData> datas = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
+                if (datas != null && datas.Count > 0)
+                {
+                    //TODO
+                }
+            }
+            else
+                _notificationCacheProvider.PushNotificationCache("GEN_NOTIF", jsonData, DateTime.UtcNow);
+        }
+
+        public int AsyncDecode(out List<MDData> data, List<string> assets = null)
+        {
+            List<DateTime> dates = new List<DateTime>();
+            data = new List<MDData>();
+            int hash = 0;
+            if (_splitCacheByAsset && assets != null)
+            {
+                data = new List<MDData>();
+                foreach (string asset in assets)
+                {
+
+                }
+            }
+            else
+            {
+                // We have the current buffer of X second + 1 buffer . If the second buffer is full (X sec) we can decode the first one
+                DateTime maxTimeLimit = DateTime.UtcNow.AddSeconds(-(_maxBufferTime * 2));
+                DateTime timeLimit = DateTime.UtcNow.AddSeconds(-_maxBufferTime);
+
+                IDictionary<DateTime, string> jsonData = _notificationCacheProvider.RequestNotificationCache("GEN_NOTIF", maxTimeLimit);
+                Dictionary<DateTime, List<MDData>> decodedData = new Dictionary<DateTime, List<MDData>>();
+
+                if (jsonData.Keys.LastOrDefault() > timeLimit)
+                {
+                    foreach (KeyValuePair<DateTime, string> d in jsonData)
+                    {
+
+                    }
+                    hash = data.GetHashCode();
+                }
+            }
+            _currentDataInPipe.Add(hash, dates);
+
+            return hash;
+        }
+
+        public void AckDecodedData(int hashId)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="jsonData"></param>
+        /// <returns></returns>
         public List<MDData> Decode(string jsonData)
         {
-            List<MDData> datas = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
-            if (datas != null && datas.Count > 0)
+            List<MDData> data = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
+            if (data != null && data.Count > 0)
             {
-                datas = datas.OrderBy(x => x.DateOfData).ToList();
-
-                if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
-                {
-                    TrackingData history = null;
-
-                    foreach (MD.CloudConnect.MDData data in datas)
-                    {
-                        if (data.Meta.Event == "track")
-                        {
-                            ITracking track = (ITracking)data.Tracking;
-                            history = _cacheProvider.findCache(track.Asset);
-                            if (history == null)
-                            {
-                                history = GeneratePayload(track.Asset, _fieldsUse);
-                                history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
-                                _cacheProvider.AddCache(track.Asset, history);
-                            }
-
-                            if (track.Recorded_at.Ticks > history.Recorded_at.Ticks && track.Recorded_at.Ticks <= track.Received_at.Ticks)
-                            {
-                                FillTrackingDataUserChoice(track, history);
-                                history.Recorded_at = track.Recorded_at;
-                            }
-                            else if (_autoFilter)
-                                data.ShouldBeIgnore = true;
-                            else
-                                FillTrackingDataUserChoice(track, history, false);
-
-                            _cacheProvider.UpdateCache(track.Asset, history);
-                        }
-                    }
-                }
-                return datas.Where(x => !x.ShouldBeIgnore).ToList();
+                data = data.OrderBy(x => x.DateOfData).ToList();
+                RebuildTrackingDate(data);
+                return data.Where(x => !x.ShouldBeIgnore).ToList();
             }
             else return new List<MDData>();
+        }
+
+        private void RebuildTrackingDate(List<MDData> alldata)
+        {
+            if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
+            {
+                TrackingData history = null;
+
+                foreach (MD.CloudConnect.MDData data in alldata)
+                {
+                    if (data.Meta.Event == "track")
+                    {
+                        ITracking track = (ITracking)data.Tracking;
+                        history = _trackingCacheProvider.FindTrackingCache(track.Asset);
+                        if (history == null)
+                        {
+                            history = GeneratePayload(track.Asset, _fieldsUse);
+                            history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
+                            _trackingCacheProvider.AddTrackingCache(track.Asset, history);
+                        }
+
+                        if (track.Recorded_at.Ticks > history.Recorded_at.Ticks && track.Recorded_at.Ticks <= track.Received_at.Ticks)
+                        {
+                            FillTrackingDataUserChoice(track, history);
+                            history.Recorded_at = track.Recorded_at;
+                        }
+                        else if (_autoFilter)
+                            data.ShouldBeIgnore = true;
+                        else
+                            FillTrackingDataUserChoice(track, history, false);
+
+                        _trackingCacheProvider.UpdateTrackingCache(track.Asset, history);
+                    }
+                }
+            }
         }
 
         private void FillTrackingDataUserChoice(ITracking data, TrackingData history, bool updateCache = true)

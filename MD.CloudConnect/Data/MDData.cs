@@ -104,6 +104,8 @@ namespace MD.CloudConnect
                 return _message;
             }
         }
+
+
         [JsonIgnore]
         public bool ShouldBeIgnore { get; set; }
     }

@@ -12,7 +12,7 @@ namespace MD.CloudConnect.Data
         [JsonProperty("asset")]
         public string Asset { get; set; }
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public UInt64 Id { get; set; }
         [JsonProperty("id_str")]
         public string Id_str { get; set; }
 

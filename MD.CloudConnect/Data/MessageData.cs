@@ -7,7 +7,7 @@ namespace MD.CloudConnect.Data
 {
     public class MessageData : IMessage
     {
-        public string Id { get; set; }
+        public UInt64 Id { get; set; }
         public string StrId { get; set; }
         public string ParentId { get; set; }
         public string ParentIdStr { get; set; }

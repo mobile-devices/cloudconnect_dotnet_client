@@ -9,7 +9,7 @@ namespace MD.CloudConnect
     public interface ICommonData
     {
         string Asset { get; }
-        string Id { get; }
+        UInt64 Id { get; }
         string Id_str { get; }
     }
 }

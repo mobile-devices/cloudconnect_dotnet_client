@@ -17,10 +17,6 @@ namespace WebDemo.httphandler
     /// </summary>
     public class Notifications : IHttpHandler
     {
-        // private static readonly object _lock = new object();
-
-        public static Queue<string> _notificationQ = new Queue<string>();
-
         public static void NotificationTask(String k, Object v, CacheItemRemovedReason r)
         {
             if (k == "Notification"
@@ -28,29 +24,16 @@ namespace WebDemo.httphandler
                 || r == CacheItemRemovedReason.Underused
                 || r == CacheItemRemovedReason.DependencyChanged))
             {
-                string data = "";
-                while (_notificationQ.Count > 0)
-                {
-                    string tmp = "";
-                    data = _notificationQ.Dequeue();
-                    int counter = 1;
-                    // rebuild a full data (concat all json data)
-                    while (_notificationQ.Count > 0 && counter < 1000)
-                    {
-                        tmp = _notificationQ.Dequeue();
-                        data = data.Remove(data.Length - 1, 1) + " , " + tmp.Remove(0, 1);
-                        counter++;
-                    }
-                }
                 try
                 {
-                    Decode(data);
+                    List<MD.CloudConnect.MDData> data = null;
+                    int hash_key = MD.CloudConnect.Notification.Instance.AsyncDecode(out data);
+                    Analyze(data);
+                    MD.CloudConnect.Notification.Instance.AckDecodedData(hash_key);
                 }
                 catch (Exception ex)
                 {
-                    _notificationQ.Enqueue(data);
                     Tools.Log.Instance.Notification.Error("Decode Error in notification task : " + ex.Message);
-
                 }
             }
         }
@@ -61,18 +44,13 @@ namespace WebDemo.httphandler
 
             if (context.Request.HttpMethod == "POST")
             {
-                if (_notificationQ.Count > 1000)
-                {
-                    throw new Exception("Too Many data in cache");
-                }
-
                 using (StreamReader stream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
                 {
                     data = stream.ReadToEnd();
                 }
-                lock (_notificationQ)
+                lock (Tools.Log.Instance.Notification)
                 {
-                    _notificationQ.Enqueue(data);
+                    MD.CloudConnect.Notification.Instance.PrepareDataToDecode(data);
                     Tools.Log.Instance.Notification.Info(data);
                 }
                 if (HttpRuntime.Cache["Notification"] == null)
@@ -85,7 +63,7 @@ namespace WebDemo.httphandler
                 data = context.Request.Params["Data"];
                 if (!String.IsNullOrEmpty(data))
                 {
-                    Decode(data);
+                    Analyze(MD.CloudConnect.Notification.Instance.Decode(data));
                 }
                 else
                 {
@@ -116,9 +94,9 @@ namespace WebDemo.httphandler
             }
         }
 
-        private static void Decode(string data)
+        private static void Analyze(List<MD.CloudConnect.MDData> decodedData)
         {
-            List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
+            //List<MD.CloudConnect.MDData> decodedData = MD.CloudConnect.Notification.Instance.Decode(data);
 
             List<TrackingModel> saveTracks = new List<TrackingModel>();
             List<DeviceModel> saveDevices = new List<DeviceModel>();

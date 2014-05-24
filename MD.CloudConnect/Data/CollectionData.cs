@@ -16,7 +16,7 @@ namespace MD.CloudConnect.Data
 
         public string Asset { get; set; }
 
-        public string Id { get; set; }
+        public UInt64 Id { get; set; }
 
         public string Id_str { get; set; }
 

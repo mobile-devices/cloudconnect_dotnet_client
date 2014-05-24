@@ -52,15 +52,14 @@
     <Compile Include="Api\Field.cs" />
     <Compile Include="Api\Message.cs" />
     <Compile Include="Api\Track.cs" />
-    <Compile Include="CacheProvider\CouchDbCache.cs" />
     <Compile Include="CacheProvider\InMemory.cs" />
-    <Compile Include="CacheProvider\MongoCache.cs" />
     <Compile Include="CloudConnect.cs" />
     <Compile Include="Data\AssetData.cs" />
     <Compile Include="Data\ChannelData.cs" />
     <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\FieldData.cs" />
     <Compile Include="Data\MessageData.cs" />
+    <Compile Include="Data\PresenceData.cs" />
     <Compile Include="Data\TrackingData.cs" />
     <Compile Include="Extension\CarDiagnostic.cs" />
     <Compile Include="Extension\DriverBehavior.cs" />
@@ -70,7 +69,9 @@
     <Compile Include="Interface\ICollection.cs" />
     <Compile Include="Interface\ICommonData.cs" />
     <Compile Include="Interface\IDataCache.cs" />
-    <Compile Include="Interface\ICacheProvider.cs" />
+    <Compile Include="Interface\INotificationCacheProvider.cs" />
+    <Compile Include="Interface\IPresence.cs" />
+    <Compile Include="Interface\ITrackingCacheProvider.cs" />
     <Compile Include="Interface\IMessage.cs" />
     <Compile Include="Interface\ITracking.cs" />
     <Compile Include="Notifications.cs" />
