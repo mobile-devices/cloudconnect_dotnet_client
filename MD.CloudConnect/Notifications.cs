@@ -24,15 +24,6 @@ namespace MD.CloudConnect
             }
         }
 
-        //private DateTime _maxRecordedAt = DateTime.MinValue;
-        //public DateTime MaxRecorededAt
-        //{
-        //    get
-        //    {
-        //        return _maxRecordedAt;
-        //    }
-        //}
-
         public DecodedNotificationData(DateTime date, string json)
         {
             Data = JsonConvert.DeserializeObject<List<MDData>>(json);
@@ -41,23 +32,24 @@ namespace MD.CloudConnect
             {
                 if (_maxId < data.IdOfData)
                     _maxId = data.IdOfData;
-                //if (_maxRecordedAt < data.DateOfData)
-                //    _maxRecordedAt = data.DateOfData;
             }
         }
     }
 
     public class Notification
     {
+        private const string GENERIC_KEY = "GEN_NOTIF";
+
         private ITrackingCacheProvider _trackingCacheProvider = null;
         private INotificationCacheProvider _notificationCacheProvider = null;
         private string[] _fieldsUse = null;
         private IDataCache _dataCache = null;
         private bool _autoFilter = true;
 
+        private bool _rebuildTracking = false;
         private int _maxBufferTime;
         private bool _splitCacheByAsset;
-        private Dictionary<int, List<DateTime>> _currentDataInPipe = new Dictionary<int, List<DateTime>>();
+        private Dictionary<string, List<DateTime>> _currentDataInPipe = new Dictionary<string, List<DateTime>>();
 
         private bool _fixMoving = false;
         //Decimal degrees (11.1 meters)
@@ -111,29 +103,38 @@ namespace MD.CloudConnect
         {
             _splitCacheByAsset = false;
             _maxBufferTime = 5;
+            _autoFilter = autoFilter;
             if (fieldsName != null && fieldsName.Length > 0)
             {
                 _fieldsUse = fieldsName;
                 _dataCache = dataCache;
+                if (_dataCache != null)
+                {
+                    _autoFilter = true;
+                    _rebuildTracking = true;
+                }
             }
 
             _trackingCacheProvider = new InMemory();
             _notificationCacheProvider = new InMemory();
 
-            _autoFilter = autoFilter;
             _fixMoving = fixMoving;
         }
 
-        public void Initialize(string[] fieldsName, bool autoFilter = true, bool fixMoving = false
+        public void Initialize(string[] fieldsName, bool autoFilter = true, bool rebuildTracking = false, bool fixMoving = false
             , ITrackingCacheProvider trackingCacheProvider = null, INotificationCacheProvider notificationCacheProvider = null
-            , int maxBufferTime = 5, bool splitCacheByAsset = false)
+            , int maxBufferTime = 5, bool splitCacheByAsset = false, IDataCache dataCache = null)
         {
+            _autoFilter = autoFilter;
+            _rebuildTracking = rebuildTracking;
+            if(_rebuildTracking)
+                _autoFilter = true;
             _splitCacheByAsset = splitCacheByAsset;
             _maxBufferTime = maxBufferTime;
             if (fieldsName != null && fieldsName.Length > 0)
             {
                 _fieldsUse = fieldsName;
-                _dataCache = null;
+                _dataCache = dataCache;
             }
 
             if (trackingCacheProvider == null)
@@ -141,7 +142,6 @@ namespace MD.CloudConnect
             if (notificationCacheProvider == null)
                 _notificationCacheProvider = new InMemory();
 
-            _autoFilter = autoFilter;
             _fixMoving = fixMoving;
         }
 
@@ -157,14 +157,14 @@ namespace MD.CloudConnect
                 }
             }
             else
-                _notificationCacheProvider.PushNotificationCache("GEN_NOTIF", jsonData, DateTime.UtcNow);
+                _notificationCacheProvider.PushNotificationCache(GENERIC_KEY, jsonData, DateTime.UtcNow);
         }
 
-        public int AsyncDecode(out List<MDData> data, List<string> assets = null)
+        public string AsyncDecode(out List<MDData> data, List<string> assets = null)
         {
             List<DateTime> dates = new List<DateTime>();
             data = new List<MDData>();
-            int hash = 0;
+            string hash = "";
             if (_splitCacheByAsset && assets != null)
             {
                 data = new List<MDData>();
@@ -175,14 +175,15 @@ namespace MD.CloudConnect
             }
             else
             {
+                DateTime max_real_date = DateTime.MinValue;
                 // We have the current buffer of X second + 1 buffer . If the second buffer is full (X sec) we can decode the first one
                 DateTime maxTimeLimit = DateTime.UtcNow.AddSeconds(-(_maxBufferTime * 2));
                 DateTime timeLimit = DateTime.UtcNow.AddSeconds(-_maxBufferTime);
 
-                IDictionary<DateTime, string> jsonData = _notificationCacheProvider.RequestNotificationCache("GEN_NOTIF", maxTimeLimit);
+                IDictionary<DateTime, string> jsonData = _notificationCacheProvider.RequestNotificationCache(GENERIC_KEY, maxTimeLimit);
                 List<DecodedNotificationData> decodedData = new List<DecodedNotificationData>();
 
-                if (jsonData.Keys.LastOrDefault() > timeLimit)
+                if (jsonData.Keys.FirstOrDefault() < timeLimit)
                 {
                     //step 1 : new Class with 2 important things = DateTime notification and MaxID in Json
                     foreach (KeyValuePair<DateTime, string> d in jsonData)
@@ -194,23 +195,36 @@ namespace MD.CloudConnect
                     decodedData.OrderBy(d => d.MaxID);
 
                     //step 3 : consider K-sort constraint, we can only decode data from the current buffer limit by the Max time size
-                    foreach(DecodedNotificationData newData in decodedData)
+                    foreach (DecodedNotificationData newData in decodedData)
                     {
                         if (newData.DateOfGroup <= timeLimit)
+                        {
                             data.AddRange(newData.Data);
+                            if (newData.DateOfGroup > max_real_date)
+                                max_real_date = newData.DateOfGroup;
+                        }
                     }
-
-                    hash = data.GetHashCode();
+                    dates.Add(max_real_date);
+                    if (_rebuildTracking)
+                        RebuildTrackingDate(data);
+                    if (_autoFilter)
+                        data = data.Where(x => !x.ShouldBeIgnore).ToList();
                 }
             }
-            _currentDataInPipe.Add(hash, dates);
-
+            if (data.Count > 0)
+            {
+                hash = data.GetHashCode().ToString();
+                _currentDataInPipe.Add(hash, dates);
+            }
             return hash;
         }
 
-        public void AckDecodedData(int hashId)
+        public void AckDecodedData(string hashId)
         {
-
+            foreach (DateTime dt in _currentDataInPipe[hashId])
+            {
+                _notificationCacheProvider.DropNotificationCache("GEN_NOTIF", dt);
+            }
         }
 
         /// <summary>
@@ -224,7 +238,8 @@ namespace MD.CloudConnect
             if (data != null && data.Count > 0)
             {
                 data = data.OrderBy(x => x.DateOfData).ToList();
-                RebuildTrackingDate(data);
+                if (_rebuildTracking)
+                    RebuildTrackingDate(data);
                 return data.Where(x => !x.ShouldBeIgnore).ToList();
             }
             else return new List<MDData>();
@@ -232,7 +247,7 @@ namespace MD.CloudConnect
 
         private void RebuildTrackingDate(List<MDData> alldata)
         {
-            if (_dataCache != null && _fieldsUse != null && _fieldsUse.Length > 0)
+            if (_fieldsUse != null && _fieldsUse.Length > 0)
             {
                 TrackingData history = null;
 
@@ -242,10 +257,12 @@ namespace MD.CloudConnect
                     {
                         ITracking track = (ITracking)data.Tracking;
                         history = _trackingCacheProvider.FindTrackingCache(track.Asset);
+
                         if (history == null)
                         {
                             history = GeneratePayload(track.Asset, _fieldsUse);
-                            history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
+                            if (_dataCache != null)
+                                history.Recorded_at = _dataCache.getHistoryFor(track.Asset, (ITracking)history);
                             _trackingCacheProvider.AddTrackingCache(track.Asset, history);
                         }
 

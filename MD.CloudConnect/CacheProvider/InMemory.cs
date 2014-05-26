@@ -10,6 +10,7 @@ namespace MD.CloudConnect.CacheProvider
     public class InMemory : ITrackingCacheProvider, INotificationCacheProvider
     {
         private Dictionary<string, TrackingData> _fieldsCache = new Dictionary<string, TrackingData>();
+        private Dictionary<string, Dictionary<DateTime, string>> _notificationCache = new Dictionary<string, Dictionary<DateTime, string>>();
 
         public TrackingData FindTrackingCache(string asset)
         {
@@ -32,17 +33,33 @@ namespace MD.CloudConnect.CacheProvider
 
         public void PushNotificationCache(string key, string jsonData, DateTime recorded_date)
         {
-         
+            if (!_notificationCache.ContainsKey(key))
+                _notificationCache.Add(key, new Dictionary<DateTime, string>());
+            _notificationCache[key].Add(recorded_date, jsonData);
         }
 
         public IDictionary<DateTime, string> RequestNotificationCache(string key, DateTime max_date)
         {
-            return new Dictionary<DateTime, string>();
+            Dictionary<DateTime, string> result = new Dictionary<DateTime, string>();
+            if (_notificationCache.ContainsKey(key))
+            {
+                foreach (KeyValuePair<DateTime, string> item in _notificationCache[key])
+                {
+                    if (item.Key <= max_date)
+                        result.Add(item.Key, item.Value);
+                }
+            }
+            return result;
         }
 
-        public void DropNotificationCache(string key , DateTime max_date)
+        public void DropNotificationCache(string key, DateTime max_date)
         {
-
+            if (_notificationCache.ContainsKey(key))
+            {
+                DateTime[] dates = _notificationCache[key].Keys.Where(k => k <= max_date).ToArray();
+                foreach (DateTime d in dates)
+                    _notificationCache[key].Remove(d);
+            }
         }
     }
 }

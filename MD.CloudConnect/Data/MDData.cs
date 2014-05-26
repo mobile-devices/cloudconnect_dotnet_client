@@ -43,8 +43,27 @@ namespace MD.CloudConnect
                 {
                     if (_idOfData == 0)
                     {
-                        ICommonData tmp = JsonConvert.DeserializeObject<ICommonData>(Payload.ToString());
-                        _idOfData = tmp.Id;
+                        // TODO : find a way to optimize this
+                        if (Meta.Event == "track")
+                        {
+                            if (this.Tracking != null &&  !String.IsNullOrEmpty(this.Tracking.Id_str))
+                                 _idOfData =  this.Tracking.Id;
+                        }
+                        else if (Meta.Event == "message")
+                        {
+                            if (this.Message != null &&  !String.IsNullOrEmpty(this.Message.Id_str))
+                                 _idOfData =  this.Message.Id;
+                        }
+                        else if (Meta.Event == "presence")
+                        {
+                            if (this.Presence != null &&  !String.IsNullOrEmpty(this.Presence.Id_str))
+                                 _idOfData =  this.Presence.Id;
+                        }
+                        else if (Meta.Event == "collection")
+                        {
+                            if (this.Collection != null && !String.IsNullOrEmpty(this.Collection.Id_str))
+                                _idOfData =  this.Collection.Id;
+                        }
                     }
                 }
                 return _idOfData;
@@ -85,7 +104,7 @@ namespace MD.CloudConnect
                                 return this.Collection.Start_at.Value;
                             else return DateTime.UtcNow;
                         }
-                    } 
+                    }
                 }
                 return _dateOfData;
             }

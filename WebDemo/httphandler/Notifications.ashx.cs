@@ -26,14 +26,21 @@ namespace WebDemo.httphandler
             {
                 try
                 {
-                    List<MD.CloudConnect.MDData> data = null;
-                    int hash_key = MD.CloudConnect.Notification.Instance.AsyncDecode(out data);
-                    Analyze(data);
-                    MD.CloudConnect.Notification.Instance.AckDecodedData(hash_key);
+                    lock (MD.CloudConnect.Notification.Instance)
+                    {
+                        List<MD.CloudConnect.MDData> data = null;
+                        string hash_key = MD.CloudConnect.Notification.Instance.AsyncDecode(out data);
+                        if (data.Count > 0)
+                        {
+                            Tools.Log.Instance.General.Debug("Total decoded value : " + data.Count.ToString());
+                            Analyze(data);
+                            MD.CloudConnect.Notification.Instance.AckDecodedData(hash_key);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Tools.Log.Instance.Notification.Error("Decode Error in notification task : " + ex.Message);
+                    Tools.Log.Instance.General.Error("Decode Error in notification task : " + ex.Message);
                 }
             }
         }
@@ -55,7 +62,7 @@ namespace WebDemo.httphandler
                 }
                 if (HttpRuntime.Cache["Notification"] == null)
                 {
-                    HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 15)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
+                    HttpRuntime.Cache.Insert("Notification", true, null, DateTime.Now.Add(new TimeSpan(0, 0, 10)), TimeSpan.Zero, CacheItemPriority.Normal, NotificationTask);
                 }
             }
             else

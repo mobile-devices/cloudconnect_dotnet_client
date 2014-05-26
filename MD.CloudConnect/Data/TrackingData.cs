@@ -101,7 +101,8 @@ namespace MD.CloudConnect.Data
             {
                 if (fields.ContainsKey(FieldDefinition.MVT_STATE.Key))
                     return fields[FieldDefinition.MVT_STATE.Key].GetValueAsBool();
-                else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.MVT_STATE));
+                 else throw new KeyNotFoundException(String.Format("The key {0} is not present", FieldDefinition.MVT_STATE));
+                //else return false;
             }
             set
             {

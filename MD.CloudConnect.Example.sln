@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.DevTools.NotificationSen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "WebDemo\WebDemo.csproj", "{998B63BF-E885-443E-BE66-9F0224940F2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudConnect.MongoProvider", "CloudConnect.MongoProvider\CloudConnect.MongoProvider.csproj", "{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,18 @@ Global
 		{998B63BF-E885-443E-BE66-9F0224940F2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{998B63BF-E885-443E-BE66-9F0224940F2E}.Release|x64.ActiveCfg = Release|Any CPU
 		{998B63BF-E885-443E-BE66-9F0224940F2E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|x64.ActiveCfg = Release|Any CPU
+		{F3A6EB9B-FCE5-4768-AC00-48F6EBB1026B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
