@@ -14,7 +14,7 @@ namespace MD.CloudConnect.Interface
         /// <param name="jsonData"></param>
         void PushNotificationCache(string key, string jsonData, DateTime recorded_date);
          
-        IDictionary<DateTime, string> RequestNotificationCache(string key, DateTime max_date);
+        IEnumerable<INotificationData> RequestNotificationCache(string key, DateTime max_date);
 
         void DropNotificationCache(string key , DateTime max_date);
     }

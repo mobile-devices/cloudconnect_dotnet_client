@@ -17,6 +17,8 @@ namespace WebDemo.httphandler
     /// </summary>
     public class Notifications : IHttpHandler
     {
+        internal static CloudConnect.MongoProvider.NotificationProvider _provider = new CloudConnect.MongoProvider.NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
+
         public static void NotificationTask(String k, Object v, CacheItemRemovedReason r)
         {
             if (k == "Notification"
@@ -32,7 +34,7 @@ namespace WebDemo.httphandler
                         string hash_key = MD.CloudConnect.Notification.Instance.AsyncDecode(out data);
                         if (data.Count > 0)
                         {
-                            Tools.Log.Instance.General.Debug("Total decoded value : " + data.Count.ToString());
+                            Tools.Log.Instance.General.Debug(String.Format("{0} decoded values on {1} raw notifications", data.Count, _provider.SizeOfCache()));
                             Analyze(data);
                             MD.CloudConnect.Notification.Instance.AckDecodedData(hash_key);
                         }

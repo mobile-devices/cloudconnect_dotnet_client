@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Text;
 using MongoDB.Driver;
 using System.Web.Caching;
+using CloudConnect.MongoProvider;
 
 namespace WebDemo
 {
@@ -68,7 +69,11 @@ namespace WebDemo
             WebDemo.Models.Repository.RepositoryFactory.Instance.Initialize();
 
             Tools.CloudConnectConnetor.Instance.InitializeFields();
-            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, Tools.CloudConnectConnetor.Instance, true, true);
+
+            NotificationProvider provider = new NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
+
+            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, provider, 5, false, Tools.CloudConnectConnetor.Instance);
+//            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, null, 5, false, Tools.CloudConnectConnetor.Instance);
         }
 
 

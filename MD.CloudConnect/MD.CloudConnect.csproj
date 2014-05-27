@@ -58,6 +58,7 @@
     <Compile Include="Data\ChannelData.cs" />
     <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\FieldData.cs" />
+    <Compile Include="Data\InMemoryNotificationData.cs" />
     <Compile Include="Data\MessageData.cs" />
     <Compile Include="Data\PresenceData.cs" />
     <Compile Include="Data\TrackingData.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interface\ICommonData.cs" />
     <Compile Include="Interface\IDataCache.cs" />
     <Compile Include="Interface\INotificationCacheProvider.cs" />
+    <Compile Include="Interface\INotificationData.cs" />
     <Compile Include="Interface\IPresence.cs" />
     <Compile Include="Interface\ITrackingCacheProvider.cs" />
     <Compile Include="Interface\IMessage.cs" />

@@ -10,7 +10,9 @@ namespace MD.CloudConnect.CacheProvider
     public class InMemory : ITrackingCacheProvider, INotificationCacheProvider
     {
         private Dictionary<string, TrackingData> _fieldsCache = new Dictionary<string, TrackingData>();
-        private Dictionary<string, Dictionary<DateTime, string>> _notificationCache = new Dictionary<string, Dictionary<DateTime, string>>();
+        private List<InMemoryNotificationData> _notificationCache = new List<InMemoryNotificationData>();
+
+        //private Dictionary<string, Dictionary<long, string>> _notificationCache = new Dictionary<string, Dictionary<long, string>>();
 
         public TrackingData FindTrackingCache(string asset)
         {
@@ -33,32 +35,29 @@ namespace MD.CloudConnect.CacheProvider
 
         public void PushNotificationCache(string key, string jsonData, DateTime recorded_date)
         {
-            if (!_notificationCache.ContainsKey(key))
-                _notificationCache.Add(key, new Dictionary<DateTime, string>());
-            _notificationCache[key].Add(recorded_date, jsonData);
+            _notificationCache.Add(new InMemoryNotificationData()
+            {
+                Content = jsonData,
+                Received_at = recorded_date.Ticks,
+                Key = key
+            });
         }
 
-        public IDictionary<DateTime, string> RequestNotificationCache(string key, DateTime max_date)
+        public IEnumerable<INotificationData> RequestNotificationCache(string key, DateTime max_date)
         {
-            Dictionary<DateTime, string> result = new Dictionary<DateTime, string>();
-            if (_notificationCache.ContainsKey(key))
+            List<INotificationData> result = new List<INotificationData>();
+            if (_notificationCache.Count > 0)
             {
-                foreach (KeyValuePair<DateTime, string> item in _notificationCache[key])
-                {
-                    if (item.Key <= max_date)
-                        result.Add(item.Key, item.Value);
-                }
+                result = (List<INotificationData>)_notificationCache.Where(x => x.Key == key && x.Received_at <= max_date.Ticks);
             }
             return result;
         }
 
         public void DropNotificationCache(string key, DateTime max_date)
         {
-            if (_notificationCache.ContainsKey(key))
+            if (_notificationCache.Count > 0)
             {
-                DateTime[] dates = _notificationCache[key].Keys.Where(k => k <= max_date).ToArray();
-                foreach (DateTime d in dates)
-                    _notificationCache[key].Remove(d);
+                _notificationCache.RemoveAll(x => x.Received_at <= max_date.Ticks && x.Key == key);
             }
         }
     }
