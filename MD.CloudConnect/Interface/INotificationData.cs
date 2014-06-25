@@ -9,7 +9,7 @@ namespace MD.CloudConnect
     {
         long Received_at { get; set; }
         string Key { get; set; }
-        string Content { get; set; }
+        string Data { get; set; }
         //string Group { get; set; }
     }
 }

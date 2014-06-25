@@ -18,25 +18,50 @@ namespace MD.DevTools.NotificationSender
             Console.ReadLine();
 
             Data currentData = null;
+
             int page = 0;
-            do
+
+            if (String.IsNullOrEmpty(Properties.Settings.Default.FromFile))
             {
-                currentData = LoadData(NotificationSender.Properties.Settings.Default.Asset
-                    , NotificationSender.Properties.Settings.Default.Date.Year, NotificationSender.Properties.Settings.Default.Date.Month, NotificationSender.Properties.Settings.Default.Date.Day
-                    , page, NotificationSender.Properties.Settings.Default.ItemsPerPage);
-                if (currentData.Content != null)
+                do
                 {
-                    Console.WriteLine("Page {0}/{1}", page, currentData.TotalPages);
-                    SendData(JsonConvert.SerializeObject(currentData.Content, Formatting.None));
+
+                    currentData = LoadData(NotificationSender.Properties.Settings.Default.Asset
+                        , NotificationSender.Properties.Settings.Default.Date.Year, NotificationSender.Properties.Settings.Default.Date.Month, NotificationSender.Properties.Settings.Default.Date.Day
+                        , page, NotificationSender.Properties.Settings.Default.ItemsPerPage);
+
+                    if (currentData.Content != null)
+                    {
+                        Console.WriteLine("Page {0}/{1}", page, currentData.TotalPages);
+
+                        SendData(JsonConvert.SerializeObject(currentData.Content, Formatting.None));
+                        if (Properties.Settings.Default.PauseBetweenRequest)
+                        {
+                            Console.WriteLine("press enter to continue");
+                            Console.ReadLine();
+                        }
+                    }
+
+                    page++;
+                } while (currentData.Page != currentData.TotalPages);
+            }
+            else
+            {
+
+                currentData = LoadDataFromFile(Properties.Settings.Default.FromFile);
+                foreach(string data in currentData.RawContent)
+                {
+                    Console.WriteLine("Line {0}/{1}", page, currentData.RawContent.Count());
+                    SendData(data);
                     if (Properties.Settings.Default.PauseBetweenRequest)
                     {
                         Console.WriteLine("press enter to continue");
                         Console.ReadLine();
                     }
+                    page++;
                 }
-
-                page++;
-            } while (currentData.Page != currentData.TotalPages);
+               
+            }
 
             Console.WriteLine("Press enter to quit");
             Console.ReadLine();
@@ -63,6 +88,13 @@ namespace MD.DevTools.NotificationSender
             {
                 Console.WriteLine("Error: {0}", ex.Message);
             }
+        }
+
+        public static Data LoadDataFromFile(string file)
+        {
+            Data result = new Data();
+            result.RawContent = File.ReadAllLines(file);
+            return result;
         }
 
         public static Data LoadData(string asset, int year, int month, int day, int page, int itemperpage)

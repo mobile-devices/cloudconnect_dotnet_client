@@ -201,6 +201,7 @@ namespace WebDemo.Models
             { "MDI_JOURNEY_TIME", new ExtendedFieldDetail() { Key = "MDI_JOURNEY_TIME", Id = 240, Type = ExtendedFieldType.Second , DisplayName = "Journey Time"}},
             { "MDI_IDLE_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_IDLE_JOURNEY", Id = 241, Type = ExtendedFieldType.Second , DisplayName = "Idle journey"}},
             { "MDI_DRIVING_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_DRIVING_JOURNEY", Id = 242, Type = ExtendedFieldType.Second , DisplayName = "Driving journey"}},
+            { "MDI_MAX_SPEED_IN_LAST_OVERSPEED", new ExtendedFieldDetail() { Key = "MDI_MAX_SPEED_IN_LAST_OVERSPEED", Id = 243,FieldDependency = "MDI_OVERSPEED", Type = ExtendedFieldType.Integer , DisplayName = "Max speed in last overspeed"}},
             { "MDI_OVERSPEED_COUNTER", new ExtendedFieldDetail() { Key = "MDI_OVERSPEED_COUNTER", Id = 244, Type = ExtendedFieldType.Integer , DisplayName = "Overspeed Counter"}},
             { "MDI_TOW_AWAY", new ExtendedFieldDetail() { Key = "MDI_TOW_AWAY", Id = 245, Type = ExtendedFieldType.Boolean , DisplayName = "Tow Away"}},
             { "MDI_ODO_JOURNEY", new ExtendedFieldDetail() { Key = "MDI_ODO_JOURNEY", Id = 246, Type = ExtendedFieldType.Integer , DisplayName = "Odo Journey"}},

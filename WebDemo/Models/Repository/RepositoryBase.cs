@@ -22,11 +22,11 @@ namespace WebDemo.Models.Repository
 
         public object LoadDataCache(string request)
         {
-            if (IsActive)
+           // if (IsActive)
             {
                 return HttpRuntime.Cache[request];
             }
-            return null;
+            //return null;
         }
 
         public virtual void RemovedCallback(String k, Object v, CacheItemRemovedReason r)
@@ -37,7 +37,7 @@ namespace WebDemo.Models.Repository
         public void SaveDataCache(string request, int expiredSecond, int expiredMinute, int expiredHour, object objet, string dependancyKey = ""
            , bool lowPriority = false, bool autoReload = false)
         {
-            if (IsActive && HttpRuntime.Cache.EffectivePercentagePhysicalMemoryLimit > 5)
+ //           if (IsActive && HttpRuntime.Cache.EffectivePercentagePhysicalMemoryLimit > 5)
             {
                 if (objet != null)
                 {

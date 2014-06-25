@@ -26,7 +26,8 @@ namespace MD.CloudConnect
 
         public DecodedNotificationData(INotificationData notif)
         {
-            Data = JsonConvert.DeserializeObject<List<MDData>>(notif.Content);
+            Data = JsonConvert.DeserializeObject<List<MDData>>(notif.Data);
+
             DateOfGroup = new DateTime(notif.Received_at, DateTimeKind.Utc);
             foreach (MDData data in Data)
             {
@@ -48,7 +49,7 @@ namespace MD.CloudConnect
 
         private bool _rebuildTracking = false;
         private int _maxBufferTime;
-        private bool _splitCacheByAsset;
+        private bool _splitCacheByGroup;
         private Dictionary<string, List<DateTime>> _currentDataInPipe = new Dictionary<string, List<DateTime>>();
 
         private bool _fixMoving = false;
@@ -101,7 +102,7 @@ namespace MD.CloudConnect
         /// <param name="fixMoving">Activate function to detect when a unit move or not.This information is send by the unit but can be not correct in some case</param>
         public void Initialize(string[] fieldsName, IDataCache dataCache, bool autoFilter = true, bool fixMoving = false)
         {
-            _splitCacheByAsset = false;
+            _splitCacheByGroup = false;
             _maxBufferTime = 5;
             _autoFilter = autoFilter;
             if (fieldsName != null && fieldsName.Length > 0)
@@ -123,13 +124,13 @@ namespace MD.CloudConnect
 
         public void Initialize(string[] fieldsName, bool autoFilter = true, bool rebuildTracking = false, bool fixMoving = false
             , ITrackingCacheProvider trackingCacheProvider = null, INotificationCacheProvider notificationCacheProvider = null
-            , int maxBufferTime = 5, bool splitCacheByAsset = false, IDataCache dataCache = null)
+            , int maxBufferTime = 5, bool splitCacheByGroup = false, IDataCache dataCache = null)
         {
             _autoFilter = autoFilter;
             _rebuildTracking = rebuildTracking;
             if (_rebuildTracking)
                 _autoFilter = true;
-            _splitCacheByAsset = splitCacheByAsset;
+            _splitCacheByGroup = splitCacheByGroup;
             _maxBufferTime = maxBufferTime;
             if (fieldsName != null && fieldsName.Length > 0)
             {
@@ -148,9 +149,10 @@ namespace MD.CloudConnect
         }
 
 
-        public void PrepareDataToDecode(string jsonData)
+        public void PrepareDataToDecode(string jsonData, string groupName = null)
         {
-            if (_splitCacheByAsset)
+
+            if (_splitCacheByGroup && !String.IsNullOrEmpty(groupName))
             {
                 List<MDData> datas = JsonConvert.DeserializeObject<List<MDData>>(jsonData);
                 if (datas != null && datas.Count > 0)
@@ -162,15 +164,16 @@ namespace MD.CloudConnect
                 _notificationCacheProvider.PushNotificationCache(GENERIC_KEY, jsonData, DateTime.UtcNow);
         }
 
-        public string AsyncDecode(out List<MDData> data, string GroupName = null)
+        public string AsyncDecode(out List<MDData> data, out List<MDData> dropData, string groupName = null)
         {
             List<DateTime> dates = new List<DateTime>();
             data = new List<MDData>();
+            dropData = new List<MDData>();
             string hash = "";
-            if (GroupName != null)
+            if (_splitCacheByGroup && !String.IsNullOrEmpty(groupName))
             {
                 data = new List<MDData>();
-
+                //TODO
             }
             else
             {
@@ -182,7 +185,8 @@ namespace MD.CloudConnect
                 IEnumerable<INotificationData> jsonData = _notificationCacheProvider.RequestNotificationCache(GENERIC_KEY, maxTimeLimit);
                 List<DecodedNotificationData> decodedData = new List<DecodedNotificationData>();
 
-                if (jsonData.FirstOrDefault().Received_at < timeLimit.Ticks)
+                INotificationData firstNotif = jsonData.FirstOrDefault();
+                if (firstNotif != null && firstNotif.Received_at < timeLimit.Ticks)
                 {
                     //step 1 : new Class with 2 important things = DateTime notification and MaxID in Json
                     foreach (INotificationData d in jsonData)
@@ -204,10 +208,14 @@ namespace MD.CloudConnect
                         }
                     }
                     dates.Add(max_real_date);
+                    data = data.OrderBy(x => x.DateOfData).ToList();
                     if (_rebuildTracking)
                         RebuildTrackingData(data);
                     if (_autoFilter)
-                        data = data.Where(x => !x.ShouldBeIgnore).ToList();
+                    {
+                        dropData = data.Where(x => x.ShouldBeIgnore).ToList();
+                        data = data.Where(x => !x.ShouldBeIgnore).ToList();   
+                    }
                 }
             }
             if (data.Count > 0)
@@ -218,11 +226,14 @@ namespace MD.CloudConnect
             return hash;
         }
 
-        public void AckDecodedData(string hashId, string GroupName = null)
+        public void AckDecodedData(string hashId, string groupName = null)
         {
             foreach (DateTime dt in _currentDataInPipe[hashId])
             {
-                _notificationCacheProvider.DropNotificationCache(GENERIC_KEY, dt);
+                if (_splitCacheByGroup && !String.IsNullOrEmpty(groupName))
+                    _notificationCacheProvider.DropNotificationCache(groupName, dt);
+                else
+                    _notificationCacheProvider.DropNotificationCache(GENERIC_KEY, dt);
             }
             _currentDataInPipe.Remove(hashId);
         }
@@ -317,10 +328,6 @@ namespace MD.CloudConnect
             }
 
             if (((TrackingData)data).location != null)
-            //{
-            //    ((TrackingData)data).location = (double[])history.location.Clone();
-            //}
-            //else
             {
                 history.location[0] = data.Longitude;
                 history.location[1] = data.Latitude;

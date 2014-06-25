@@ -1,5 +1,6 @@
 ﻿using MD.CloudConnect;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace CloudConnect.MongoProvider
         public ObjectId Id { get; set; }
         public long Received_at { get; set; }
         public string Key { get; set; }
-        public string Content { get; set; }
+        public string Data { get; set; }
         public bool Dropped { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

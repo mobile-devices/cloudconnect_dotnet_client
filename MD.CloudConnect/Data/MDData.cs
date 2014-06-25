@@ -14,6 +14,7 @@ namespace MD.CloudConnect
         public Dictionary<string, string> MetaData { get; set; }
 
         private Meta _meta = null;
+        [JsonIgnore]
         public Meta Meta
         {
             get

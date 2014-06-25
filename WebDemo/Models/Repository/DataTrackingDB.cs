@@ -5,6 +5,7 @@ using System.Web;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using WebDemo.Tools;
+using MongoDB.Driver.Builders;
 
 namespace WebDemo.Models.Repository
 {
@@ -16,9 +17,9 @@ namespace WebDemo.Models.Repository
         {
             MongoCollection<TrackingModel> dataDb = Tools.MongoConnector.Instance.DataBaseReadOnly.GetCollection<TrackingModel>(TRACKING_DB_NAME);
 
-            List<TrackingModel>  result = (from d in dataDb.AsQueryable<TrackingModel>()
-                      where d.DeviceID == device.Id && d.RecordedDateKey == date.GenerateKey()
-                      select d).ToList();
+            List<TrackingModel> result = (from d in dataDb.AsQueryable<TrackingModel>()
+                                          where d.Asset == device.Imei && d.RecordedDateKey == date.GenerateKey()
+                                          select d).ToList();
 
             return result;
         }

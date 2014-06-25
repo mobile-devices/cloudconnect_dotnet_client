@@ -18,15 +18,15 @@ namespace WebDemo.Controllers
         //
         // GET: /Tracking/
 
-        public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28, string options = "")
+        public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28, string debug = "off")
         {
             List<TrackingModel> tracks = new List<TrackingModel>();
             ViewBag.Imei = "";
             ViewBag.Fields = new Dictionary<string, MD.CloudConnect.Data.Field>();
             ViewBag.Date = DateTime.MinValue;
-
-
-
+            ViewBag.DebugOn = false;
+            if (debug == "on")
+                ViewBag.DebugOn = true;
             if (!String.IsNullOrEmpty(asset))
             {
                 DateTime date = new DateTime(year, month, day);
@@ -35,7 +35,8 @@ namespace WebDemo.Controllers
                 {
                     ViewBag.Imei = device.Imei;
                     tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).ToList();
-
+                    if (debug == "off")
+                        tracks = tracks.Where(x => x.Dropped == false).ToList();
                     //if (!String.IsNullOrEmpty(options) && options == "ED")
                     //{
                     //    foreach (TrackingModel t in tracks)
@@ -90,7 +91,7 @@ namespace WebDemo.Controllers
                         WriteCsvCell(writer, key);
                     }
                     DateTime date = DateTime.ParseExact(dateKey.ToString(), "yyyyMMdd", null);
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
                     writer.WriteLine();
                     for (int i = 0; i < tracks.Count; i++)
                     {
@@ -101,7 +102,7 @@ namespace WebDemo.Controllers
                         WriteCsvCell(writer, t.Data.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture));
                         foreach (string key in keys)
                         {
-                            WriteCsvCell(writer, t.GetDisplayDataFor(key, (i < tracks.Count - 1 ? tracks[i + 1].Data.fields : null)));
+                            WriteCsvCell(writer, t.GetDisplayDataFor(key, (i < tracks.Count - 1 ? tracks[i + 1].Data.Fields : null)));
                         }
                         writer.WriteLine();
                     }
@@ -163,7 +164,7 @@ namespace WebDemo.Controllers
                 DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
                 if (device != null)
                 {
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
 
                     Dictionary<string, MD.CloudConnect.Data.Field> previousFields = null;
                     foreach (TrackingModel t in tracks)
@@ -171,27 +172,27 @@ namespace WebDemo.Controllers
                         if (previousFields == null)
                         {
                             previousFields = new Dictionary<string, MD.CloudConnect.Data.Field>();
-                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.fields)
+                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.Fields)
                             {
                                 if (item.Value.b64_value != null)
                                     previousFields.Add(item.Key, item.Value);
                             }
-                            t.Data.fields = previousFields;
+                            t.Data.Fields = previousFields;
                         }
                         else
                         {
                             Dictionary<string, MD.CloudConnect.Data.Field> tmp = new Dictionary<string, MD.CloudConnect.Data.Field>();
                             //remove not usefull fields to simulate the cloud alogrithm
-                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.fields)
+                            foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in t.Data.Fields)
                             {
                                 if ((previousFields.ContainsKey(item.Key) && previousFields[item.Key].b64_value != item.Value.b64_value)
-                                    && t.Data.fields[item.Key].b64_value != null)
+                                    && t.Data.Fields[item.Key].b64_value != null)
                                 {
                                     tmp.Add(item.Key, item.Value);
                                     previousFields[item.Key].b64_value = item.Value.b64_value;
                                 }
                             }
-                            t.Data.fields = tmp;
+                            t.Data.Fields = tmp;
                         }
                     }
 
@@ -238,7 +239,7 @@ namespace WebDemo.Controllers
                 if (device != null)
                 {
                     ViewBag.Imei = device.Imei;
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
                     List<string> keys = device.GetOrderFieldName();
 
                     JsonTrackingModel jtrack = null;
@@ -275,7 +276,7 @@ namespace WebDemo.Controllers
                             {
                                 Key = key,
                                 DisplayName = t.GetDisplayNameField(key),
-                                Value = t.GetDisplayDataFor(key, (i > 0 ? tracks[i - 1].Data.fields : null))
+                                Value = t.GetDisplayDataFor(key, (i > 0 ? tracks[i - 1].Data.Fields : null))
                             });
                         }
 

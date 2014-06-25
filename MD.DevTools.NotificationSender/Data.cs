@@ -13,6 +13,7 @@ namespace MD.DevTools.NotificationSender
         public int TotalPages { get; set; }
         public int TotalItems { get; set; }
 
+        public string[] RawContent { get; set; }
         public MD.CloudConnect.MDData[] Content { get; set; }
     }
 }

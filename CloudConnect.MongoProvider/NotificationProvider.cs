@@ -24,14 +24,15 @@ namespace CloudConnect.MongoProvider
             _dataBase = server.GetDatabase(dataBaseName);
         }
 
-        public void PushNotificationCache(string key, string jsonData, DateTime recorded_date)
+        public void PushNotificationCache(string key, string data, DateTime recorded_date)
         {
             MongoCollection<NotificationData> dataDb = _dataBase.GetCollection<NotificationData>(NOTIFICATION_DB_NAME);
             dataDb.Insert<NotificationData>(new NotificationData()
             {
-                Content = jsonData,
+                Data = data,
                 Received_at = recorded_date.Ticks,
                 Key = key,
+                CreatedAt = DateTime.UtcNow,
                 Dropped = false
             });
         }
@@ -39,23 +40,39 @@ namespace CloudConnect.MongoProvider
         public IEnumerable<INotificationData> RequestNotificationCache(string key, DateTime max_date)
         {
             MongoCollection<NotificationData> dataDb = _dataBase.GetCollection<NotificationData>(NOTIFICATION_DB_NAME);
-            IEnumerable<INotificationData> result = dataDb.AsQueryable<NotificationData>().Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Id).Take(5000);
+            IEnumerable<INotificationData> result = dataDb.AsQueryable<NotificationData>().Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Received_at).Take(10000);
+                //.OrderBy(x => x.Id).Take(10);
+      
             return result;
         }
 
         public void DropNotificationCache(string key, DateTime max_date)
         {
             MongoCollection<NotificationData> dataDb = _dataBase.GetCollection<NotificationData>(NOTIFICATION_DB_NAME);
-            List<NotificationData> data = dataDb.AsQueryable<NotificationData>().Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Id).Take(5000).ToList();
-
-            foreach(NotificationData d in data)
+            List<NotificationData> data = dataDb.AsQueryable<NotificationData>().Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Received_at).Take(10000).ToList();
+               //.OrderBy(x => x.Id).Take(10).ToList();
+           
+            foreach (NotificationData d in data)
             {
                 d.Dropped = true;
                 dataDb.Save(d);
             }
-            // var query = Query.And(Query.LTE("Created_at", max_date), Query.EQ("Dropped", false));
-            // var update = Update.Set("Dropped", true);
-            // dataDb.Update(query,  update);
+
+            //var query = Query.And(Query.EQ("Key", key), Query.LTE("Created_at", max_date), Query.EQ("Dropped", false));
+            //var update = Update.Set("Dropped", true);
+
+            //var options = new MongoUpdateOptions { Flags = UpdateFlags.Multi };
+            //dataDb.Update(query, update, options);
+        }
+
+        public List<string> GetAssetsForGroup(string groupName)
+        {
+            return new List<string>();
+        }
+
+        public void SetAssetsForGroup(string groupName, List<string> assets)
+        {
+
         }
 
         public int SizeOfCache()

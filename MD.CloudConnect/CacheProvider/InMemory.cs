@@ -11,8 +11,7 @@ namespace MD.CloudConnect.CacheProvider
     {
         private Dictionary<string, TrackingData> _fieldsCache = new Dictionary<string, TrackingData>();
         private List<InMemoryNotificationData> _notificationCache = new List<InMemoryNotificationData>();
-
-        //private Dictionary<string, Dictionary<long, string>> _notificationCache = new Dictionary<string, Dictionary<long, string>>();
+        private Dictionary<string, List<string>> _groupCache = new Dictionary<string, List<string>>();
 
         public TrackingData FindTrackingCache(string asset)
         {
@@ -33,14 +32,29 @@ namespace MD.CloudConnect.CacheProvider
                 _fieldsCache[asset] = data;
         }
 
-        public void PushNotificationCache(string key, string jsonData, DateTime recorded_date)
+        public void PushNotificationCache(string key, string data, DateTime recorded_date)
         {
             _notificationCache.Add(new InMemoryNotificationData()
             {
-                Content = jsonData,
+                Data = data,
                 Received_at = recorded_date.Ticks,
                 Key = key
             });
+        }
+
+        public List<string> GetAssetsForGroup(string groupName)
+        {
+            if(_groupCache.ContainsKey(groupName))
+                return _groupCache[groupName];
+            return new List<string>();
+        }
+
+        public void SetAssetsForGroup(string groupName, List<string> assets)
+        {
+            if (_groupCache.ContainsKey(groupName))
+                _groupCache[groupName] = assets;
+            else
+                _groupCache.Add(groupName, assets);
         }
 
         public IEnumerable<INotificationData> RequestNotificationCache(string key, DateTime max_date)
