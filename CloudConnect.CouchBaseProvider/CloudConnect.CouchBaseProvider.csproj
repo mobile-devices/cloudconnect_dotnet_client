@@ -62,18 +62,24 @@
     <Compile Include="CouchbaseManager.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="DeviceRepository.cs" />
-    <Compile Include="Field.cs" />
-    <Compile Include="ModelBase.cs" />
-    <Compile Include="NotificationData.cs" />
+    <Compile Include="IModelBase.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="NotificationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />
+    <Compile Include="RepositoryFactory.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Tracking.cs" />
+    <Compile Include="TrackingRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MD.CloudConnect\MD.CloudConnect.csproj">
       <Project>{a3fe3d46-a1cb-4eee-8c25-b7a4b5bff1f6}</Project>
       <Name>MD.CloudConnect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebDemo.AbstractModel\WebDemo.AbstractModel.csproj">
+      <Project>{20cf406c-6d02-4e89-900d-a2ffe0747bee}</Project>
+      <Name>WebDemo.AbstractModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

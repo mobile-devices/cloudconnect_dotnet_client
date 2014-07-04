@@ -10,6 +10,7 @@ using System.IO;
 using System.Web.Script.Serialization;
 using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
+using WebDemo.AbstractModel;
 
 namespace WebDemo.Controllers
 {
@@ -20,7 +21,7 @@ namespace WebDemo.Controllers
 
         public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28, string debug = "off")
         {
-            List<TrackingModel> tracks = new List<TrackingModel>();
+            List<Track> tracks = new List<Track>();
             ViewBag.Imei = "";
             ViewBag.Fields = new Dictionary<string, MD.CloudConnect.Data.Field>();
             ViewBag.Date = DateTime.MinValue;
@@ -30,7 +31,7 @@ namespace WebDemo.Controllers
             if (!String.IsNullOrEmpty(asset))
             {
                 DateTime date = new DateTime(year, month, day);
-                DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
+                Device device = RepositoryFactory.Instance.DeviceDb.Get(asset);
                 if (device != null)
                 {
                     ViewBag.Imei = device.Imei;
@@ -60,14 +61,14 @@ namespace WebDemo.Controllers
         {
             DateTime date = new DateTime(year, month, day);
 
-            if (!String.IsNullOrEmpty(asset))
-            {
-                MongoDB.Driver.MongoCollection<WebDemo.Models.TrackingModel> dataDb = Tools.MongoConnector.Instance.DataBase.GetCollection<WebDemo.Models.TrackingModel>("TRACKING");
+            //if (!String.IsNullOrEmpty(asset))
+            //{
+            //    MongoDB.Driver.MongoCollection<Tracking> dataDb = Tools.MongoConnector.Instance.DataBase.GetCollection<WebDemo.Models.TrackingModel>("TRACKING");
 
-                var resultat = dataDb.Remove(Query.And(Query.EQ("Data.Asset", asset)
-                         , Query.EQ("RecordedDateKey", date.GenerateKey())));
+            //    var resultat = dataDb.Remove(Query.And(Query.EQ("Data.Asset", asset)
+            //             , Query.EQ("RecordedDateKey", date.GenerateKey())));
 
-            }
+            //}
             return RedirectToAction("index", new { asset = asset, year = year, month = month, Day = day });
         }
 
@@ -78,7 +79,7 @@ namespace WebDemo.Controllers
 
             if (!String.IsNullOrEmpty(asset))
             {
-                DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
+                Device device = RepositoryFactory.Instance.DeviceDb.Get(asset);
                 if (device != null)
                 {
                     List<string> keys = device.GetOrderFieldName();
@@ -91,11 +92,11 @@ namespace WebDemo.Controllers
                         WriteCsvCell(writer, key);
                     }
                     DateTime date = DateTime.ParseExact(dateKey.ToString(), "yyyyMMdd", null);
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<Track> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
                     writer.WriteLine();
                     for (int i = 0; i < tracks.Count; i++)
                     {
-                        TrackingModel t = tracks[i];
+                        Track t = tracks[i];
                         WriteCsvCell(writer, t.Data.Recorded_at.ToString("yyyy/MM/dd"));
                         WriteCsvCell(writer, t.Data.Recorded_at.ToString("HH:mm:ss"));
                         WriteCsvCell(writer, t.Data.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -119,7 +120,7 @@ namespace WebDemo.Controllers
         {
             var result = new
             {
-                authorizedKeys = ExtendedFieldDefinition.Fields.Select(x => x.Key).ToList(),
+                authorizedKeys = WebDemo.AbstractModel.ExtendedFieldDefinition.Fields.Select(x => x.Key).ToList(),
                 defaultKeyMap = new string[] { 
                     "GPRMC_VALID",
                     "GPS_SPEED",
@@ -161,13 +162,13 @@ namespace WebDemo.Controllers
             if (!String.IsNullOrEmpty(asset))
             {
                 DateTime date = new DateTime(year, month, day);
-                DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
+                Device device = RepositoryFactory.Instance.DeviceDb.Get(asset);
                 if (device != null)
                 {
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<Track> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
 
                     Dictionary<string, MD.CloudConnect.Data.Field> previousFields = null;
-                    foreach (TrackingModel t in tracks)
+                    foreach (Track t in tracks)
                     {
                         if (previousFields == null)
                         {
@@ -200,12 +201,12 @@ namespace WebDemo.Controllers
                     result.TotalPages = tracks.Count / maxItemPerPage;
 
                     result.Page = page;
-                    List<TrackingModel> tracksCurrentPage = tracks.Skip(page * maxItemPerPage).Take(maxItemPerPage).ToList();
+                    List<Track> tracksCurrentPage = tracks.Skip(page * maxItemPerPage).Take(maxItemPerPage).ToList();
                     result.NumberOfItems = tracksCurrentPage.Count;
 
                     List<MD.CloudConnect.MDData> data = new List<MD.CloudConnect.MDData>();
 
-                    foreach (TrackingModel t in tracksCurrentPage)
+                    foreach (Track t in tracksCurrentPage)
                     {
                         MD.CloudConnect.MDData current = new MD.CloudConnect.MDData()
                         {
@@ -235,11 +236,11 @@ namespace WebDemo.Controllers
             if (!String.IsNullOrEmpty(asset))
             {
                 DateTime date = new DateTime(year, month, day);
-                DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
+                Device device = RepositoryFactory.Instance.DeviceDb.Get(asset);
                 if (device != null)
                 {
                     ViewBag.Imei = device.Imei;
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<Track> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
                     List<string> keys = device.GetOrderFieldName();
 
                     JsonTrackingModel jtrack = null;
@@ -259,7 +260,7 @@ namespace WebDemo.Controllers
 
                     for (int i = 0; i < tracks.Count; i++)
                     {
-                        TrackingModel t = tracks[i];
+                        Track t = tracks[i];
                         jtrack = new JsonTrackingModel()
                         {
                             Id = i,

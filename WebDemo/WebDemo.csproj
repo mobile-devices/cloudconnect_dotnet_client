@@ -121,7 +121,6 @@
     <Compile Include="Areas\SecurityGuard\Models\SelectObject.cs" />
     <Compile Include="Areas\SecurityGuard\Models\UserViewModel.cs" />
     <Compile Include="Areas\SecurityGuard\SecurityGuardAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -137,10 +136,6 @@
     <Compile Include="httphandler\Notifications.ashx.cs">
       <DependentUpon>Notifications.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\CollectionModel.cs" />
-    <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\FeedResult.cs" />
     <Compile Include="Models\FieldModel.cs" />
     <Compile Include="Models\JsonExportData.cs" />
@@ -150,14 +145,7 @@
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ObdStackMessage.cs" />
-    <Compile Include="Models\Repository\AccountDb.cs" />
-    <Compile Include="Models\Repository\DataCollectionDb.cs" />
-    <Compile Include="Models\Repository\DataTrackingDB.cs" />
-    <Compile Include="Models\Repository\DeviceDb.cs" />
-    <Compile Include="Models\Repository\NotificationRepository.cs" />
-    <Compile Include="Models\Repository\RepositoryBase.cs" />
     <Compile Include="Models\Repository\RepositoryFactory.cs" />
-    <Compile Include="Models\TrackingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\CloudConnectConnetor.cs" />
     <Compile Include="Tools\DateExtension.cs" />
@@ -336,8 +324,6 @@
     <None Include="fonts\fontawesome-webfont.ttf" />
     <None Include="fonts\fontawesome-webfont.woff" />
     <None Include="fonts\FontAwesome.otf" />
-    <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\web.config" />
     <Content Include="Views\SGAccount\ChangePassword.cshtml" />
     <Content Include="Views\SGAccount\ChangePasswordSuccess.cshtml" />
@@ -347,7 +333,6 @@
     <Content Include="Views\Tracking\Index.cshtml" />
     <Content Include="Views\messaging\Index.cshtml" />
     <Content Include="Views\ObdStack\Index.cshtml" />
-    <Content Include="Views\Collection\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CloudConnect.CouchBaseProvider\CloudConnect.CouchBaseProvider.csproj">
@@ -361,6 +346,10 @@
     <ProjectReference Include="..\MD.CloudConnect\MD.CloudConnect.csproj">
       <Project>{A3FE3D46-A1CB-4EEE-8C25-B7A4B5BFF1F6}</Project>
       <Name>MD.CloudConnect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebDemo.AbstractModel\WebDemo.AbstractModel.csproj">
+      <Project>{20cf406c-6d02-4e89-900d-a2ffe0747bee}</Project>
+      <Name>WebDemo.AbstractModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

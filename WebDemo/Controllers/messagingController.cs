@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebDemo.Models;
 using WebDemo.Models.Repository;
 using MD.CloudConnect.Data;
+using WebDemo.AbstractModel;
 
 namespace WebDemo.Controllers
 {
@@ -72,7 +73,7 @@ namespace WebDemo.Controllers
         public JsonResult SendTasks(JsonTasksModel data)
         {
             string res = "OK";
-            DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(data.Asset);
+            Device device = RepositoryFactory.Instance.DeviceDb.Get(data.Asset);
 
             if (device != null)
             {
@@ -88,7 +89,7 @@ namespace WebDemo.Controllers
                     res = "BAD";
                 }
 
-                RepositoryFactory.Instance.DeviceDb.Save(device);
+                RepositoryFactory.Instance.DeviceDb.Update(device);
             }
             else
                 res = "Device does not exists";

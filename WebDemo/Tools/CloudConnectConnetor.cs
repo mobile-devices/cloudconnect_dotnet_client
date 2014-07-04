@@ -5,6 +5,7 @@ using System.Web;
 using WebDemo.Models.Repository;
 using WebDemo.Models;
 using MD.CloudConnect.Data;
+using WebDemo.AbstractModel;
 
 namespace WebDemo.Tools
 {
@@ -31,17 +32,17 @@ namespace WebDemo.Tools
 
         public void InitializeFields()
         {
-            Fields = ExtendedFieldDefinition.Fields.Where(x => !x.Value.IgnoreInHistory).Select(x => x.Key).ToArray();
+            Fields = WebDemo.AbstractModel.ExtendedFieldDefinition.Fields.Where(x => !x.Value.IgnoreInHistory).Select(x => x.Key).ToArray();
         }
 
 
         public DateTime getHistoryFor(string asset, MD.CloudConnect.ITracking data)
         {
-            DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
+            Device device = RepositoryFactory.Instance.DeviceDb.Get(asset);
 
             if (device != null)
             {
-                foreach (KeyValuePair<string, Field> item in ((TrackingData)data).fields)
+                foreach (KeyValuePair<string, MD.CloudConnect.Data.Field> item in ((TrackingData)data).fields)
                 {
                     if (device.LastFields != null && device.LastFields.ContainsKey(item.Key))
                         ((TrackingData)data).fields[item.Key].b64_value = device.LastFields[item.Key].B64Value;

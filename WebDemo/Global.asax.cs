@@ -67,15 +67,19 @@ namespace WebDemo
             RegisterRoutes(RouteTable.Routes);
 
             Tools.Log.Instance.Initialize();
-            WebDemo.Models.Repository.RepositoryFactory.Instance.Initialize();
+            //WebDemo.Models.Repository.RepositoryFactory.Instance.Initialize();
 
             Tools.CloudConnectConnetor.Instance.InitializeFields();
 
-            NotificationProvider provider = new NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
+            //NotificationProvider provider = new NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
 
+            CloudConnect.CouchBaseProvider.CouchbaseManager.RegisterModelViews(new Assembly[] { Assembly.GetAssembly(typeof(CloudConnect.CouchBaseProvider.CouchbaseManager)) });
+            CloudConnect.CouchBaseProvider.NotificationProvider provider = new CloudConnect.CouchBaseProvider.NotificationProvider();
+            WebDemo.Models.Repository.RepositoryFactory.Instance.Provider = new CloudConnect.CouchBaseProvider.RepositoryFactory();
             MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, provider, 10, false, Tools.CloudConnectConnetor.Instance);
+
 //            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, null, 5, false, Tools.CloudConnectConnetor.Instance);
-       //     CloudConnect.CouchBaseProvider.CouchbaseManager.RegisterModelViews(new Assembly[] { Assembly.GetAssembly( typeof(CloudConnect.CouchBaseProvider.CouchbaseManager)) });
+   
         }
 
 

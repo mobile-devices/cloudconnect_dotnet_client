@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace CloudConnect.CouchBaseProvider
 {
-    public abstract class RepositoryBase<T> where T : ModelBase
+    public abstract class RepositoryBase<T> where T : IModelBase
     {
         protected static CouchbaseClient _Client { get; set; }
         static RepositoryBase()
@@ -71,13 +71,22 @@ namespace CloudConnect.CouchBaseProvider
             return result.StatusCode.Value;
         }
 
-        public virtual int Save(T value, PersistTo persistTo = PersistTo.Zero)
-        {
-            var key = string.IsNullOrEmpty(value.Id) ? BuildKey(value) : value.Id;
-            var result = _Client.ExecuteStore(StoreMode.Set, key, serializeAndIgnoreId(value), persistTo);
-            if (result.Exception != null) throw result.Exception;
-            return result.StatusCode.Value;
-        }
+        //public virtual void Update(List<T> data, PersistTo persistTo = PersistTo.Zero)
+        //{
+        //    foreach (T value in data)
+        //    {
+        //        var result = _Client.ExecuteStore(StoreMode.Replace, value.Id, serializeAndIgnoreId(value), persistTo);
+        //        if (result.Exception != null) throw result.Exception;
+        //    }
+        //}
+
+        //public virtual int Save(T value, PersistTo persistTo = PersistTo.Zero)
+        //{
+        //    var key = string.IsNullOrEmpty(value.Id) ? BuildKey(value) : value.Id;
+        //    var result = _Client.ExecuteStore(StoreMode.Set, key, serializeAndIgnoreId(value), persistTo);
+        //    if (result.Exception != null) throw result.Exception;
+        //    return result.StatusCode.Value;
+        //}
 
         public virtual T Get(string key)
         {
@@ -86,7 +95,7 @@ namespace CloudConnect.CouchBaseProvider
 
             if (result.Value == null)
             {
-                return null;
+                return default(T);
             }
 
             var model = JsonConvert.DeserializeObject<T>(result.Value);
@@ -100,8 +109,6 @@ namespace CloudConnect.CouchBaseProvider
             if (result.Exception != null) throw result.Exception;
             return result.StatusCode.HasValue ? result.StatusCode.Value : 0;
         }
-
-
 
         private string serializeAndIgnoreId(T obj)
         {

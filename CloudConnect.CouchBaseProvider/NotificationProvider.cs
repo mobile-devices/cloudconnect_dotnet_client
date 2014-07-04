@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 using Enyim.Caching.Memcached;
 using Couchbase.Extensions;
 using Couchbase;
+using MD.CloudConnect;
 
 namespace CloudConnect.CouchBaseProvider
 {
-    public class NotificationProvider : RepositoryBase<NotificationData> , INotificationCacheProvider
+    public class NotificationProvider : RepositoryBase<Notification> , INotificationCacheProvider
     {
         public void PushNotificationCache(string key, string data, DateTime recorded_date)
         {
-            NotificationData notif = new NotificationData(){
+            Notification notif = new Notification()
+            {
                 Created_at = DateTime.Now,
                 Data = data,
                 Dropped = false,
@@ -24,9 +26,15 @@ namespace CloudConnect.CouchBaseProvider
             this.CreateWithExpireTime(notif, recorded_date.AddDays(7));
         }
 
-        public IEnumerable<NotificationData> GetAllByDropped(string startKey = null, string endKey = null, int limit = 0, bool allowStale = false)
+        public int SizeOfCache()
         {
-            var view = GetView("by_dropped");
+            IEnumerable<Notification> result = GetAllByDropped("[ 'false' ]", "[ 'false' ]");
+            return result.Count();
+        }
+
+        public IEnumerable<Notification> GetAllByDropped(string startKey = null, string endKey = null, int limit = 0, bool allowStale = false)
+        {
+            var view = GetView("by_dropped_and_received_and_key");
             if (limit > 0) view.Limit(limit);
             if (!allowStale) view.Stale(StaleMode.False);
             if (!string.IsNullOrEmpty(startKey)) view.StartKey(startKey);
@@ -36,19 +44,19 @@ namespace CloudConnect.CouchBaseProvider
 
         public IEnumerable<MD.CloudConnect.INotificationData> RequestNotificationCache(string key, DateTime max_date)
         {
-            IEnumerable<NotificationData> result = GetAllByDropped("false", "false", 1000);
+            IEnumerable<Notification> result = GetAllByDropped("[ 'false' ]", "[ 'false' ]", 10000);
             return result.Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Received_at);
         }
 
         public void DropNotificationCache(string key, DateTime max_date)
         {
-            IEnumerable<NotificationData> result = GetAllByDropped("false", "false", 1000);
+            IEnumerable<Notification> result = GetAllByDropped("[ 'false' ]", "[ 'false' ]", 10000);
             result = result.Where(x => x.Key == key && x.Received_at <= max_date.Ticks && x.Dropped == false).OrderBy(x => x.Received_at);
 
-            foreach (NotificationData d in result)
+            foreach (Notification d in result)
             {
                 d.Dropped = true;
-                this.Save(d);
+                this.Update(d);
             }
         }
 
