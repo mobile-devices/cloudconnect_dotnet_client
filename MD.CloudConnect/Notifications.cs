@@ -191,7 +191,13 @@ namespace MD.CloudConnect
                     //step 1 : new Class with 2 important things = DateTime notification and MaxID in Json
                     foreach (INotificationData d in jsonData)
                     {
-                        decodedData.Add(new DecodedNotificationData(d));
+                        try
+                        {
+                            decodedData.Add(new DecodedNotificationData(d));
+                        }catch(Exception ex)
+                        {
+                            //ignor notification with bad json format
+                        }
                     }
 
                     //step 2 : order by ID (because IDs are always generate by the cloud in a correct order so it's a good way to re-order received data)

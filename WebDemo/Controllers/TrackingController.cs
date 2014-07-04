@@ -20,7 +20,7 @@ namespace WebDemo.Controllers
 
         public ActionResult Index(string asset = "", int year = 2013, int month = 2, int day = 28, string debug = "off")
         {
-            List<TrackingModel> tracks = new List<TrackingModel>();
+            IEnumerable<TrackingModel> tracks = null;
             ViewBag.Imei = "";
             ViewBag.Fields = new Dictionary<string, MD.CloudConnect.Data.Field>();
             ViewBag.Date = DateTime.MinValue;
@@ -34,9 +34,9 @@ namespace WebDemo.Controllers
                 if (device != null)
                 {
                     ViewBag.Imei = device.Imei;
-                    tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).ToList();
+                    tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at);
                     if (debug == "off")
-                        tracks = tracks.Where(x => x.Dropped == false).ToList();
+                        tracks = tracks.Where(x => x.Dropped == false).Take(1000);
                     //if (!String.IsNullOrEmpty(options) && options == "ED")
                     //{
                     //    foreach (TrackingModel t in tracks)
@@ -52,7 +52,7 @@ namespace WebDemo.Controllers
                 }
             }
 
-            return View(tracks);
+            return View(tracks.ToList());
         }
 
         [Authorize(Roles = "Admin")]
@@ -63,9 +63,9 @@ namespace WebDemo.Controllers
             if (!String.IsNullOrEmpty(asset))
             {
                 MongoDB.Driver.MongoCollection<WebDemo.Models.TrackingModel> dataDb = Tools.MongoConnector.Instance.DataBase.GetCollection<WebDemo.Models.TrackingModel>("TRACKING");
-
-                var resultat = dataDb.Remove(Query.And(Query.EQ("Data.Asset", asset)
-                         , Query.EQ("RecordedDateKey", date.GenerateKey())));
+                var update = Update<WebDemo.Models.TrackingModel>.Set(e => e.Dropped, true);
+                var resultat = dataDb.Update(Query.And(Query.EQ("Data.Asset", asset)
+                         , Query.EQ("RecordedDateKey", date.GenerateKey())),update);
 
             }
             return RedirectToAction("index", new { asset = asset, year = year, month = month, Day = day });
@@ -91,7 +91,7 @@ namespace WebDemo.Controllers
                         WriteCsvCell(writer, key);
                     }
                     DateTime date = DateTime.ParseExact(dateKey.ToString(), "yyyyMMdd", null);
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderByDescending(x => x.Data.Recorded_at).Where(x => x.Dropped == false).Take(1000).ToList();
                     writer.WriteLine();
                     for (int i = 0; i < tracks.Count; i++)
                     {
@@ -164,7 +164,7 @@ namespace WebDemo.Controllers
                 DeviceModel device = RepositoryFactory.Instance.DeviceDb.GetDevice(asset);
                 if (device != null)
                 {
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).Take(1000).ToList();
 
                     Dictionary<string, MD.CloudConnect.Data.Field> previousFields = null;
                     foreach (TrackingModel t in tracks)
@@ -239,7 +239,7 @@ namespace WebDemo.Controllers
                 if (device != null)
                 {
                     ViewBag.Imei = device.Imei;
-                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).ToList();
+                    List<TrackingModel> tracks = RepositoryFactory.Instance.DataTrackingDB.GetData(device, date).OrderBy(x => x.Data.Recorded_at).Where(x => x.Dropped == false).Take(1000).ToList();
                     List<string> keys = device.GetOrderFieldName();
 
                     JsonTrackingModel jtrack = null;
