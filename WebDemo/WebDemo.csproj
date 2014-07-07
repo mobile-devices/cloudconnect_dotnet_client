@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebDemo</RootNamespace>
     <AssemblyName>WebDemo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -60,7 +60,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.1.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.1.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=1.9.1.221, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Bson.dll</HintPath>
@@ -78,6 +93,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="SecurityGuard">
       <HintPath>..\packages\SecurityGuard.1.0.54.586\lib\net40\SecurityGuard.dll</HintPath>
@@ -159,10 +177,12 @@
     <Compile Include="Models\Repository\RepositoryFactory.cs" />
     <Compile Include="Models\TrackingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Tools\CloudConnectConnetor.cs" />
     <Compile Include="Tools\DateExtension.cs" />
     <Compile Include="Tools\Log.cs" />
     <Compile Include="Tools\MongoConnector.cs" />
+    <Compile Include="Tools\Poke.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\renault.xml" />
@@ -175,7 +195,11 @@
     <Content Include="Content\direction_right.png" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\gritter-light.png" />
+    <Content Include="Content\gritter-long.png" />
+    <Content Include="Content\gritter.png" />
     <Content Include="Content\icy_road.png" />
+    <Content Include="Content\jquery.gritter.css" />
     <Content Include="Content\SecurityGuard\images\blue_ico.png" />
     <Content Include="Content\SecurityGuard\images\blue_message.gif" />
     <Content Include="Content\SecurityGuard\images\go.gif" />
@@ -267,34 +291,22 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="MailerTemplates\ResetPassword.html" />
-    <Content Include="Models\Scripts\bootstrap.js" />
-    <Content Include="Models\Scripts\bootstrap.min.js" />
-    <Content Include="Models\Scripts\home.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\locahost.pubxml" />
-    <None Include="Models\Scripts\jquery-2.1.1-vsdoc.js" />
-    <Content Include="Models\Scripts\jquery-2.1.1.js" />
-    <Content Include="Models\Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Models\Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Models\Scripts\jquery-ui-1.10.4.min.js" />
-    <None Include="Models\Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Models\Scripts\jquery.validate.js" />
-    <Content Include="Models\Scripts\jquery.validate.min.js" />
-    <Content Include="Models\Scripts\jStorage.js" />
-    <Content Include="Models\Scripts\modernizr-2.7.2.js" />
-    <Content Include="Models\Scripts\table-fixed-header.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\home.js" />
-    <None Include="Scripts\jquery-2.1.1-vsdoc.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery.gritter.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -310,7 +322,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
-    <Content Include="Scripts\old_home.js" />
     <Content Include="Scripts\table-fixed-header.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -322,16 +333,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Models\Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Models\Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Models\Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Models\Scripts\MicrosoftAjax.js" />
-    <Content Include="Models\Scripts\MicrosoftAjax.debug.js" />
-    <Content Include="Models\Scripts\MicrosoftMvcAjax.js" />
-    <Content Include="Models\Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Models\Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Models\Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -339,9 +340,7 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Models\Scripts\jquery-2.1.1.min.map" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
-    <Content Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -377,10 +376,6 @@
     <Content Include="Views\Collection\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudConnect.CouchBaseProvider\CloudConnect.CouchBaseProvider.csproj">
-      <Project>{7cf2725a-7d8a-4e55-9a82-473943b4edca}</Project>
-      <Name>CloudConnect.CouchBaseProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CloudConnect.MongoProvider\CloudConnect.MongoProvider.csproj">
       <Project>{f3a6eb9b-fce5-4768-ac00-48f6ebb1026b}</Project>
       <Name>CloudConnect.MongoProvider</Name>

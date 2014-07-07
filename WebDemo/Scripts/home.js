@@ -1,5 +1,6 @@
 ﻿var map;
 var _dataCache = {};
+var _chat;
 
 // Overide Array 
 Array.prototype.contains = function (obj) {
@@ -625,4 +626,29 @@ $(document).ready(function () {
     });
 
     $("#bt_execute").bind("click", loadTrackingData);
+
+    chat = $.connection.pokeHub;
+
+    chat.client.BroadCastPoke = function (msg) {
+        var data = eval("(" + msg + ")");
+
+        if (data.asset && data.asset == $("#asset").val()) {
+            $.gritter.add({                
+                title: 'New Message for ' + data.asset,               
+                text: data.msg
+            });
+        }
+    };
+
+    chat.client.broadcastMessage = function (name, message) {
+        if (name && name == $("#asset").val()) {
+            $.gritter.add({
+                title: name,
+                text: message
+            });
+        }
+    };
+
+    $.connection.hub.start().done(function () {
+    });
 });

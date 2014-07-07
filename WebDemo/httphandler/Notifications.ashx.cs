@@ -10,6 +10,7 @@ using WebDemo.Tools;
 using System.Web.Caching;
 using System.Threading;
 using System.Diagnostics;
+using MD.CloudConnect.Data;
 
 namespace WebDemo.httphandler
 {
@@ -214,6 +215,17 @@ namespace WebDemo.httphandler
                 if (dData.Meta.Event == "collection")
                 {
                     //DecodeCollection(dData.Collection, currentAccount, saveCollections);
+                }
+                if (dData.Meta.Event == "poke")
+                {
+                    try
+                    {
+                        PokeData p = dData.Poke;
+                        string msg = MD.CloudConnect.Tools.Base64Decoder.GetValueAsString(p.b64_payload);
+                        PokeHub.BroadCastPoke("{ asset: '" + p.Asset + "', msg: '" + msg + "' }" );
+                    }
+                    catch { }
+
                 }
             }
             if (saveTracks.Count > 0)

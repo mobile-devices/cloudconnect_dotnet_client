@@ -44,16 +44,12 @@ namespace WebDemo.Controllers
 
         public ContentResult Test()
         {
-            CloudConnect.CouchBaseProvider.NotificationProvider np = new CloudConnect.CouchBaseProvider.NotificationProvider();
-
-            CloudConnect.CouchBaseProvider.Device device = new CloudConnect.CouchBaseProvider.Device()
-            {
-                CreatedAt = DateTime.UtcNow,
-                Imei = "1234"
-            };
-
-            CloudConnect.CouchBaseProvider.DeviceRepository dRepo = new CloudConnect.CouchBaseProvider.DeviceRepository();
-            dRepo.SaveDevice(device);
+           string json =  "{\"meta\":{\"account\":\"unstable\",\"event\":\"poke\"},\"payload\":{\"id\":597363964166275184,\"id_str\":\"597363964166275184\",\"asset\":\"351732052448241\",\"sender\":\"Vice Manager\",\"namespace\":\"ToTo\",\"received_at\":\"2014-07-07T09:51:07Z\",\"b64_payload\":\"b2hoaCB5ZWFoaGg=\"}}]";
+           
+            
+            //PokeHub.BroadCastPoke("{ test: 'tata', asset: 'toto' }");
+             
+           
             //CloudConnect.MongoProvider.NotificationProvider provider = new CloudConnect.MongoProvider.NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
             //int idx = 0;
             //do

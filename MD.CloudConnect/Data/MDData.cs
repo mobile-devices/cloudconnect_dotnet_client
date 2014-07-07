@@ -26,6 +26,7 @@ namespace MD.CloudConnect
                         _meta.Account = (string)this.MetaData["account"];
                     if (this.MetaData.ContainsKey("event"))
                         _meta.Event = (string)this.MetaData["event"];
+
                 }
                 return _meta;
             }
@@ -141,6 +142,21 @@ namespace MD.CloudConnect
                         _collection = JsonConvert.DeserializeObject<CollectionData>(Payload.ToString());
                 }
                 return _collection;
+            }
+        }
+
+        private PokeData _poke = null;
+        [JsonIgnore]
+        public PokeData Poke
+        {
+            get
+            {
+                if (Meta != null && Meta.Event == "poke" && Payload != null)
+                {
+                    if (_poke == null)
+                        _poke = JsonConvert.DeserializeObject<PokeData>(Payload.ToString());
+                }
+                return _poke;
             }
         }
 
