@@ -121,6 +121,8 @@ namespace WebDemo.Models
             { "BATT_TEMP", new ExtendedFieldDetail() { Key = "BATT_TEMP", Id = 42, Type = ExtendedFieldType.Int1000 }},
             { "CASE_TEMP", new ExtendedFieldDetail() { Key = "CASE_TEMP", Id = 43, Type = ExtendedFieldType.Int1000 }},
 
+            { "OBD_CONNECTED_PROTOCOL", new ExtendedFieldDetail() { Key = "OBD_CONNECTED_PROTOCOL", Id = 45, Type = ExtendedFieldType.Integer }},
+
             { "BATT_VOLT", new ExtendedFieldDetail() { Key = "BATT_VOLT", Id = 51, Type = ExtendedFieldType.Integer, DisplayName = "Batt. volt(mV)" }},
             { "MDI_AREA_LIST", new ExtendedFieldDetail() { Key = "MDI_AREA_LIST", Id = 53, Type = ExtendedFieldType.String, DisplayName = "Area List" }},
 
