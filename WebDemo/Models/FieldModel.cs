@@ -153,7 +153,8 @@ namespace WebDemo.Models
             { "BEHAVE_UNIQUE_ID", new ExtendedFieldDetail() { Key = "BEHAVE_UNIQUE_ID", Id = 121, Type = ExtendedFieldType.Integer, DisplayName = "B. UniqueID", FieldDependency ="BEHAVE_UNIQUE_ID" }},
 
             { "MDI_CRASH_DETECTED", new ExtendedFieldDetail() { Key = "MDI_CRASH_DETECTED", Id = 122, Type = ExtendedFieldType.String , DisplayName = "Crash Detected", IgnoreInHistory = true}},
-          
+            { "EVENT", new ExtendedFieldDetail() { Key = "EVENT", Id = 127, Type = ExtendedFieldType.String , DisplayName = "Event", IgnoreInHistory = true}},
+
             { "MDI_EXT_BATT_LOW", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_LOW", Id = 150, Type = ExtendedFieldType.Boolean , DisplayName = "Ext. Batt. Low"}},
             { "MDI_EXT_BATT_VOLTAGE", new ExtendedFieldDetail() { Key = "MDI_EXT_BATT_VOLTAGE", Id = 151 , Type = ExtendedFieldType.Int1000 , DisplayName = "Ext. Batt. Voltage"}},
 
