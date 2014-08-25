@@ -78,8 +78,8 @@ namespace WebDemo
             WebDemo.Models.Repository.RepositoryFactory.Instance.Provider = new CloudConnect.CouchBaseProvider.RepositoryFactory();
             MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, provider, 10, false, Tools.CloudConnectConnetor.Instance);
 
-//            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, null, 5, false, Tools.CloudConnectConnetor.Instance);
-   
+            //            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, null, 5, false, Tools.CloudConnectConnetor.Instance);
+
         }
 
 
