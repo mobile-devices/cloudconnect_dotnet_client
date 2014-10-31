@@ -49,7 +49,7 @@ namespace Test.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ed5ec080e878ec23ff57b3ff1761cca4862ea617")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string token {
             get {
                 return ((string)(this["token"]));
