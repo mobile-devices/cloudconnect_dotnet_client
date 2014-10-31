@@ -23,51 +23,39 @@ namespace Test.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("dev")]
         public string env {
             get {
                 return ((string)(this["env"]));
             }
-            set {
-                this["env"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("unstable")]
         public string account {
             get {
                 return ((string)(this["account"]));
             }
-            set {
-                this["account"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ed5ec080e878ec23ff57b3ff1761cca4862ea617")]
         public string token {
             get {
                 return ((string)(this["token"]));
             }
-            set {
-                this["token"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://unstable.dev.g8teway.com/api/v3")]
         public string cloudurl {
             get {
                 return ((string)(this["cloudurl"]));
-            }
-            set {
-                this["cloudurl"] = value;
             }
         }
     }
