@@ -6,13 +6,13 @@
       <Value Profile="(Default)">dev</Value>
     </Setting>
     <Setting Name="account" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">unstable</Value>
+      <Value Profile="(Default)"></Value>
     </Setting>
     <Setting Name="token" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ed5ec080e878ec23ff57b3ff1761cca4862ea617</Value>
+      <Value Profile="(Default)"></Value>
     </Setting>
     <Setting Name="cloudurl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://unstable.dev.g8teway.com/api/v3</Value>
+      <Value Profile="(Default)"></Value>
     </Setting>
   </Settings>
 </SettingsFile>
