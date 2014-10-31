@@ -34,7 +34,7 @@ namespace Test.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("unstable")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string account {
             get {
                 return ((string)(this["account"]));
@@ -43,7 +43,7 @@ namespace Test.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ed5ec080e878ec23ff57b3ff1761cca4862ea617")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string token {
             get {
                 return ((string)(this["token"]));
@@ -52,7 +52,7 @@ namespace Test.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://unstable.dev.g8teway.com/api/v3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string cloudurl {
             get {
                 return ((string)(this["cloudurl"]));
