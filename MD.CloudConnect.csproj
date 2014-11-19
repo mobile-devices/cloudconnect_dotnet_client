@@ -57,6 +57,7 @@
     <Compile Include="Api\Track.cs" />
     <Compile Include="CacheProvider\InMemory.cs" />
     <Compile Include="CloudConnect.cs" />
+    <Compile Include="CloudConnectRebuilder.cs" />
     <Compile Include="Data\AssetData.cs" />
     <Compile Include="Data\ChannelData.cs" />
     <Compile Include="Data\CollectionData.cs" />

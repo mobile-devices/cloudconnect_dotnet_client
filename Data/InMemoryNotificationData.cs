@@ -14,5 +14,30 @@ namespace MD.CloudConnect.Data
         public string Data { get; set; }
 
         public string Group { get; set; }
+
+
+        public int Status
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

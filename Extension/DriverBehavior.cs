@@ -7,28 +7,28 @@ namespace MD.CloudConnect.Extension
 {
     public class DriverBehavior
     {
-        public static FieldDetail BEHAVE_ID = new FieldDetail() { Key = "BEHAVE_ID", Id = 100, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_LONG = new FieldDetail() { Key = "BEHAVE_LONG", Id = 101, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_LAT = new FieldDetail() { Key = "BEHAVE_LAT", Id = 102, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_DAY_OF_YEAR = new FieldDetail() { Key = "BEHAVE_DAY_OF_YEAR", Id = 103, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_TIME_OF_DAY = new FieldDetail() { Key = "BEHAVE_TIME_OF_DAY", Id = 104, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_SPEED_BEGIN = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_BEGIN", Id = 105, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_SPEED_PEAK = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_PEAK", Id = 106, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_SPEED_END = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_END", Id = 107, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_HEADING_BEGIN = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_BEGIN", Id = 108, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_HEADING_PEAK = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_PEAK", Id = 109, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_GPS_HEADING_END = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_END", Id = 110, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_X_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_X_BEGIN", Id = 111, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_X_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_X_PEAK", Id = 112, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_X_END = new FieldDetail() { Key = "BEHAVE_ACC_X_END", Id = 113, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Y_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_Y_BEGIN", Id = 114, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Y_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_Y_PEAK", Id = 115, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Y_END = new FieldDetail() { Key = "BEHAVE_ACC_Y_END", Id = 116, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Z_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_Z_BEGIN", Id = 117, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Z_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_Z_PEAK", Id = 118, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ACC_Z_END = new FieldDetail() { Key = "BEHAVE_ACC_Z_PEAK", Id = 119, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_ELAPSED = new FieldDetail() { Key = "BEHAVE_ELAPSED", Id = 120, Type = FieldType.Integer };
-        public static FieldDetail BEHAVE_UNIQUE_ID = new FieldDetail() { Key = "BEHAVE_UNIQUE_ID", Id = 121, Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ID = new FieldDetail() { Key = "BEHAVE_ID", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_LONG = new FieldDetail() { Key = "BEHAVE_LONG", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_LAT = new FieldDetail() { Key = "BEHAVE_LAT", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_DAY_OF_YEAR = new FieldDetail() { Key = "BEHAVE_DAY_OF_YEAR", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_TIME_OF_DAY = new FieldDetail() { Key = "BEHAVE_TIME_OF_DAY",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_SPEED_BEGIN = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_BEGIN", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_SPEED_PEAK = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_PEAK",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_SPEED_END = new FieldDetail() { Key = "BEHAVE_GPS_SPEED_END", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_HEADING_BEGIN = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_BEGIN", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_HEADING_PEAK = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_PEAK",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_GPS_HEADING_END = new FieldDetail() { Key = "BEHAVE_GPS_HEADING_END",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_X_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_X_BEGIN", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_X_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_X_PEAK", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_X_END = new FieldDetail() { Key = "BEHAVE_ACC_X_END", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Y_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_Y_BEGIN",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Y_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_Y_PEAK", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Y_END = new FieldDetail() { Key = "BEHAVE_ACC_Y_END", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Z_BEGIN = new FieldDetail() { Key = "BEHAVE_ACC_Z_BEGIN", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Z_PEAK = new FieldDetail() { Key = "BEHAVE_ACC_Z_PEAK", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ACC_Z_END = new FieldDetail() { Key = "BEHAVE_ACC_Z_PEAK", Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_ELAPSED = new FieldDetail() { Key = "BEHAVE_ELAPSED",  Type = FieldType.Integer };
+        public static FieldDetail BEHAVE_UNIQUE_ID = new FieldDetail() { Key = "BEHAVE_UNIQUE_ID", Type = FieldType.Integer };
 
         /// <summary>
         /// List of available Field for this module

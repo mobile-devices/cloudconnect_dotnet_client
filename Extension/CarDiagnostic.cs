@@ -7,11 +7,11 @@ namespace MD.CloudConnect.Extension
 {
     public class CarDiagnostic
     {
-        public static FieldDetail MDI_OBD_SPEED = new FieldDetail() { Key = "MDI_OBD_SPEED", Id = 235, Type = FieldType.Integer };
-        public static FieldDetail MDI_OBD_RPM = new FieldDetail() { Key = "MDI_OBD_RPM", Id = 236, Type = FieldType.Integer };
-        public static FieldDetail MDI_OBD_FUEL = new FieldDetail() { Key = "MDI_OBD_FUEL", Id = 237, Type = FieldType.Integer };
-        public static FieldDetail MDI_OBD_VIN = new FieldDetail() { Key = "MDI_OBD_VIN", Id = 238, Type = FieldType.String };
-        public static FieldDetail MDI_OBD_MILEAGE = new FieldDetail() { Key = "MDI_OBD_MILEAGE", Id = 239, Type = FieldType.Integer };
+        public static FieldDetail MDI_OBD_SPEED = new FieldDetail() { Key = "MDI_OBD_SPEED",  Type = FieldType.Integer };
+        public static FieldDetail MDI_OBD_RPM = new FieldDetail() { Key = "MDI_OBD_RPM", Type = FieldType.Integer };
+        public static FieldDetail MDI_OBD_FUEL = new FieldDetail() { Key = "MDI_OBD_FUEL",  Type = FieldType.Integer };
+        public static FieldDetail MDI_OBD_VIN = new FieldDetail() { Key = "MDI_OBD_VIN",  Type = FieldType.String };
+        public static FieldDetail MDI_OBD_MILEAGE = new FieldDetail() { Key = "MDI_OBD_MILEAGE",  Type = FieldType.Integer };
 
         /// <summary>
         /// List of available Field for this module

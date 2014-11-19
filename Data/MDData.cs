@@ -13,6 +13,9 @@ namespace MD.CloudConnect
         [JsonProperty("meta")]
         public Dictionary<string, string> MetaData { get; set; }
 
+        [JsonIgnore]
+        internal string NotificationID { get; set; }
+
         private Meta _meta = null;
         [JsonIgnore]
         public Meta Meta

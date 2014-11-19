@@ -7,15 +7,15 @@ namespace MD.CloudConnect
 {
     public class Easyconnect
     {
-        public static FieldDetail MDI_JOURNEY_TIME = new FieldDetail() { Key = "MDI_JOURNEY_TIME", Id = 240, Type = FieldType.Integer };
-        public static FieldDetail MDI_IDLE_JOURNEY = new FieldDetail() { Key = "MDI_IDLE_JOURNEY", Id = 241, Type = FieldType.Integer };
-        public static FieldDetail MDI_DRIVING_JOURNEY = new FieldDetail() { Key = "MDI_DRIVING_JOURNEY", Id = 242, Type = FieldType.Integer };
-        public static FieldDetail MDI_OVERSPEED_COUNTER = new FieldDetail() { Key = "MDI_OVERSPEED_COUNTER", Id = 244, Type = FieldType.Integer };
-        public static FieldDetail MDI_TOW_AWAY = new FieldDetail() { Key = "MDI_TOW_AWAY", Id = 245, Type = FieldType.Boolean };
-        public static FieldDetail MDI_ODO_JOURNEY = new FieldDetail() { Key = "MDI_ODO_JOURNEY", Id = 246, Type = FieldType.Integer };
-        public static FieldDetail MDI_OVERSPEED = new FieldDetail() { Key = "MDI_OVERSPEED", Id = 247, Type = FieldType.Boolean };
-        public static FieldDetail MDI_MAX_SPEED_JOURNEY = new FieldDetail() { Key = "MDI_MAX_SPEED_JOURNEY", Id = 248, Type = FieldType.Integer };
-        public static FieldDetail MDI_JOURNEY_STATE = new FieldDetail() { Key = "MDI_JOURNEY_STATE", Id = 249, Type = FieldType.Boolean };
+        public static FieldDetail MDI_JOURNEY_TIME = new FieldDetail() { Key = "MDI_JOURNEY_TIME", Type = FieldType.Integer };
+        public static FieldDetail MDI_IDLE_JOURNEY = new FieldDetail() { Key = "MDI_IDLE_JOURNEY", Type = FieldType.Integer };
+        public static FieldDetail MDI_DRIVING_JOURNEY = new FieldDetail() { Key = "MDI_DRIVING_JOURNEY", Type = FieldType.Integer };
+        public static FieldDetail MDI_OVERSPEED_COUNTER = new FieldDetail() { Key = "MDI_OVERSPEED_COUNTER", Type = FieldType.Integer };
+        public static FieldDetail MDI_TOW_AWAY = new FieldDetail() { Key = "MDI_TOW_AWAY", Type = FieldType.Boolean };
+        public static FieldDetail MDI_ODO_JOURNEY = new FieldDetail() { Key = "MDI_ODO_JOURNEY", Type = FieldType.Integer };
+        public static FieldDetail MDI_OVERSPEED = new FieldDetail() { Key = "MDI_OVERSPEED", Type = FieldType.Boolean };
+        public static FieldDetail MDI_MAX_SPEED_JOURNEY = new FieldDetail() { Key = "MDI_MAX_SPEED_JOURNEY", Type = FieldType.Integer };
+        public static FieldDetail MDI_JOURNEY_STATE = new FieldDetail() { Key = "MDI_JOURNEY_STATE", Type = FieldType.Boolean };
 
         public static FieldDetail[] GetAllFieldsDetail()
         {

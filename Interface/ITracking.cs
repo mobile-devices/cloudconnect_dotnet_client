@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MD.CloudConnect.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,6 +53,19 @@ namespace MD.CloudConnect
         /// 5 to say input 1 and 3 are active
         /// </summary>
         byte Inputs { get; set; }
+
+        UInt64? ConnectionId { get; set; }
+
+        UInt32? Index { get; set; }
+
+        Dictionary<string, Field> Fields { get; set; }
+
+        /// <summary>
+        /// 0 : ok
+        /// 1 : ignored for history
+        /// 2 : partialy used
+        /// </summary>
+        int Status { get; set; }
 
         bool GetFieldAsBool(string fieldName);
         string GetFieldAsString(string fieldName);

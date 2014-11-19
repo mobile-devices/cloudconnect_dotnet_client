@@ -37,6 +37,9 @@ namespace MD.CloudConnect
         }
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
     public class Notification
     {
         private const string GENERIC_KEY = "GEN_NOTIF";
@@ -320,10 +323,10 @@ namespace MD.CloudConnect
                 }
                 else
                 {
-                    if (history.fields.ContainsKey(field))
-                        ((TrackingData)data).fields.Add(field, history.fields[field]);
+                    if (history.Fields.ContainsKey(field))
+                        ((TrackingData)data).Fields.Add(field, history.Fields[field]);
                     else
-                        ((TrackingData)data).fields.Add(field, new Field());
+                        ((TrackingData)data).Fields.Add(field, new Field());
                 }
             }
 
@@ -366,10 +369,10 @@ namespace MD.CloudConnect
 
         private void UpdateCache(TrackingData history, string field, ITracking data)
         {
-            if (!history.fields.ContainsKey(field))
-                history.fields.Add(field, ((TrackingData)data).fields[field]);
+            if (!history.Fields.ContainsKey(field))
+                history.Fields.Add(field, ((TrackingData)data).Fields[field]);
             else
-                history.fields[field] = ((TrackingData)data).fields[field];
+                history.Fields[field] = ((TrackingData)data).Fields[field];
         }
 
         private TrackingData GeneratePayload(string asset, string[] fields)
@@ -377,10 +380,10 @@ namespace MD.CloudConnect
             TrackingData result = new TrackingData();
 
             result.Asset = asset;
-            result.fields = new Dictionary<string, Field>();
+            result.Fields = new Dictionary<string, Field>();
             foreach (string field in fields)
             {
-                result.fields.Add(field, new Field());
+                result.Fields.Add(field, new Field());
             }
 
             result.location = new double[2];
