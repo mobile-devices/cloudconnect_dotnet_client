@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{998B63BF-E885-443E-BE66-9F0224940F2E}</ProjectGuid>
-    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebDemo</RootNamespace>
@@ -50,62 +50,51 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Couchbase, Version=1.3.10.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\CouchbaseNetClient.1.3.10\lib\net40\Couchbase.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Enyim.Caching, Version=1.3.10.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\CouchbaseNetClient.1.3.10\lib\net40\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="inflector_extension">
+      <HintPath>..\library\inflector_extension.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.1.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.1.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.2.0.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Bson, Version=1.9.1.221, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=1.9.1.221, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoMembership">
-      <HintPath>..\packages\MongoMembership.0.1.0\lib\MongoMembership.dll</HintPath>
-    </Reference>
-    <Reference Include="MVCCentral.Framework">
-      <HintPath>..\packages\SecurityGuard.1.0.54.586\lib\net40\MVCCentral.Framework.dll</HintPath>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="SecurityGuard">
-      <HintPath>..\packages\SecurityGuard.1.0.54.586\lib\net40\SecurityGuard.dll</HintPath>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -116,6 +105,18 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -123,30 +124,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\SecurityGuard\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\SecurityGuard\Controllers\MembershipController.cs" />
-    <Compile Include="Areas\SecurityGuard\Controllers\RoleController.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ChangePasswordViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\DashboardViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ForgotPasswordViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\GrantRolesToUserViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\JsonResponse.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ManageRolesViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ManageUsersViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\RegisterViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\ResponseItem.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\RoleViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\SelectObject.cs" />
-    <Compile Include="Areas\SecurityGuard\Models\UserViewModel.cs" />
-    <Compile Include="Areas\SecurityGuard\SecurityGuardAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LognotificationController.cs" />
-    <Compile Include="Controllers\messagingController.cs" />
     <Compile Include="Controllers\ObdStackController.cs" />
-    <Compile Include="Controllers\SGAccountController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Extensions\SelectExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -160,29 +140,19 @@
     <Compile Include="Models\CollectionModel.cs" />
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\FeedResult.cs" />
-    <Compile Include="Models\FieldModel.cs" />
+    <Compile Include="Models\FieldHelper.cs" />
     <Compile Include="Models\JsonExportData.cs" />
     <Compile Include="Models\JsonTasksModel.cs" />
     <Compile Include="Models\JsonTrackingModel.cs" />
-    <Compile Include="Models\LogOnViewModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ObdStackMessage.cs" />
-    <Compile Include="Models\Repository\AccountDb.cs" />
-    <Compile Include="Models\Repository\DataCollectionDb.cs" />
     <Compile Include="Models\Repository\DataTrackingDB.cs" />
     <Compile Include="Models\Repository\DeviceDb.cs" />
-    <Compile Include="Models\Repository\NotificationRepository.cs" />
     <Compile Include="Models\Repository\RepositoryBase.cs" />
     <Compile Include="Models\Repository\RepositoryFactory.cs" />
     <Compile Include="Models\TrackingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="Tools\CloudConnectConnetor.cs" />
     <Compile Include="Tools\DateExtension.cs" />
     <Compile Include="Tools\Log.cs" />
-    <Compile Include="Tools\MongoConnector.cs" />
-    <Compile Include="Tools\Poke.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\renault.xml" />
@@ -200,32 +170,16 @@
     <Content Include="Content\gritter.png" />
     <Content Include="Content\icy_road.png" />
     <Content Include="Content\jquery.gritter.css" />
-    <Content Include="Content\SecurityGuard\images\blue_ico.png" />
-    <Content Include="Content\SecurityGuard\images\blue_message.gif" />
-    <Content Include="Content\SecurityGuard\images\go.gif" />
-    <Content Include="Content\SecurityGuard\images\green_ico.png" />
-    <Content Include="Content\SecurityGuard\images\green_message.gif" />
-    <Content Include="Content\SecurityGuard\images\negative.gif" />
-    <Content Include="Content\SecurityGuard\images\next.gif" />
-    <Content Include="Content\SecurityGuard\images\pag_bg.gif" />
-    <Content Include="Content\SecurityGuard\images\positive.gif" />
-    <Content Include="Content\SecurityGuard\images\prev.gif" />
-    <Content Include="Content\SecurityGuard\images\red_ico.png" />
-    <Content Include="Content\SecurityGuard\images\red_message.gif" />
-    <Content Include="Content\SecurityGuard\images\td_bg1.gif" />
-    <Content Include="Content\SecurityGuard\images\td_bg2.gif" />
-    <Content Include="Content\SecurityGuard\images\white_ico.png" />
-    <Content Include="Content\SecurityGuard\images\white_message.gif" />
-    <Content Include="Content\SecurityGuard\images\yellow_ico.png" />
-    <Content Include="Content\SecurityGuard\images\yellow_message.gif" />
-    <Content Include="Content\SecurityGuard\pagination.css" />
-    <Content Include="Content\SecurityGuard\scripts\jquery-1.6.1.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.jqia.selects.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.validate.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Content\SecurityGuard\scripts\modernizr-1.7.min.js" />
-    <Content Include="Content\SecurityGuard\securityguard.css" />
     <Content Include="Content\stop.png" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -257,20 +211,7 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
-    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
     <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
@@ -287,10 +228,23 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="MailerTemplates\ResetPassword.html" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -304,8 +258,9 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.2.js" />
+    <Content Include="Scripts\jquery-ui-1.11.2.min.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.1.0.js" />
     <Content Include="Scripts\jquery.signalR-2.1.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -322,6 +277,8 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\table-fixed-header.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -349,39 +306,17 @@
     <Content Include="httphandler\Notifications.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\SecurityGuard\Views\Web.config" />
-    <Content Include="Areas\SecurityGuard\Views\Shared\_SecurityGuardLayoutPage.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Role\Index.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\Update.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\Index.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\GrantRolesToUser.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Membership\CreateUser.cshtml" />
-    <Content Include="Areas\SecurityGuard\Views\Dashboard\Index.cshtml" />
-    <Content Include="log4net.config" />
-    <None Include="fonts\fontawesome-webfont.eot" />
-    <None Include="fonts\fontawesome-webfont.ttf" />
-    <None Include="fonts\fontawesome-webfont.woff" />
-    <None Include="fonts\FontAwesome.otf" />
-    <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\web.config" />
-    <Content Include="Views\SGAccount\ChangePassword.cshtml" />
-    <Content Include="Views\SGAccount\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPassword.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\LogOn.cshtml" />
     <Content Include="Views\Tracking\Index.cshtml" />
-    <Content Include="Views\messaging\Index.cshtml" />
     <Content Include="Views\ObdStack\Index.cshtml" />
-    <Content Include="Views\Collection\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CloudConnect.MongoProvider\CloudConnect.MongoProvider.csproj">
-      <Project>{f3a6eb9b-fce5-4768-ac00-48f6ebb1026b}</Project>
-      <Name>CloudConnect.MongoProvider</Name>
+    <ProjectReference Include="C:\Users\cyril\Documents\GitHub\cloudconnect-couchebase-provider\CloudConnect.CouchBaseProvider.csproj">
+      <Project>{b143e9ff-c2c9-4e3b-87a7-18d5c8fc4ed8}</Project>
+      <Name>CloudConnect.CouchBaseProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MD.CloudConnect\MD.CloudConnect.csproj">
-      <Project>{A3FE3D46-A1CB-4EEE-8C25-B7A4B5BFF1F6}</Project>
+    <ProjectReference Include="C:\Users\cyril\Documents\GitHub\cloudconnect_dotnet_client\MD.CloudConnect.csproj">
+      <Project>{a3fe3d46-a1cb-4eee-8c25-b7a4b5bff1f6}</Project>
       <Name>MD.CloudConnect</Name>
     </ProjectReference>
   </ItemGroup>

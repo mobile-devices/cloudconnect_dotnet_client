@@ -5,9 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Text;
-using MongoDB.Driver;
 using System.Web.Caching;
-using CloudConnect.MongoProvider;
 using System.Reflection;
 
 namespace WebDemo
@@ -69,13 +67,8 @@ namespace WebDemo
             Tools.Log.Instance.Initialize();
             WebDemo.Models.Repository.RepositoryFactory.Instance.Initialize();
 
-            Tools.CloudConnectConnetor.Instance.InitializeFields();
 
-            NotificationProvider provider = new NotificationProvider(System.Configuration.ConfigurationManager.AppSettings["MongoUri"], System.Configuration.ConfigurationManager.AppSettings["MongoDbName"]);
-
-            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, provider, 10, false, Tools.CloudConnectConnetor.Instance);
-//            MD.CloudConnect.Notification.Instance.Initialize(Tools.CloudConnectConnetor.Instance.Fields, true, true, true, null, null, 5, false, Tools.CloudConnectConnetor.Instance);
-       //     CloudConnect.CouchBaseProvider.CouchbaseManager.RegisterModelViews(new Assembly[] { Assembly.GetAssembly( typeof(CloudConnect.CouchBaseProvider.CouchbaseManager)) });
+            MD.CloudConnect.CouchBaseProvider.CouchbaseManager.Instance.RegisterBucketConfiguration("couchbaseClients/couchbase", "webdemo");
         }
 
 

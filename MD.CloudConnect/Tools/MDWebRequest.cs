@@ -25,7 +25,7 @@ namespace MD.CloudConnect
 
         public void Get(string function, string parameter, string per_page = null, string page = null)
         {
-            if (String.IsNullOrEmpty(Token) || String.IsNullOrEmpty(Account) || String.IsNullOrEmpty(Environment))
+            if (String.IsNullOrEmpty(Token) || String.IsNullOrEmpty(Account))
                 throw new Exception("You must initialize Token, Account and Environment");
 
             if (!String.IsNullOrEmpty(per_page))
@@ -33,11 +33,13 @@ namespace MD.CloudConnect
             if (!String.IsNullOrEmpty(page))
                 parameter += !String.IsNullOrEmpty(parameter) ? "&page=" + page : "page=" + page;
 
-            HttpWebRequest httpRequete = HttpWebRequest.Create(String.Format("http://{0}.{1}.cloudconnect.io/api/v3/{2}{3}"
+            string uri = String.Format("http://{0}{1}cloudconnect.io/api/v3/{2}{3}"
                 , Account
-                , Environment
+                , (!String.IsNullOrEmpty(Environment) ? String.Format(".{0}.", Environment) : "")
                 , function
-                , !String.IsNullOrEmpty(parameter) ? "?" + parameter : "")) as HttpWebRequest;
+                , !String.IsNullOrEmpty(parameter) ? "?" + parameter : "");
+
+            HttpWebRequest httpRequete = HttpWebRequest.Create(uri) as HttpWebRequest;
             httpRequete.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(Token + ":X"));
 
             httpRequete.Accept = "application/json";

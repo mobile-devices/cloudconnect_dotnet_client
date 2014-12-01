@@ -15,6 +15,7 @@ namespace WebDemo.Models
     public class JsonTrackingModel
     {
         public int Id { get; set; }
+        public string DocId { get; set; }
         public string Recorded_at { get; set; }
         public string Received_at { get; set; }
         public double Longitude { get; set; }

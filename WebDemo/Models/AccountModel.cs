@@ -5,15 +5,12 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace WebDemo.Models
 {
     public class AccountModel
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 

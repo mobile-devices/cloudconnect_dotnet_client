@@ -23,6 +23,7 @@ namespace MD.CloudConnect.Data
         public DateTime? Received_at { get; set; }
         public DateTime? Recorded_at { get; set; }
         public DateTime? Created_at { get; set; }
+        public DateTime? Timeout_at { get; set; }
         public string Url { get; set; }
 
         private string _payload = string.Empty;

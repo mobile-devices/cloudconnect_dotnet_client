@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -68,26 +68,39 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <label>
-                    Choose Fields Display in Table
-                </label>
-                <select id="fieldsForTable" multiple="multiple" class="input-xxlarge" style="height: 125px"></select>
-                <label>
-                    Choose Fields Display on the Map
-                </label>
-                <select id="fieldsForMap" multiple="multiple" class="input-xxlarge" style="height: 125px"></select>
-                <label class="checkbox">
-                    <input type="checkbox" id="trackFeature">
-                    Activate track feature between table and map
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" id="clickFeature">
-                    Activate click feature between table and map
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" id="dBehavEvent">
-                    Display Driver Behavior Event on the map
-                </label>
+                <form role="form">
+                    <div class="form-group">
+                        <label>
+                            Choose Fields Display in Table
+                        </label>
+                        <select id="fieldsForTable" multiple="multiple" class="input-xxlarge" style="height: 125px"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Choose Fields Display on the Map
+                        </label>
+
+                        <select id="fieldsForMap" multiple="multiple" class="input-xxlarge" style="height: 125px"></select>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="trackFeature">
+                            Activate track feature between table and map
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="clickFeature">
+                            Activate click feature between table and map
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="dBehavEvent">
+                            Display Driver Behavior Event on the map
+                        </label>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button id="btResetConfig" class="btn btn-warning">
@@ -100,8 +113,12 @@
                     Save Changes
                 </button>
             </div>
+
         </div>
     </div>
+</div>
+<div id="indicator" style="position: fixed; left: 50%; top: 50%; display: none;">
+    <img src="~/content/ajax-loader.gif"></img>
 </div>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>

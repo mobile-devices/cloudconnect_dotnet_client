@@ -1,6 +1,6 @@
 ﻿var map;
 var _dataCache = {};
-var _chat;
+var _currentDocID = "";
 
 // Overide Array 
 Array.prototype.contains = function (obj) {
@@ -181,7 +181,7 @@ var mapObject = {
         this.emptyArray(this.infos);
         this.emptyArray(this.markersDbehav);
         this.emptyArray(this.infosDbehav);
-        this.emptyArray(this.bounds);
+        this.bounds = new google.maps.LatLngBounds();
     },
     focusOn: function (id) {
         map.setZoom(17);
@@ -518,67 +518,84 @@ function AddDriverBehavPointOnMap(data, idx, replace_loc_map) {
     }
 }
 
-function loadTrackingData() {
+
+function trackingDataAnswer(res, format, erase) {
+    var docID = "";
+    if (res) {
+        if (erase) {
+            $("#bodyTable").html("");
+            $("#headTable").html("");
+            mapObject.clear();
+            _dataCache = {};
+        }
+        var driverBehavData = null;
+        for (var i = 0; i < res.length; i++) {
+            if (i == 0 && erase)
+                AddHeaderTable(res[i]);
+
+            driverBehavData = AddLineInTable(res[i], i);
+            AddPointOnMap(res[i], i, format);
+            if (config.displayDriverBehavOnMap && driverBehavData) {
+
+                //hack 3.1.27
+                if (driverBehavData.checkDateAndTime(res[i])) {
+                    AddDriverBehavPointOnMap(driverBehavData, i, true);
+                }
+                else {
+                    AddPointOnMap(res[i], i, format);
+                    AddDriverBehavPointOnMap(driverBehavData, i, false);
+                }
+            }
+            docID = res[i].DocId;
+        }
+
+        // make the header fixed on scroll
+        $('.table-fixed-header').fixedHeader();
+
+        if (config.syncTableCursorAndMap) {
+            $("#bodyTable tr").hover(function () {
+                var id = $(this).attr("line");
+                mapObject.focusOn(id);
+            });
+            $("#map_canvas").hover(function () {
+                mapObject.hoverMap();
+            });
+        }
+        if (config.zoomInClickTable) {
+            $("#bodyTable tr").click(function () {
+                var id = $(this).attr("line");
+                mapObject.focusOn(id);
+            });
+        }
+        mapObject.update();
+    }
+    return docID;
+}
+
+function loadTrackingData(erase) {
     var datevalue = $("#date").datepicker('getDate');
     var format = $("#format_view option:selected").val();
-
+    $('#indicator').show();
     $.ajax({
         url: '/tracking/loadData',
         type: 'GET',
-        data: "asset=" + $("#asset").val() + "&year=" + datevalue.getFullYear() + "&month=" + (datevalue.getMonth() + 1).toString() + "&day=" + datevalue.getDate(),
+        data: "asset=" + $("#asset").val() + "&year=" + datevalue.getFullYear() + "&month=" + (datevalue.getMonth() + 1).toString() + "&day=" + datevalue.getDate() + "&limit=10&nextDocID=" + _currentDocID,
         success: function (res) {
-            if (res) {
-                $("#bodyTable").html("");
-                $("#headTable").html("");
-                mapObject.clear();
-                _dataCache = {};
-
-                var driverBehavData = null;
-                for (var i = 0; i < res.length; i++) {
-                    if (i == 0)
-                        AddHeaderTable(res[i]);
-
-                    driverBehavData = AddLineInTable(res[i], i);
-                    AddPointOnMap(res[i], i, format);
-                    if (config.displayDriverBehavOnMap && driverBehavData) {
-
-                        //hack 3.1.27
-                        if (driverBehavData.checkDateAndTime(res[i])) {
-                            AddDriverBehavPointOnMap(driverBehavData, i, true);
-                        }
-                        else {
-                            AddPointOnMap(res[i], i, format);
-                            AddDriverBehavPointOnMap(driverBehavData, i, false);
-                        }
-                    }
-                }
-
-                // make the header fixed on scroll
-                $('.table-fixed-header').fixedHeader();
-
-                if (config.syncTableCursorAndMap) {
-                    $("#bodyTable tr").hover(function () {
-                        var id = $(this).attr("line");
-                        mapObject.focusOn(id);
-                    });
-                    $("#map_canvas").hover(function () {
-                        mapObject.hoverMap();
-                    });
-                }
-                if (config.zoomInClickTable) {
-                    $("#bodyTable tr").click(function () {
-                        var id = $(this).attr("line");
-                        mapObject.focusOn(id);
-                    });
-                }
-                mapObject.update();
+            var docID = trackingDataAnswer(res, format, true);
+            //if (res && res.length >0 && docID != _currentDocID) {
+            //    _currentDocID = docID;
+            //    loadTrackingData(false);
+            //}
+            $('#indicator').hide();
+            if (res && res.length == 0) {
+                alert("no data for this date");
             }
         },
         error: function (res) {
+            $('#indicator').hide();
             alert("Error : " + res);
         }
     });
-
 }
 
 function resize() {
@@ -626,29 +643,4 @@ $(document).ready(function () {
     });
 
     $("#bt_execute").bind("click", loadTrackingData);
-
-    chat = $.connection.pokeHub;
-
-    chat.client.BroadCastPoke = function (msg) {
-        var data = eval("(" + msg + ")");
-
-        if (data.asset && data.asset == $("#asset").val()) {
-            $.gritter.add({                
-                title: 'New Message for ' + data.asset,               
-                text: data.msg
-            });
-        }
-    };
-
-    chat.client.broadcastMessage = function (name, message) {
-        if (name && name == $("#asset").val()) {
-            $.gritter.add({
-                title: name,
-                text: message
-            });
-        }
-    };
-
-    $.connection.hub.start().done(function () {
-    });
 });
